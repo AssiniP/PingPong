@@ -1,16 +1,26 @@
 <?php
-include_once('helpers/MySqlDatabase.php');
-//include_once("helpers/MustacheRender.php");
+include_once('helpers/MariaDBDatabase.php');
+include_once("helpers/MustacheRender.php");
 include_once('helpers/Router.php');
 
 //INCLUIR ACA MODELOS Y CONTROLADORES
-//Comento los mustache porque quiza los usemos ahora lmao
-//include_once('third-party/mustache/src/Mustache/Autoloader.php');
+include_once ('controller/PingPongController.php');
+include_once ('controller/LoginController.php');
+
+include_once('third-party/mustache/src/Mustache/Autoloader.php');
 
 class Configuration {
     private $configFile = 'config/config.ini';
 
     public function __construct() {
+    }
+
+    public function getPingPongController(){
+        return new PingPongController($this->getRenderer());
+    }
+
+    public function getLoginController(){
+        return new LoginController($this->getRenderer());
     }
 
     private function getArrayConfig() {
@@ -33,7 +43,7 @@ class Configuration {
     public function getRouter() {
         return new Router(
             $this,
-            "getController",
+            "getPingPongController",
             "list");
     }
 }
