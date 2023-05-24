@@ -7,9 +7,7 @@ class loginModel
         Session::init();
     }
 
-    public function run()
-    {
-
+    public function run() {
         $nick_name=$_POST['nickname'];
         // Se encripta la pass para validarla
         $password=md5($_POST['password']);
@@ -24,18 +22,11 @@ class loginModel
             Session::set('loggedIn', true);
             Session::set('nickname', $nick_name);
             $this->renderer->render('registerForm');
-
-
         }
         else {
             Session::set('loggedIn', false);
            // header('location: '.URL);
-            $this->renderer->render('registerForm');
+            $this->renderer->render('loginForm');
         }
-
-
     }
-
-
-
 }
