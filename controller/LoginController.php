@@ -1,25 +1,27 @@
 <?php
-
-class LoginController {
+class LoginController{
     private $renderer;
     private $userModel;
-    public function __construct($userModel, $renderer){
+    public function __construct($renderer) {
         $this->renderer = $renderer;
-        $this->userModel = $userModel;
     }
 
-    public function list() {
-        $this->renderer->render('login');
+    function list() {
+        $this->renderer->render('loginForm');
     }
 
-    public function authenticate() {
-
+    function authenticate() {
         $nickname = $_POST['nickname'];
         $password = md5($_POST['password']);
+        var_dump($password);
+        var_dump($nickname);
 
-        $data["usuario"] = $this->userModel->validarLogin($nickname, $password);
+        $data['user']= $this->userModel->validarLogin($nickname, $password);
+
+        var_dump($data);
+/*
         // Validar las credenciales del usuario
-        if (count($data["usuario"])>0) {
+        if ($nickname === 'admin' && $password === 'admin123') {
             // Iniciar sesión exitosamente
             session_start();
             $_SESSION['nickname'] = $nickname;
@@ -35,6 +37,16 @@ class LoginController {
         session_start();
         session_destroy();
         $this->renderer->render('login'); // Redirijo al login
+        exit();
+    }
+}
+        }*/
+    }
+
+    function logout() {
+        session_start();
+        session_destroy();
+        $this->renderer->render('loginForm'); // Redirijo al login
         exit();
     }
 }

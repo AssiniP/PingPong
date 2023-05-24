@@ -12,13 +12,24 @@ include_once('controller/PingPongController.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 
+include_once('helpers/MariaDBDatabase.php');
+include_once("helpers/MustacheRender.php");
+include_once('helpers/Router.php');
 
+//INCLUIR ACA MODELOS Y CONTROLADORES
+include_once ('controller/PingPongController.php');
+include_once ('controller/LoginController.php');
+include_once('controller/UsersController.php');
+
+include_once ('model/UserModel.php');
+include_once ('model/loginModel.php');
+
+include_once('third-party/mustache/src/Mustache/Autoloader.php');
 class Configuration {
     private $configFile = 'config/config.ini';
 
     public function __construct() {
     }
-
     public function getUserController() {
         return new UserController(
             new UserModel($this->getDatabase()),
@@ -34,6 +45,17 @@ class Configuration {
     public function getPingPongController() {
         return new PingPongController($this->getRenderer());
     }
+    public function getPingPongController(){
+        return new PingPongController($this->getRenderer());
+    }
+
+    public function getLoginController(){
+        return new LoginController($this->getRenderer());
+    }
+
+    public function getUserController(){
+        return new UsersController($this->getRenderer());
+    }
 
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);
@@ -46,6 +68,7 @@ class Configuration {
     public function getDatabase() {
         $config = $this->getArrayConfig();
         return new MySqlDatabase(
+        return new MariaDBDatabase(
             $config['servername'],
             $config['username'],
             $config['password'],
@@ -59,3 +82,4 @@ class Configuration {
             "list");
     }
 }
+

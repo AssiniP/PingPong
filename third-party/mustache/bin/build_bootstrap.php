@@ -22,7 +22,6 @@
  */
 $baseDir = realpath(dirname(__FILE__) . '/..');
 
-
 require $baseDir . '/src/Mustache/Autoloader.php';
 Mustache_Autoloader::register();
 

@@ -1,6 +1,4 @@
 Mustache.php
-============
-
 A [Mustache](http://mustache.github.com/) implementation in PHP.
 
 [![Package version](http://img.shields.io/packagist/v/mustache/mustache.svg?style=flat-square)](https://packagist.org/packages/mustache/mustache)
@@ -11,12 +9,13 @@ A [Mustache](http://mustache.github.com/) implementation in PHP.
 
 Usage
 -----
-
+```
 A quick example:
-
-```php
 <?php
+
 $m = new Mustache_Engine;
+$m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
+
 echo $m->render('Hello {{planet}}', array('planet' => 'World!')); // "Hello World!"
 ```
 
@@ -54,10 +53,11 @@ And render it:
 ```php
 <?php
 $m = new Mustache_Engine;
+$m = new Mustache_Engine(array('entity_flags' => ENT_QUOTES));
 $chris = new Chris;
 echo $m->render($template, $chris);
 ```
-
+*Note:* we recommend using `ENT_QUOTES` as a default of [entity_flags](https://github.com/bobthecow/mustache.php/wiki#entity_flags) to decrease the chance of Cross-site scripting vulnerability.
 
 And That's Not All!
 -------------------
@@ -70,3 +70,5 @@ See Also
 
  * [Readme for the Ruby Mustache implementation](http://github.com/defunkt/mustache/blob/master/README.md).
  * [mustache(5)](http://mustache.github.com/mustache.5.html) man page.
+
+

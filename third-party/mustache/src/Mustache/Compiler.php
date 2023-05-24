@@ -334,11 +334,13 @@ class Mustache_Compiler
             if (%s) {
                 $source = %s;
                 $result = call_user_func($value, $source, %s);
+                $result = (string) call_user_func($value, $source, %s);
                 if (strpos($result, \'{{\') === false) {
                     $buffer .= $result;
                 } else {
                     $buffer .= $this->mustache
                         ->loadLambda((string) $result%s)
+                        ->loadLambda($result%s)
                         ->renderInternal($context);
                 }
             } elseif (!empty($value)) {
@@ -391,12 +393,15 @@ class Mustache_Compiler
         $method  = $this->getFindMethod($id);
         $id      = var_export($id, true);
         $filters = $this->getFilters($filters, $level);
-
         return sprintf($this->prepare(self::SECTION_CALL, $level), $id, $method, $id, $filters, $key);
     }
 
     const INVERTED_SECTION = '
         // %s inverted section
+        return sprintf($this->prepare(self::SECTION_CALL, $level), $method, $id, $filters, $key);
+    }
+
+    const INVERTED_SECTION = '
         $value = $context->%s(%s);%s
         if (empty($value)) {
             %s
@@ -418,8 +423,8 @@ class Mustache_Compiler
         $method  = $this->getFindMethod($id);
         $id      = var_export($id, true);
         $filters = $this->getFilters($filters, $level);
-
-        return sprintf($this->prepare(self::INVERTED_SECTION, $level), $id, $method, $id, $filters, $this->walk($nodes, $level));
+        return sprintf($this->prepare(self::INVERTED_SECTION, $level), $id, $method, $id, $filters, $this->walk($nodes, $level));´
+        return sprintf($this->prepare(self::INVERTED_SECTION, $level), $method, $id, $filters, $this->walk($nodes, $level));
     }
 
     const PARTIAL_INDENT = ', $indent . %s';
@@ -508,6 +513,7 @@ class Mustache_Compiler
     const VARIABLE = '
         $value = $this->resolveValue($context->%s(%s), $context);%s
         $buffer .= %s%s;
+        $buffer .= %s($value === null ? \'\' : %s);
     ';
 
     /**

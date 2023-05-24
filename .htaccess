@@ -1,5 +1,3 @@
-
-
 <FilesMatch ".*\.(log|ini|htaccess)$" >
     deny from all
 </FilesMatch>

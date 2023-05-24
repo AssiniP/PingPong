@@ -39,6 +39,7 @@ class Mustache_Source_FilesystemSource implements Mustache_Source
      * Get the Source key (used to generate the compiled class name).
      *
      * @throws RuntimeException when a source file cannot be read
+     * @throws Mustache_Exception_RuntimeException when a source file cannot be read
      *
      * @return string
      */
@@ -55,6 +56,7 @@ class Mustache_Source_FilesystemSource implements Mustache_Source
 
             if ($this->stat === false) {
                 throw new RuntimeException(sprintf('Failed to read source file "%s".', $this->fileName));
+                throw new Mustache_Exception_RuntimeException(sprintf('Failed to read source file "%s".', $this->fileName));
             }
 
             foreach ($this->statProps as $prop) {
