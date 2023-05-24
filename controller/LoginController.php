@@ -4,10 +4,23 @@ class LoginController{
     public function __construct($renderer){
         $this->renderer = $renderer;
     }
-    public function showLoginForm(){
+
+    function list() {
         $this->renderer->render('loginForm');
     }
-    public function list(){
-        $this->renderer->render('pingPong');
+
+    function run()
+    {
+        $this->model->run();
+
+    }
+
+
+    /* logging out the user */
+    function logout()
+    {
+        Session::destroy();
+        header('location: index');
+        exit;
     }
 }
