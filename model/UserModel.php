@@ -13,8 +13,14 @@ class UserModel
     }
 
     //validar que ni el usuario ni el email ya se encuentren registrados.
-    public function check_user($nick_name,$email) {
-        return $this->database->query("SELECT * FROM `usuario` WHERE nickname = '".$user_name."' OR email = '".$email."'");
+    public function check_user($nickname,$email) {
+        return $this->database->query("SELECT * FROM `usuario` WHERE nickname = '".$nickname."' OR email = '".$email."'");
     }
+
+    //validar que el usuario y la password existan
+    public function validarLogin(String $nickname, String $password){
+        return $this->database->query("SELECT * FROM usuario WHERE nickname = '".$nickname."' and password = '".$password."'");
+    }
+
 
 }
