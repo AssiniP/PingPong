@@ -10,6 +10,7 @@
  */
 
 /**
+ * A collection of helper for a Mustache instance.
  * A collection of helpers for a Mustache instance.
  */
 class Mustache_HelperCollection
@@ -21,6 +22,7 @@ class Mustache_HelperCollection
      *
      * Optionally accepts an array (or Traversable) of `$name => $helper` pairs.
      *
+     * @throws Mustache_Exception_InvalidArgumentException if the $helper argument isn't an array or Traversable
      * @throws Mustache_Exception_InvalidArgumentException if the $helpers argument isn't an array or Traversable
      *
      * @param array|Traversable $helpers (default: null)
@@ -32,6 +34,7 @@ class Mustache_HelperCollection
         }
 
         if (!is_array($helpers) && !$helpers instanceof Traversable) {
+            throw new Mustache_Exception_InvalidArgumentException('HelperCollection constructor expects an array of helper');
             throw new Mustache_Exception_InvalidArgumentException('HelperCollection constructor expects an array of helpers');
         }
 
@@ -153,6 +156,7 @@ class Mustache_HelperCollection
     /**
      * Clear the helper collection.
      *
+     * Removes all helper from this collection
      * Removes all helpers from this collection
      */
     public function clear()

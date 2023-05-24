@@ -1,7 +1,6 @@
 <?php
 
-class UserModel
-{
+class UserModel {
     private $database;
 
     public function __construct($database) {
@@ -19,8 +18,6 @@ class UserModel
 
     //validar que el usuario y la password existan
     public function validarLogin(String $nickname, String $password){
-        return $this->database->query("SELECT * FROM usuario WHERE nickname = '".$nickname."' and password = '".$password."'");
+        return $this->database->query("SELECT * FROM usuario WHERE nickname like '".$nickname."' and password like '".$password."'");
     }
-
-
 }

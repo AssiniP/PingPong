@@ -29,6 +29,17 @@ class LoginController{
             exit();
         } else {
             echo 'Usuario o contraseña incorrectos.';
+        }
+
+    }
+
+    public function logout() {
+        session_start();
+        session_destroy();
+        $this->renderer->render('login'); // Redirijo al login
+        exit();
+    }
+}
         }*/
     }
 

@@ -33,7 +33,6 @@ interface Mustache_Cache
      * @param string $value
      */
     public function cache($key, $value);
-
     /**
      * Set a logger instance.
      *

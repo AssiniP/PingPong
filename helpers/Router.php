@@ -1,6 +1,5 @@
 <?php
-class Router
-{
+class Router {
 
     private $configuration;
     private $defaultController;
@@ -12,13 +11,10 @@ class Router
         $this->defaultController = $defaultController;
         $this->defaultMethod = $defaultMethod;
     }
-
-    public function route($module, $method)
-    {
+    public function route($module, $method) {
         $controller = $this->getControllerFrom($module);
-        $this->executeMethodFromController($controller, $method);
+        $this->executeMethodFromController($controller,$method);
     }
-
     private function getControllerFrom($module)
     {
         $controllerName = 'get' . ucfirst($module) . 'Controller';
@@ -26,8 +22,7 @@ class Router
         return call_user_func(array($this->configuration, $validController));
     }
 
-    private function executeMethodFromController($controller, $method)
-    {
+    private function executeMethodFromController($controller, $method) {
         $validMethod = method_exists($controller, $method) ? $method : $this->defaultMethod;
         call_user_func(array($controller, $validMethod));
     }
