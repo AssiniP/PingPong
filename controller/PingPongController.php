@@ -10,4 +10,4 @@ class PingPongController {
     public function list() {
         $this->renderer->render('pingpong');
 
-}
+}}

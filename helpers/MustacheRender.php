@@ -8,8 +8,6 @@ class MustacheRender{
             array(
             'partials_loader' => new Mustache_Loader_FilesystemLoader( $partialsPathLoader )
         ));
-                'partials_loader' => new Mustache_Loader_FilesystemLoader( $partialsPathLoader )
-            ));
     }
 
     public function render($contentFile , $data = array() ){

@@ -23,10 +23,9 @@
  */
 class Mustache_Engine
 {
-    const VERSION        = '2.12.0';
-    const SPEC_VERSION   = '1.1.2';
     const VERSION        = '2.14.2';
     const SPEC_VERSION   = '1.2.2';
+
     const PRAGMA_FILTERS      = 'FILTERS';
     const PRAGMA_BLOCKS       = 'BLOCKS';
     const PRAGMA_ANCHORED_DOT = 'ANCHORED-DOT';
@@ -101,10 +100,6 @@ class Mustache_Engine
      *         // efficient or lazy as a Filesystem (or database) loader.
      *         'partials' => array('foo' => file_get_contents(dirname(__FILE__).'/views/partials/foo.mustache')),
      *
-     *         // An array of 'helper'. Helpers can be global variables or objects, closures (e.g. for higher order
-     *         // sections), or any other valid Mustache context value. They will be prepended to the context stack,
-     *         // so they will be available in any template loaded by this Mustache instance.
-     *         'helper' => array('i18n' => function ($text) {
      *         // An array of 'helpers'. Helpers can be global variables or objects, closures (e.g. for higher order
      *         // sections), or any other valid Mustache context value. They will be prepended to the context stack,
      *         // so they will be available in any template loaded by this Mustache instance.
@@ -181,8 +176,6 @@ class Mustache_Engine
             $this->setPartials($options['partials']);
         }
 
-        if (isset($options['helper'])) {
-            $this->setHelpers($options['helper']);
         if (isset($options['helpers'])) {
             $this->setHelpers($options['helpers']);
         }
@@ -358,13 +351,6 @@ class Mustache_Engine
     }
 
     /**
-     * Set an array of Mustache helper.
-     *
-     * An array of 'helper'. Helpers can be global variables or objects, closures (e.g. for higher order sections), or
-     * any other valid Mustache context value. They will be prepended to the context stack, so they will be available in
-     * any template loaded by this Mustache instance.
-     *
-     * @throws Mustache_Exception_InvalidArgumentException if $helper is not an array or Traversable
      * Set an array of Mustache helpers.
      *
      * An array of 'helpers'. Helpers can be global variables or objects, closures (e.g. for higher order sections), or
@@ -378,7 +364,6 @@ class Mustache_Engine
     public function setHelpers($helpers)
     {
         if (!is_array($helpers) && !$helpers instanceof Traversable) {
-            throw new Mustache_Exception_InvalidArgumentException('setHelpers expects an array of helper');
             throw new Mustache_Exception_InvalidArgumentException('setHelpers expects an array of helpers');
         }
 
@@ -390,7 +375,6 @@ class Mustache_Engine
     }
 
     /**
-     * Get the current set of Mustache helper.
      * Get the current set of Mustache helpers.
      *
      * @see Mustache_Engine::setHelpers

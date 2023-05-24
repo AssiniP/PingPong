@@ -2,8 +2,9 @@
 class LoginController{
     private $renderer;
     private $userModel;
-    public function __construct($renderer) {
+    public function __construct($userModel, $renderer) {
         $this->renderer = $renderer;
+        $this->userModel = $userModel;
     }
 
     function list() {
@@ -13,15 +14,10 @@ class LoginController{
     function authenticate() {
         $nickname = $_POST['nickname'];
         $password = md5($_POST['password']);
-        var_dump($password);
-        var_dump($nickname);
 
-        $data['user']= $this->userModel->validarLogin($nickname, $password);
-
-        var_dump($data);
-/*
+        $data["usuario"] = $this->userModel->validarLogin($nickname, $password);
         // Validar las credenciales del usuario
-        if ($nickname === 'admin' && $password === 'admin123') {
+        if (count($data["usuario"])>0) {
             // Iniciar sesión exitosamente
             session_start();
             $_SESSION['nickname'] = $nickname;
@@ -30,17 +26,6 @@ class LoginController{
         } else {
             echo 'Usuario o contraseña incorrectos.';
         }
-
-    }
-
-    public function logout() {
-        session_start();
-        session_destroy();
-        $this->renderer->render('login'); // Redirijo al login
-        exit();
-    }
-}
-        }*/
     }
 
     function logout() {

@@ -45,17 +45,6 @@ class Configuration {
     public function getPingPongController() {
         return new PingPongController($this->getRenderer());
     }
-    public function getPingPongController(){
-        return new PingPongController($this->getRenderer());
-    }
-
-    public function getLoginController(){
-        return new LoginController($this->getRenderer());
-    }
-
-    public function getUserController(){
-        return new UsersController($this->getRenderer());
-    }
 
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);
@@ -68,7 +57,6 @@ class Configuration {
     public function getDatabase() {
         $config = $this->getArrayConfig();
         return new MySqlDatabase(
-        return new MariaDBDatabase(
             $config['servername'],
             $config['username'],
             $config['password'],
