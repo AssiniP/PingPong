@@ -6,6 +6,10 @@ include_once('helpers/Router.php');
 //INCLUIR ACA MODELOS Y CONTROLADORES
 include_once ('controller/PingPongController.php');
 include_once ('controller/LoginController.php');
+include_once('controller/UsersController.php');
+
+include_once ('model/UserModel.php');
+include_once ('model/loginModel.php');
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 
@@ -21,6 +25,10 @@ class Configuration {
 
     public function getLoginController(){
         return new LoginController($this->getRenderer());
+    }
+
+    public function getUserController(){
+        return new UsersController($this->getRenderer());
     }
 
     private function getArrayConfig() {
