@@ -18,8 +18,16 @@
     <label for="password">Contraseña:</label>
     <input type="password" name="password" required class="mb-5 rounded border border-2 border-green-300 ml-6"><br>
 
+
+    <input type="submit" value="Iniciar sesión">
+  </form>
+  <a href="/register/list">Registrate</a>
+  {{#msg}}
+      <p>{{.}}</p>
+  {{/msg}}
     <input type="submit" value="Iniciar sesión" class="text-white bg-green-700 hover:bg-green-500 p-2 m-5 rounded">
   </form>
     </div>
     </body>
     </html>
+

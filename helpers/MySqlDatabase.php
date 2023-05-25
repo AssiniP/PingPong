@@ -23,4 +23,14 @@ class MySqlDatabase {
         $result = mysqli_query($this->connection, $sql);
         return mysqli_fetch_all($result, MYSQLI_BOTH);
     }
+
+    public function insertUser($query, $userData){
+        $stmt = $this->connection->prepare($query);
+
+        $stmt->bind_param("sssssssiss",$userData['nickName'], $userData['password'], $userData['nombre'],
+            $userData['email'], $userData['ubicacion'], $userData['imagenPerfil'], $userData['pais'],
+            $userData['idRol'], $userData['idGenero'], $userData['ciudad']);
+        $stmt->execute();
+        $stmt->close();
+    }
 }
