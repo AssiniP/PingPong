@@ -1,10 +1,25 @@
-  <h1>Iniciar sesión</h1>
+  <!DOCTYPE html>
+  <html lang="en">
+  <title>Ping Pong</title>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../public/css/estilo.css">
+  </head>
+  <body class="m-0 p-0 font-sans bg-cyan-100 mt-64 mr-96 ml-96 opacity-75">
+  <div class="flex flex-col justify-center items-center text-center text-green-700 bg-white">
+  <img src="../../public/img/logo-pingpong.png" alt="LOGO" class="h-20 w-20 m-auto">
+  <h1 class="text-4xl text-center mb-10 font-bold">Login</h1>
   <form action="/index.php?module=login&method=authenticate" method="POST">
     <label for="nickname">Usuario:</label>
-    <input type="text" name="nickname" required><br>
+    <input type="text" name="nickname" required class="mb-5 rounded border border-2 border-green-300 ml-10"><br>
 
     <label for="password">Contraseña:</label>
-    <input type="password" name="password" required><br>
+    <input type="password" name="password" required class="mb-5 rounded border border-2 border-green-300 ml-6"><br>
 
-    <input type="submit" value="Iniciar sesión">
+    <input type="submit" value="Iniciar sesión" class="text-white bg-green-700 hover:bg-green-500 p-2 m-5 rounded">
   </form>
+    </div>
+    </body>
+    </html>
