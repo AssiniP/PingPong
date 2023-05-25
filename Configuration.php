@@ -6,6 +6,7 @@ include_once('helpers/Router.php');
 
 include_once('model/UserModel.php');
 
+include_once('controller/RegisterController.php');
 include_once('controller/UserController.php');
 include_once('controller/LoginController.php');
 include_once('controller/PingPongController.php');
@@ -45,6 +46,13 @@ class Configuration {
     public function getPingPongController() {
         return new PingPongController($this->getRenderer());
     }
+
+    public function getRegisterController() {
+        return new RegisterController(
+            new UserModel($this->getDatabase()),
+                $this->getRenderer());
+    }
+
 
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);
