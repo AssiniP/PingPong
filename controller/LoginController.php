@@ -1,19 +1,17 @@
 <?php
-
-class LoginController {
+class LoginController{
     private $renderer;
     private $userModel;
-    public function __construct($userModel, $renderer){
+    public function __construct($userModel, $renderer) {
         $this->renderer = $renderer;
         $this->userModel = $userModel;
     }
 
-    public function list() {
-        $this->renderer->render('login');
+    function list() {
+        $this->renderer->render('loginForm');
     }
 
-      public function authenticate() {
-
+    function authenticate() {
         $nickname = $_POST['nickname'];
         $password = md5($_POST['password']);
 
@@ -28,13 +26,12 @@ class LoginController {
         } else {
             echo 'Usuario o contraseña incorrectos.';
         }
-
     }
 
-    public function logout() {
+    function logout() {
         session_start();
         session_destroy();
-        $this->renderer->render('login'); // Redirijo al login
+        $this->renderer->render('loginForm'); // Redirijo al login
         exit();
     }
 }

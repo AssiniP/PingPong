@@ -1,5 +1,4 @@
 <?php
-
 class PingPongController {
 
     private $renderer;
@@ -10,5 +9,5 @@ class PingPongController {
 
     public function list() {
         $this->renderer->render('pingpong');
-    }
-}
+
+}}
