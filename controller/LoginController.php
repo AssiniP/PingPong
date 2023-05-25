@@ -12,7 +12,7 @@ class LoginController {
         $this->renderer->render('login');
     }
 
-    public function authenticate() {
+      public function authenticate() {
 
         $nickname = $_POST['nickname'];
         $password = md5($_POST['password']);
