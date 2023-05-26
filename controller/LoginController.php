@@ -7,11 +7,12 @@ class LoginController{
         $this->userModel = $userModel;
     }
 
-    function list() {
+    public function list() {
         $this->renderer->render('login');
     }
 
-    function authenticate() {
+    public function authenticate() {
+        $errorMsg = [];
         $nickname = $_POST['nickname'];
         $password = md5($_POST['password']);
 
@@ -24,11 +25,14 @@ class LoginController{
             $this->renderer->render('crearPartida'); // Redirijo al login // Redirigir a la página de inicio después de iniciar sesión
             exit();
         } else {
-            echo 'Usuario o contraseña incorrectos.';
+            $errorMsg[] = 'Usuario o contraseña incorrectos.';
+            $data['errorMsg'] = $errorMsg;
+            $this->renderer->render('login', $data);
+            exit;
         }
     }
 
-    function logout() {
+    public function logout() {
         session_start();
         session_destroy();
         $this->renderer->render('login'); // Redirijo al login

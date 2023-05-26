@@ -24,5 +24,8 @@
   </form>
    <a href="/register/list" class="text-blue-400 hover:text-green-700 p-2">Registrate</a>
     </div>
+       {{#errorMsg}}
+            <p>{{.}}</p>
+        {{/errorMsg}}
     </body>
     </html>
