@@ -13,11 +13,4 @@ class UserController {
         $this->renderer->render('users',$data);
     }
 
-    public function add(){
-        die("llame a add");
-    }
-
-    public function delete() {
-        die('llame a delete');
-    }
 }
