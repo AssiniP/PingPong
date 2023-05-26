@@ -5,13 +5,6 @@ include_once("helpers/MustacheRender.php");
 include_once('helpers/Router.php');
 
 
-include_once('model/UserModel.php');
-
-include_once('controller/RegisterController.php');
-include_once('controller/UserController.php');
-include_once('controller/LoginController.php');
-include_once('controller/PingPongController.php');
-
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
 
 
@@ -26,6 +19,7 @@ include_once ('controller/PingPongController.php');
 include_once ('controller/LoginController.php');
 include_once('controller/UserController.php');
 include_once ('controller/RegisterController.php');
+include_once ('controller/MailValiderController.php');
 
 include_once ('model/UserModel.php');
 //include_once ('model/loginModel.php');
@@ -49,6 +43,10 @@ class Configuration {
 
     public function getPingPongController() {
         return new PingPongController($this->getRenderer());
+    }
+
+    public function getMailValiderController() {
+        return new MailValiderController($this->getRenderer(),new UserModel($this->getDatabase()));
     }
 
 
