@@ -22,6 +22,8 @@ class LoginController{
             // Iniciar sesión exitosamente
             session_start();
             $_SESSION['nickname'] = $nickname;
+            $rol = $data["usuario"][0]["rol"];
+            $_SESSION['rol'] = $rol;
             $this->renderer->render('crearPartida'); // Redirijo al login // Redirigir a la página de inicio después de iniciar sesión
             exit();
         } else {
