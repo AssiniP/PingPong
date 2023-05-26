@@ -8,7 +8,7 @@ class LoginController{
     }
 
     function list() {
-        $this->renderer->render('loginForm');
+        $this->renderer->render('login');
     }
 
     function authenticate() {
@@ -31,7 +31,7 @@ class LoginController{
     function logout() {
         session_start();
         session_destroy();
-        $this->renderer->render('loginForm'); // Redirijo al login
+        $this->renderer->render('login'); // Redirijo al login
         exit();
     }
 }
