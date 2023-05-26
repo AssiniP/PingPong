@@ -7,8 +7,8 @@ class UserModel {
         $this->database = $database;
     }
 
-    public function getUsers() {
-        return $this->database->query('SELECT * FROM usuario');
+    public function getUsers($nickname) {
+        return $this->database->query("select u.*, G.nombre genero from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
 
     //validar que ni el usuario ni el email ya se encuentren registrados.
@@ -18,7 +18,7 @@ class UserModel {
 
     //validar que el usuario y la password existan
     public function validarLogin(String $nickname, String $password){
-        return $this->database->query("SELECT * FROM usuario WHERE nickname like '".$nickname."' and password like '".$password."'");
+        return $this->database->query("SELECT  u.* , r.rol FROM usuario U, rol  R  where R.id=U.idRol and nickname like '".$nickname."' and password like '".$password."'");
     }
 
     public function addUser($userData){
