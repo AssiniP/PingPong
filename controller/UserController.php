@@ -9,8 +9,14 @@ class UserController {
     }
 
     public function list() {
-        $data["usuario"] = $this->userModel->getUsers();
-        $this->renderer->render('users',$data);
+        session_start();
+        if(empty($_SESSION['nickname'])) {
+            $this->renderer->render('index');
+        } else {
+            $data["usuario"] = $this->userModel->getUsers($_SESSION['nickname']);
+            $this->renderer->render('users',$data);
+        }
+
     }
 
 }

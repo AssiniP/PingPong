@@ -22,7 +22,7 @@ include_once ('controller/RegisterController.php');
 include_once ('controller/MailValiderController.php');
 
 include_once ('model/UserModel.php');
-include_once ('model/loginModel.php');
+//include_once ('model/loginModel.php');
 
 class Configuration {
     private $configFile = 'config/config.ini';

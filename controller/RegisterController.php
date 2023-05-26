@@ -76,22 +76,5 @@ class RegisterController
         $data["usuario"] = $this->userModel->check_user($nickname, $email);
         return $data["usuario"];
     }
-
-/*
-
-        if ($request->password !== $request->repassword) {
-
-            return redirect()->back()->withErrors(['repassword' => 'Las contraseñas no coinciden.'])->withInput();
-            exit;
-
-        }*/
-        
-        // Validar que la contraseña y su reingreso sean iguales
-        //if ($request->password !== $request->repassword) {
-         //   $request->validate(['repassword' => 'Las contraseñas no coinciden.']);
-        //}
-
-        // Resto del código para agregar el usuario a la base de datos
-
-
+    
 }
