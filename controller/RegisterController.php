@@ -10,7 +10,7 @@ class RegisterController
     }
 
     public function list(){
-        $this->renderer->render('registerForm');
+        $this->renderer->render('register');
     }
 
     public function validateFields(){
@@ -29,7 +29,7 @@ class RegisterController
         $data['errorMsg'] = $errorMsg;
 
         if(!empty($errorMsg)){
-            $this->renderer->render('registerForm', $data);
+            $this->renderer->render('register', $data);
             exit;
         } else{
             $this->add();
@@ -50,7 +50,7 @@ class RegisterController
             'idRol' => 3];
         $this->userModel->addUser($userData);
         $data['msg'] = "Se registro correctamente";
-        $this->renderer->render('loginForm', $data);
+        $this->renderer->render('login', $data);
     }
 
     private function checkThatUserFormIsNotEmpty(){
