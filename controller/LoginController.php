@@ -37,7 +37,7 @@ class LoginController{
     public function logout() {
         session_start();
         session_destroy();
-        $this->renderer->render('login'); // Redirijo al login
+        $this->renderer->render('pingPong'); // Redirijo al login
         exit();
     }
 }
