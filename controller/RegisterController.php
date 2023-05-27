@@ -36,14 +36,18 @@ class RegisterController
         }
     }
 
-    public function add(){
+    private function add(){
+        $imgType = strtolower(pathinfo($_FILES["imagenPerfil"]["name"], PATHINFO_EXTENSION));
+        $imgPath = $_POST['nickName'] . "." . $imgType;
+        $fullPath = SITE_ROOT . "/public/foto-perfil/" . $imgPath;
+        move_uploaded_file($_FILES['imagenPerfil']['tmp_name'], $fullPath);
         $userData = [
             'nickName' => $_POST['nickName'],
             'password' => md5($_POST['password']),
             'email' => $_POST['email'],
             'nombre' => $_POST['nombre'],
             'ubicacion' => $_POST['ubicacion'],
-            'imagenPerfil' => $_POST['imagenPerfil'],
+            'imagenPerfil' => $imgPath,
             'pais' => $_POST['pais'],
             'idGenero' => $_POST['idGenero'],
             'ciudad' => $_POST['ciudad'],
@@ -56,7 +60,7 @@ class RegisterController
     private function checkThatUserFormIsNotEmpty(){
         if(empty($_POST['nickName']) || empty($_POST['email']) || empty($_POST['password']) ||
             empty($_POST['repassword']) || empty($_POST['nombre']) || empty($_POST['ubicacion']) ||
-            empty($_POST['imagenPerfil']) || empty($_POST['pais']) || empty($_POST['idGenero']) ||
+            $_FILES['imagenPerfil']['error'] == 4 || empty($_POST['pais']) || empty($_POST['idGenero']) ||
             empty($_POST['ciudad'])){
             return false;
         }

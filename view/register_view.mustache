@@ -11,7 +11,8 @@
     <div class="flex flex-col justify-center items-center justify-items-center text-center text-green-700 bg-white p-5 w-full rounded ">
     <img src="../../public/img/logo-pingpong.png" alt="LOGO" class="h-20 w-20 m-auto">
       <h1 class="text-5xl text-center mb-10 font-bold md:text-xl">Registro</h1>
-    <form action="index.php?module=register&method=validateFields" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
+    <form action="index.php?module=register&method=validateFields" method="POST" enctype="multipart/form-data" onsubmit="return checkFileSize(358400)"
+          class="flex flex-col justify-center items-center justify-items-center text-center">
     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
         <label for="nickName" class="mr-2">Nickname:</label>
         <input type="text" id="nickName" name="nickName" required class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
@@ -34,7 +35,8 @@
 </div>
 <div class="flex flex-row md:grid-cols-1  justify-center items-center">
         <label for="imagenPerfil" class="mr-2 ml-2">Imagen de Perfil:</label>
-        <input type="text" id="imagenPerfil" name="imagenPerfil" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="358400">
+        <input type="file" id="imagenPerfil" name="imagenPerfil" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
 
         <label for="pais" class="mr-2 ml-2">País:</label>
         <input type="text" id="pais" name="pais" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
@@ -61,3 +63,19 @@
     {{/errorMsg}}
         </body>
         </html>
+ <!--Perdon me daba cosa dejar la foto de perfil sin chequear-->
+ <script type="text/javascript">
+     function checkFileSize(maxSize){
+         let input = document.getElementById("imagenPerfil");
+         if(input.files && input.files.length == 1)
+         {
+             if (input.files[0].size > maxSize)
+             {
+                 alert("Tu foto de perfil debe pesar menos de " + (maxSize/1024) + "KB");
+                 return false;
+             }
+         }
+
+         return true;
+     }
+ </script>
