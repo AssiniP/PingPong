@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <script src="https://cdn.tailwindcss.com"></script>
       <link rel="stylesheet" href="../../public/css/estilo.css">
+       <script src="https://maps.googleapis.com/maps/api/js?key="PingPong"&callback=initMap" async defer></script>
     </head>
     <body onload="showMap()" class="m-auto font-sans bg-cyan-100 h-4/5 w-8/12 opacity-75 mt-32 p-0 mb-32">
       <div class="flex flex-col justify-center items-center justify-items-center text-center text-green-700 bg-white p-5 w-full rounded ">
@@ -34,18 +35,11 @@
            <input type="text" id="genero" name="genero"  value='{{genero}}' class="rounded border border-2 border-green-300 h-4/5 px-2" disabled><br><br>
     </div>
   <div class="flex flex-row md:grid-cols-1  justify-center items-center">
-  <img src="/public/foto-perfil/bandmember.jpg" alt="FOTO" class="h-30 w-30 m-auto" id="imagenPerfil" name="imagenPerfil">
+  <img src='/public/foto-perfil/{{imagenPerfil}}' alt="FOTO" class="h-30 w-30 m-auto" id="imagenPerfil" name="imagenPerfil">
 
-  <div id="map-container" style="height: 400px;"></div>
  <input type="text" id="ubicacion" name="ubicacion"  value='{{ubicacion}}' class="rounded border border-2 border-green-300 h-4/5 px-2" disabled><br><br>
-   <iframe
-     width="450"
-     height="250"
-     frameborder="0" style="border:0"
-     referrerpolicy="no-referrer-when-downgrade"
-     src="https://www.google.com/maps/embed/v1/MAP_MODE?key=PingPong&q='{{ubicacion}}'"
-     allowfullscreen>
-   </iframe>
+    <div id="map-container" style="height: 400px;"></div>
+
    </div>
         {{/usuario}}
       </form>
