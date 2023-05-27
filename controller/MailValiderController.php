@@ -2,22 +2,35 @@
 
 class MailValiderController
 {
+    private $emailModel;
     private $renderer;
-    private $userModel;
-    public function __construct($renderer, $userModel) {
+
+    public function __construct($emailModel,$renderer) {
+        $this->emailModel = $emailModel;
         $this->renderer = $renderer;
-        $this->userModel = $userModel;
     }
 
     public function list()
     {
-        if (isset($_GET['email'])) {
-            $email = $_GET['email'];
-            if($email == "humano.naraesther@gmail.com") $this->renderer->render('login');
-            else  $this->renderer->render('mailValider');
+        if (isset($_GET['codigo'])) {
+            if($_GET['codigo']== '12345'){
+                $this->renderer->render('crearPartida');
+            }
+        }
+    }
+
+    public function enviar(){
+
+        if (isset($_POST['email'])) {
+            $email = $_POST['email'];
+            $this->emailModel->enviarMail($email);
         } else {
             $this->renderer->render('pingPong');
         }
+
+    }
+
+    public function validar(){
 
     }
 }

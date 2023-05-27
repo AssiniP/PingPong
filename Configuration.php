@@ -22,6 +22,7 @@ include_once ('controller/RegisterController.php');
 include_once ('controller/MailValiderController.php');
 
 include_once ('model/UserModel.php');
+include_once ('model/EmailModel.php');
 //include_once ('model/loginModel.php');
 
 class Configuration {
@@ -46,7 +47,7 @@ class Configuration {
     }
 
     public function getMailValiderController() {
-        return new MailValiderController($this->getRenderer(),new UserModel($this->getDatabase()));
+        return new MailValiderController(new EmailModel(),$this->getRenderer());
     }
 
 
