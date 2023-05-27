@@ -44,29 +44,49 @@ function enviarMail($EMAIL){
     $mail->SMTPAuth = true;
 
 //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = 'humano.naraesther@outlook.com';
+    $mail->Username = 'pingponggame.unlam@outlook.com';
 
 //Password to use for SMTP authentication
-    $mail->Password = 'Canada7/';
+    $mail->Password = 'Argentina2023';
 
 //Set who the message is to be sent from
 //Note that with gmail you can only use your account address (same as `Username`)
 //or predefined aliases that you have configured within your account.
 //Do not use user-submitted addresses in here
-    $mail->setFrom('humano.naraesther@outlook.com', 'Ping Pong Game');
+    $mail->setFrom('pingponggame.unlam@outlook.com', 'Ping Pong Game');
 
 //Set an alternative reply-to address
 //This is a good place to put user-submitted addresses
-    $mail->addAddress($EMAIL, 'Hola');
+    $mail->addAddress($EMAIL, 'Bienvenido');
 
 
 //Read an HTML message body from an external file, convert referenced images to embedded,
 //convert HTML into a basic plain-text alternative body
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Nari aca tenes una prueba';
+    $mail->Subject ='¡Bienvenido a PingPong!';
     $url = 'http://localhost/mailValider/list?codigo=12345';
-    $mail->Body = '<center><h1>Bienvenido a PingPong</h1></center><br><br> <center> Por favor verificar tu cuenta con el siguiente link: </center> <a href="' . $url . '">Validar Email</a><br><br><b>¡Enjoy~!</b>';
-    $mail->AltBody = 'ahora a hacer mas pruebas :D';
+    $logo = "https://i.postimg.cc/Zq2SGxjf/logo-pingpong.png";
+    $mail->Body = '<div style="color: white; background-color: darkgreen; font-size: larger;">
+  <center>
+    <img src="'.$logo.'" alt="Logo">
+  </center>
+  <center>
+    <h1>Bienvenido a PingPong</h1>
+  </center>
+  <br>
+  <center>
+    Por favor verifica tu cuenta con el siguiente link
+    <br>
+    <center>
+      <h2>
+        <a href="' . $url . '" style="text-decoration: none; background-color: 29c34a; color: black; padding: 2em;">Validar Email</a>
+      </h2>
+    </center>
+    <br>
+    <br>
+  </center>
+</div>';
+    $mail->AltBody = 'Ping Pong Game, una aplicación divertida';
 
 //Replace the plain text body with one created manually
     $mail->AltBody = 'No se que poner acá :-(';
