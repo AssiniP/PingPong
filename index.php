@@ -1,4 +1,5 @@
 <?php
+define ('SITE_ROOT', realpath(dirname(__FILE__)));
 include_once('Configuration.php');
 $configuration = new Configuration();
 $router = $configuration->getRouter();
