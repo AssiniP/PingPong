@@ -53,7 +53,8 @@ class RegisterController
             'ciudad' => $_POST['ciudad'],
             'idRol' => 3];
         $this->userModel->addUser($userData);
-        $data['msg'] = "Se registro correctamente";
+        $data['msg'] = "Se registro correctamente ";
+        $this->userModel->enviarMail($_POST['email']);
         $this->renderer->render('login', $data);
     }
 

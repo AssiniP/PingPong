@@ -24,7 +24,7 @@ class LoginController{
             $_SESSION['nickname'] = $nickname;
             $rol = $data["usuario"][0]["rol"];
             $_SESSION['rol'] = $rol;
-            $this->renderer->render('lobby'); // Redirijo al login // Redirigir a la página de inicio después de iniciar sesión
+            $this->renderer->render('lobby',$data); // Redirijo al login // Redirigir a la página de inicio después de iniciar sesión
             exit();
         } else {
             $errorMsg[] = 'Usuario o contraseña incorrectos.';

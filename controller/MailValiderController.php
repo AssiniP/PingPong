@@ -14,7 +14,7 @@ class MailValiderController
     {
         if (isset($_GET['codigo'])) {
             if($_GET['codigo']== '12345'){
-                $this->renderer->render('crearPartida');
+                $this->renderer->render('lobby');
             }
         }
     }

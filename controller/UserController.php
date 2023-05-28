@@ -20,6 +20,7 @@ class UserController {
     }
 
     public function mostrar(){
+        session_start();
         if(empty($_SESSION['nickname'])) {
             $this->renderer->render('pingPong');
         } else {

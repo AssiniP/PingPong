@@ -27,4 +27,9 @@ class UserModel {
                      pais, idRol, idGenero, fechaRegistro, ciudad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
         $this->database->insertUser($query, $userData);
     }
+
+    public function enviarMail($mail) {
+        include_once("vendor/EmailSend.php");
+        enviarMail($mail);
+    }
 }
