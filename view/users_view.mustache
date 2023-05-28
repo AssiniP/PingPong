@@ -2,38 +2,25 @@
       <div class="flex flex-col text-green-700 bg-green-200 opacity-90 p-5 w-4/5 rounded m-auto">
        {{#usuario}}
        <div class="flex flex-col md:grid-cols-1  justify-center items-center">
-       <h1 class="text-xl text-center font-bold md:text-6xl">{{nickName}}</h1>
-        <img src='/public/foto-perfil/{{imagenPerfil}}' alt="FOTO" class="h-28 w-28 m-auto rounded-full" id="imagenPerfil" name="imagenPerfil">
+		<h1 class="text-xl text-center font-bold md:text-6xl">{{nickName}}</h1>
+		<img src='/public/foto-perfil/{{imagenPerfil}}' alt="FOTO" class="h-28 w-28 m-auto rounded-full" id="imagenPerfil" name="imagenPerfil">
         </div>
+		<div class="flex flex-col md:grid-cols-2 justify-center items-center w-full">
+			<h2>Nombre: {{nombre}}</h2>
+		</div>
+		<div class="flex flex-col md:grid-cols-2  justify-center items-center w-full mb-2">
+			<h2 class="mb-2 md:mb-2 text-sm">Email: {{email}}</h2>
+			<h2>País: {{pais}}</h2>
+			<h2 class="mb-2 md:mb-2">Ciudad: {{ciudad}}</h2>
+			<h2 class="mb-2 md:mb-2">Genero: {{genero}}</h2>
+			<div id="map" alt="MAPA" class="h-15 w-15 m-auto w-full h-4/5"></div>
+            			<iframe width="50%" height="80%" src="https://maps.google.it/maps?q=<?php echo'{{ubicacion}}'; ?>&output=embed" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" scrolling="no" marginheight="0" marginwidth="0">
+                        </iframe>
+		</div>
+		<div class="grid-cols-1">
 
-      <div class="flex flex-col md:grid-cols-2 justify-center items-center w-full">
-               <h2>Nombre: {{nombre}}</h2>
-
-  </div>
-    <div class="flex flex-col md:grid-cols-2  justify-center items-center w-full">
-     <h2 class="mb-2 md:mb-2 text-sm">Email: {{email}}</h2>
-               <h2>País: {{pais}}</h2>
-               <h2 class="mb-2 md:mb-2">Ciudad: {{ciudad}}</h2>
-               <h2 class="mb-2 md:mb-2">Genero: {{genero}}</h2>
-    </div>
-    <div class="flex flex-row md:grid-cols-1  justify-center items-center w-full">
-           <img src='/public/qr-perfil/qr_code_{{nickName}}.png' alt="FOTO" class="h-15 w-15 m-auto" id="imagenPerfil" name="imagenPerfil">
-           <div id="map" style="width:50%; height:50%;" alt="MAPA" class="h-15 w-15 m-auto"></div>
-                  <iframe width="50%" height="100%"
-                           src="https://maps.google.it/maps?q=<?php echo'{{ubicacion}}'; ?>&output=embed"
-                           frameborder="0"
-                           style="border:0;"
-                           allowfullscreen=""
-                           aria-hidden="false"
-                           tabindex="0"
-                           scrolling="no"
-                           marginheight="0"
-                           marginwidth="0"
-                           >
-                       </iframe>
-
-    </div>
+		<img src='/public/qr-perfil/qr_code_{{nickName}}.png' alt="FOTO" class="h-15 w-15 m-auto" id="imagenPerfil" name="imagenPerfil">
+		</div>
         {{/usuario}}
     </form>
-
-  </div>
+</div>
