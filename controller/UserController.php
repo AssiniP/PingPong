@@ -29,4 +29,14 @@ class UserController {
         }
     }
 
+    public function validate(){
+        if (isset($_GET['email'])) {
+            $email = $_GET['email'];
+            $data["usuario"] = $this->userModel->validarMail($email);
+            $this->renderer->render('lobby', $data);
+        } else {
+            $this->renderer->render('pingPong');
+        }
+    }
+
 }

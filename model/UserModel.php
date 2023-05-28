@@ -30,6 +30,12 @@ class UserModel {
 
     public function enviarMail($mail) {
         include_once("vendor/EmailSend.php");
+
         enviarMail($mail);
+    }
+
+    public function validarMail($email){
+        return $this->database->query("SELECT  * FROM usuario U  where U.email like '".$email."'");
+
     }
 }
