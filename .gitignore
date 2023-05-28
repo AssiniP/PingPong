@@ -1,4 +1,4 @@
 # configuraciones locales #
 *.ini
-/foto-perfil/
-/qr-perfil/
+foto-perfil/
+qr-perfil/
