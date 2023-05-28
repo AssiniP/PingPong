@@ -19,11 +19,11 @@ include_once ('controller/PingPongController.php');
 include_once ('controller/LoginController.php');
 include_once('controller/UserController.php');
 include_once ('controller/RegisterController.php');
-include_once ('controller/MailValiderController.php');
+//include_once ('controller/MailValiderController.php');
 include_once ('third-party/phpqrcode/qrlib.php');
 
 include_once ('model/UserModel.php');
-include_once ('model/EmailModel.php');
+//include_once ('model/EmailModel.php');
 //include_once ('model/loginModel.php');
 
 class Configuration {
@@ -54,9 +54,9 @@ class Configuration {
         return new PingPongController($this->getRenderer());
     }
 
-    public function getMailValiderController() {
+   /* public function getMailValiderController() {
         return new MailValiderController(new EmailModel(),$this->getRenderer());
-    }
+    }*/
 
 
     public function getRegisterController(){
