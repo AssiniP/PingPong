@@ -63,7 +63,7 @@ function enviarMail($EMAIL){
 //Read an HTML message body from an external file, convert referenced images to embedded,
 //convert HTML into a basic plain-text alternative body
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject ='¡Bienvenido a PingPong!';
+    $mail->Subject="¡Bienvenido a PingPong!";
     $url = 'http://localhost/mailValider/list?codigo=12345';
     $logo = "https://i.postimg.cc/Zq2SGxjf/logo-pingpong.png";
     $mail->Body = '<div style="color: white; background-color: darkgreen; font-size: larger;">
