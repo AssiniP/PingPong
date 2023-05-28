@@ -38,4 +38,22 @@ class UserModel {
         return $this->database->query("SELECT  * FROM usuario U  where U.email like '".$email."'");
 
     }
+
+    public function generateQR($nickname){
+        include_once (SITE_ROOT . '/third-party/phpqrcode/qrlib.php');
+
+        $tempDir = SITE_ROOT . '/public/qr-perfil/qr_code_' . $nickname . '.png';
+
+        // here our data
+        $url = 'http://localhost/index.php?module=user&method=seeProfile&nick=' . $nickname;
+
+        // generating
+        //Nara si el tamaño del QR es feo cambialo acá!!
+        $size = 3;
+        $level = 'L';
+        QRcode::png($url, $tempDir, $level, $size);
+
+        // displaying
+        //echo '<img src="'.EXAMPLE_TMP_URLRELPATH.'022.png" />';
+    }
 }

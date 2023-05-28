@@ -39,4 +39,16 @@ class UserController {
         }
     }
 
-}
+    public function seeProfile(){
+        session_start();
+
+        if(empty($_SESSION['nickname'])) {
+            $this->renderer->render('pingPong');
+        } else {
+            if(!empty($_GET['nick'])) {
+                $data["usuario"] = $this->userModel->getUsers($_GET['nick']);
+                $this->renderer->render('users', $data);
+            }
+    }
+
+}}

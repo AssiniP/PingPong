@@ -55,7 +55,9 @@ class RegisterController
         $this->userModel->addUser($userData);
         $data['msg'] = "Se registro correctamente ";
         $this->userModel->enviarMail($_POST['email']);
-        $this->renderer->render('login', $data);
+        $this->userModel->generateQR($_POST['nickName']);
+        //$this->renderer->render('login', $data);
+        header('location:index.php?module=login');
     }
 
     private function checkThatUserFormIsNotEmpty(){
