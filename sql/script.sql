@@ -93,3 +93,11 @@ CREATE TABLE PreguntaReportada
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
+
+insert into rol (rol) values ('Administrador');
+insert into rol (rol) values ('Editor');
+insert into rol (rol) values ('Jugador');
+
+insert into genero (nombre) values ('Masculino');
+insert into genero (nombre) values ('Femenino');
+insert into genero (nombre) values ('Prefiero no cargarlo');
