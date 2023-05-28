@@ -24,6 +24,9 @@ class MySqlDatabase {
         return mysqli_fetch_all($result, MYSQLI_BOTH);
     }
 
+    public function queryBoolean($sql) {
+        mysqli_query($this->connection, $sql);
+    }
     public function insertUser($query, $userData){
         $stmt = $this->connection->prepare($query);
 

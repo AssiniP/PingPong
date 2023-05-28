@@ -38,6 +38,10 @@ class UserModel {
         return $this->database->query("SELECT  * FROM usuario U  where U.email like '".$email."'");
 
     }
+   public function actualizarCuentaValidada($email){
+        $esValido = true;
+       return $this->database->queryBoolean("UPDATE Usuario SET cuentaValida  = ". $esValido ." where email like '".$email."'");
+   }
 
     public function generateQR($nickname){
         include_once (SITE_ROOT . '/third-party/phpqrcode/qrlib.php');

@@ -30,14 +30,17 @@ class UserController {
     }
 
     public function validate(){
+        session_start();
         if (isset($_GET['email'])) {
             $email = $_GET['email'];
             $data["usuario"] = $this->userModel->validarMail($email);
+            $this->userModel->actualizarCuentaValidada($email);
             $this->renderer->render('lobby', $data);
         } else {
             $this->renderer->render('pingPong');
         }
     }
+
 
     public function seeProfile(){
         session_start();
