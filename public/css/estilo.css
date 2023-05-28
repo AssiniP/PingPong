@@ -2,7 +2,9 @@ body {
     background-image: url("../img/fondo-registro.png");
     background-size: cover;
 }
-
+header {
+    background-color: transparent;
+}
 footer{
     position: absolute;
     bottom: 0;
@@ -12,4 +14,16 @@ nav {
     position: absolute;
     right: 0;
     padding: 1em;
+}
+
+.contenedor {
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+.precarga {
+    background:transparent url("../img/pingpong-unscreen.gif") center no-repeat;
 }
