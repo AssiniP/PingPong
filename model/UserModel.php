@@ -35,7 +35,7 @@ class UserModel {
     }
 
     public function validarMail($email){
-        return $this->database->query("SELECT  * FROM usuario U  where U.email like '".$email."'");
+        return $this->database->query("SELECT * FROM usuario U join rol R on U.idRol = R.id where U.email like '".$email."'");
 
     }
    public function actualizarCuentaValidada($email){

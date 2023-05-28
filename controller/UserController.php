@@ -30,11 +30,15 @@ class UserController {
     }
 
     public function validate(){
-        session_start();
+
         if (isset($_GET['email'])) {
             $email = $_GET['email'];
-            $data["usuario"] = $this->userModel->validarMail($email);
             $this->userModel->actualizarCuentaValidada($email);
+            $data["usuario"] = $this->userModel->validarMail($email);
+            session_start();
+            $_SESSION['nickname'] = $data["usuario"][0]["nickName"];
+            $rol = $data["usuario"][0]["rol"];
+            $_SESSION['rol'] = $rol;
             $this->renderer->render('lobby', $data);
         } else {
             $this->renderer->render('pingPong');
@@ -44,7 +48,6 @@ class UserController {
 
     public function seeProfile(){
         session_start();
-
         if(empty($_SESSION['nickname'])) {
             $this->renderer->render('pingPong');
         } else {
