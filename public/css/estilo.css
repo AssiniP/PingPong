@@ -1,29 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+label {
+    font-weight: 700;
+}
+
+h1 {
+    text-shadow: 3px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
 body {
     background-image: url("../img/fondo-registro.png");
     background-size: cover;
 }
+
 header {
     background-color: transparent;
 }
-footer{
-    position: absolute;
-    bottom: 0;
+
+.cuadro {
+    box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
+    -webkit-box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
+    -moz-box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
 }
 
-nav {
-    position: absolute;
-    right: 0;
-    padding: 1em;
-}
+/* Home */
 
-.contenedor {
-    width: 500px;
-    height: 500px;
-    margin: auto;
+.home {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.home a {
+    font-size: 7em;
+    color: #cb3860;
+    animation: blink 1.5s infinite;
+    text-shadow: 0 0 10px rgb(255, 255, 255);
+    transition: color 0.3s ease;
 }
+.home a:hover {
+    color: #ffaa24;
+}
+
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .8;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 .precarga {
-    background:transparent url("../img/pingpong-unscreen.gif") center no-repeat;
+    background: transparent url("../img/pingpong-unscreen.gif") center no-repeat;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 10%;
 }
+
+/* Header for User */
+.header{
+    background-color: #cb3860;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    padding: 0 50px;
+    box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
+    border-radius: 0px 0px 50px 50px / 0px 0px 25px 25px;
+}
+.header-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-nav a {
+    margin-right: 25px;
+    font-size: 1.5em;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    background-color: #cb3860;
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    box-shadow: 0px 1px 37px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 1px 37px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 1px 37px 0px rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    border-radius: 218px 218px 0px 0px / 94px 94px 0px 0px;
+    align-items: center;
+}
+
+.footer-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+}
+
+.footer-text p {
+    font-weight: 700;
+}
+
+

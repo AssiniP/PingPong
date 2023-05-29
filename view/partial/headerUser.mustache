@@ -14,16 +14,14 @@
 </head>
 
 <body class="m-0 p-0 font-sans bg-cyan-100">
-<header id="main-header" class="bg-gray-500 mb-10 flex flex-row">
-		<a id="logo-header" href="/index.php?module=user&method=mostrar" class="text-white">
+<header class="header" id="main-header">
+		<a class="header-logo" id="logo-header" href="/index.php?module=user&method=mostrar">
 			<img src="../../public/img/logo-pingpong.png" alt="LOGO" class="h-20 w-20 ml-20">
-		</a> <!-- / #logo-header -->
+		</a>
 
-		<nav >
-			<ul class="p-2 m-0 flex flex-row text-white">
-				<li class="ml-5 mr-5 hover:text-blue-100 hover:border-b-2"><a href="/index.php?module=user&method=mostrar"><i class="fa-solid fa-house"></i></a></li>
-				<li><a href="/index.php?module=login&method=logout"><i class="fa-solid fa-right-from-bracket"></i></a></li>
-			</ul>
-		</nav><!-- / nav -->
-	</header>
+		<div class="header-nav" >
+			<a href="/index.php?module=user&method=mostrar"><i class="fa-solid fa-house"></i></a>
+			<a href="/index.php?module=login&method=logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+		</div>
+</header>
 
