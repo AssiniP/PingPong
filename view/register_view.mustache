@@ -1,81 +1,95 @@
- <!DOCTYPE html>
-  <html lang="en">
-  <title>Ping Pong</title>
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<title>Ping Pong</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../public/css/estilo.css">
-  </head>
-  <body class="m-auto font-sans bg-cyan-100 h-4/5 w-8/12 opacity-90 mt-32 p-0 mb-32">
-    <div class="flex flex-col justify-center items-center justify-items-center text-center text-green-700 bg-white p-5 w-full rounded ">
-    <img src="../../public/img/logo-pingpong.png" alt="LOGO" class="h-20 w-20 m-auto">
-      <h1 class="text-5xl text-center mb-10 font-bold md:text-xl">Registro</h1>
-    <form action="index.php?module=register&method=validateFields" method="POST" enctype="multipart/form-data" onsubmit="return checkFileSize(358400)"
-          class="flex flex-col justify-center items-center justify-items-center text-center">
-    <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-        <label for="nickName" class="mr-2">Nickname:</label>
-        <input type="text" id="nickName" name="nickName" required class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+</head>
 
-        <label for="password" class="mr-2">Contraseña:</label>
-        <input type="password" id="password" name="password" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+<body class="m-auto font-sans bg-cyan-100 h-4/5 w-8/12 opacity-90 mt-32 p-0 mb-32">
+    <div
+        class="cuadro flex flex-col justify-center items-center justify-items-center text-center text-green-700 bg-white p-5 w-full rounded ">
+        <img src="../../public/img/logo-pingpong.png" alt="LOGO" class="h-20 w-20 m-auto">
+         <h1 class="text-4xl text-center mb-10 font-bold">Registro</h1>
+        <form action="index.php?module=register&method=validateFields" method="POST" enctype="multipart/form-data"
+            onsubmit="return checkFileSize(358400)"
+            class="flex flex-col justify-center items-center justify-items-center text-center">
+            <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                <label for="nickName" class="mr-2">Nickname:</label>
+                <input type="text" id="nickName" name="nickName" required
+                    class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
 
-        <label for="repassword" class="mr-2 ml-2">Re Contraseña:</label>
-                <input type="password" id="repassword" name="repassword" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-</div>
-<div class="flex flex-row md:grid-cols-1  justify-center items-center">
-        <label for="nombre" class="mr-2 ml-2">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br>
+                <label for="password" class="mr-2">Contraseña:</label>
+                <input type="password" id="password" name="password" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
 
-        <label for="email" class="mr-2 ml-2">Email:</label>
-        <input type="email" id="email" name="email" required class=" rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+                <label for="repassword" class="mr-2 ml-2">Re Contraseña:</label>
+                <input type="password" id="repassword" name="repassword" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+            </div>
+            <div class="flex flex-row md:grid-cols-1  justify-center items-center">
+                <label for="nombre" class="mr-2 ml-2">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br>
 
-        <label for="ubicacion" class="mr-2 ml-2">Ubicación:</label>
-        <input type="text" id="ubicacion" name="ubicacion" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-</div>
-<div class="flex flex-row md:grid-cols-1  justify-center items-center">
-        <label for="imagenPerfil" class="mr-2 ml-2">Imagen de Perfil:</label>
-        <input type="hidden" name="MAX_FILE_SIZE" value="358400">
-        <input type="file" id="imagenPerfil" name="imagenPerfil" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+                <label for="email" class="mr-2 ml-2">Email:</label>
+                <input type="email" id="email" name="email" required
+                    class=" rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
 
-        <label for="pais" class="mr-2 ml-2">País:</label>
-        <input type="text" id="pais" name="pais" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+                <label for="ubicacion" class="mr-2 ml-2">Ubicación:</label>
+                <input type="text" id="ubicacion" name="ubicacion" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+            </div>
+            <div class="flex flex-row md:grid-cols-1  justify-center items-center">
+                <label for="imagenPerfil" class="mr-2 ml-2">Imagen de Perfil:</label>
+                <input type="hidden" name="MAX_FILE_SIZE" value="358400">
+                <input type="file" id="imagenPerfil" name="imagenPerfil" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
 
-        <label for="ciudad" class="mr-2 ml-2">Ciudad:</label>
-        <input type="text" id="ciudad" name="ciudad" required class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-</div>
-<div class="flex flex-row md:grid-cols-1  justify-center items-center">
-        <label for="idGenero" class="mr-2 ml-2">Género:</label>
-        <select id="idGenero" name="idGenero" required class="rounded border border-2 border-green-300 h-4/5 px-2">
-            <option value="">Seleccionar</option>
-            <option value="1">Masculino</option>
-            <option value="2">Femenino</option>
-            <option value="3">Prefiero no cargarlo</option>
-        </select><br><br>
+                <label for="pais" class="mr-2 ml-2">País:</label>
+                <input type="text" id="pais" name="pais" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
 
-        <input type="submit" value="Enviar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5">
-</div>
-    </form>
+                <label for="ciudad" class="mr-2 ml-2">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+            </div>
+            <div class="flex flex-row md:grid-cols-1  justify-center items-center">
+                <label for="idGenero" class="mr-2 ml-2">Género:</label>
+                <select id="idGenero" name="idGenero" required
+                    class="rounded border border-2 border-green-300 h-4/5 px-2">
+                    <option value="">Seleccionar</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                    <option value="3">Prefiero no cargarlo</option>
+                </select><br><br>
+
+                <input type="submit" value="Enviar"
+                    class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5">
+            </div>
+        </form>
 
     </div>
     {{#errorMsg}}
-        <p>{{.}}</p>
+    <p>{{.}}</p>
     {{/errorMsg}}
-        </body>
-        </html>
- <!--Perdon me daba cosa dejar la foto de perfil sin chequear-->
- <script type="text/javascript">
-     function checkFileSize(maxSize){
-         let input = document.getElementById("imagenPerfil");
-         if(input.files && input.files.length == 1)
-         {
-             if (input.files[0].size > maxSize)
-             {
-                 alert("Tu foto de perfil debe pesar menos de " + (maxSize/1024) + "KB");
-                 return false;
-             }
-         }
+</body>
 
-         return true;
-     }
- </script>
+</html>
+<!--Perdon me daba cosa dejar la foto de perfil sin chequear-->
+<script type="text/javascript">
+    function checkFileSize(maxSize) {
+        let input = document.getElementById("imagenPerfil");
+        if (input.files && input.files.length == 1) {
+            if (input.files[0].size > maxSize) {
+                alert("Tu foto de perfil debe pesar menos de " + (maxSize / 1024) + "KB");
+                return false;
+            }
+        }
+
+        return true;
+    }
+</script>
