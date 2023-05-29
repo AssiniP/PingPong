@@ -19,6 +19,15 @@ body {
 
 header {
     background-color: transparent;
+    background-color: #cb3860;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    padding: 0 50px;
+    box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
+    border-radius: 0px 0px 50px 50px / 0px 0px 25px 25px;
 }
 
 .cuadro {
@@ -71,7 +80,8 @@ header {
 }
 
 /* Header for User */
-.header{
+.header-user {
+    background-color: transparent;
     background-color: #cb3860;
     display: flex;
     justify-content: space-between;
