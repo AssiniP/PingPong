@@ -39,7 +39,7 @@ class UserController {
             $_SESSION['nickname'] = $data["usuario"][0]["nickName"];
             $rol = $data["usuario"][0]["rol"];
             $_SESSION['rol'] = $rol;
-            $this->renderer->render('lobby', $data);
+            $this->renderer->render('login', $data);
         } else {
             $this->renderer->render('pingPong');
         }
