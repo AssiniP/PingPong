@@ -34,10 +34,8 @@ class UserController {
             $email = $_GET['email'];
             $this->userModel->actualizarCuentaValidada($email);
             $data["usuario"] = $this->userModel->validarMail($email);
-            $this->session->set('nickname', $data["usuario"][0]["nickName"]);
-            $this->session->set('rol', $data["usuario"][0]["rol"]);
-            //header('location: /lob');
-            $this->renderer->render('lobby', $data);
+            $this->renderer->render('login', $data);
+
         } else {
             header('location: /');
         }

@@ -29,9 +29,9 @@ class UserModel {
     }
 
     public function enviarMail($mail) {
-        //include_once("vendor/EmailSend.php");
+        include_once("vendor/SendEmail.php");
 
-        //enviarMail($mail);
+        enviarMail($mail);
     }
 
     public function validarMail($email){
