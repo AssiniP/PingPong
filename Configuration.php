@@ -8,7 +8,6 @@ include_once('helpers/Logger.php');
 
 
 include_once('third-party/mustache/src/Mustache/Autoloader.php');
-include_once('helpers/MariaDBDatabase.php');
 include_once("helpers/MustacheRender.php");
 include_once('helpers/Router.php');
 

@@ -64,7 +64,7 @@ function enviarMail($EMAIL){
 //convert HTML into a basic plain-text alternative body
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject="¡Bienvenido a PingPong!";
-    $url = 'http://localhost/index.php?module=user&method=validate&email='.$EMAIL;
+    $url = 'http://localhost/user/validate&email='.$EMAIL;
     $logo = "https://i.postimg.cc/Zq2SGxjf/logo-pingpong.png";
     $mail->Body = '<div style="color: white; background-color: darkgreen; font-size: larger;">
   <center>

@@ -53,7 +53,7 @@ class UserModel {
         $tempDir = SITE_ROOT . '/public/qr-perfil/qr_code_' . $nickname . '.png';
 
         // here our data
-        $url = 'http://localhost/index.php?module=user&method=seeProfile&nick=' . $nickname;
+        $url = 'http://localhost/user/seeProfile&nick=' . $nickname;
 
         // generating
         //Nara si el tamaño del QR es feo cambialo acá!!
