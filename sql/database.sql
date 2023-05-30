@@ -68,7 +68,6 @@ CREATE TABLE Jugada (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idPartida INT NOT NULL,
     idPregunta INT NOT NULL,
-    idUsuario INT NOT NULL,
     FOREIGN KEY (idPartida) REFERENCES Partida (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id),
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id)
