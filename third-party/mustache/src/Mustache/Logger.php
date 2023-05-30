@@ -1,126 +1,35 @@
 <?php
 
-/*
- * This file is part of Mustache.php.
- *
- * (c) 2010-2017 Justin Hileman
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-/**
- * Describes a Mustache logger instance.
- *
- * This is identical to the Psr\Log\LoggerInterface.
- *
- * The message MUST be a string or object implementing __toString().
- *
- * The message MAY contain placeholders in the form: {foo} where foo
- * will be replaced by the context data in key "foo".
- *
- * The context array can contain arbitrary data, the only assumption that
- * can be made by implementors is that if an Exception instance is given
- * to produce a stack trace, it MUST be in a key named "exception".
- *
- * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
- * for the full interface specification.
- */
-interface Mustache_Logger
+class Logger
 {
-    /**
-     * Psr\Log compatible log levels.
-     */
-    const EMERGENCY = 'emergency';
-    const ALERT     = 'alert';
-    const CRITICAL  = 'critical';
-    const ERROR     = 'error';
-    const WARNING   = 'warning';
-    const NOTICE    = 'notice';
-    const INFO      = 'info';
-    const DEBUG     = 'debug';
+    public static function info($log) {
+        self::log('INFO', $log);
+    }
 
-    /**
-     * System is unusable.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function emergency($message, array $context = array());
+    public static function warning($log) {
+        self::log('WARN', $log);
+    }
 
-    /**
-     * Action must be taken immediately.
-     *
-     * Example: Entire website down, database unavailable, etc. This should
-     * trigger the SMS alerts and wake you up.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function alert($message, array $context = array());
+    public static function error($log) {
+        self::log("ERROR", $log);
+    }
 
-    /**
-     * Critical conditions.
-     *
-     * Example: Application component unavailable, unexpected exception.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function critical($message, array $context = array());
+    private static function log($level, $log) {
+        $message = self::createMessage($level, $log);
+        self::writeLogFile($message);
+    }
 
-    /**
-     * Runtime errors that do not require immediate action but should typically
-     * be logged and monitored.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function error($message, array $context = array());
+    private static function createMessage($level, $log): string {
+        return "[" . self::getDate() . "][". $level ."]" . $log . "\n";
+    }
 
-    /**
-     * Exceptional occurrences that are not errors.
-     *
-     * Example: Use of deprecated APIs, poor use of an API, undesirable things
-     * that are not necessarily wrong.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function warning($message, array $context = array());
+    private static function writeLogFile(string $message): void {
+        $filename = "log/log-" . self::getDate() . ".txt";
+        file_put_contents($filename, $message, FILE_APPEND);
+    }
 
-    /**
-     * Normal but significant events.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function notice($message, array $context = array());
+    private static function getDate() {
+        return date("Y-m-d");
+    }
 
-    /**
-     * Interesting events.
-     *
-     * Example: User logs in, SQL logs.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function info($message, array $context = array());
-
-    /**
-     * Detailed debug information.
-     *
-     * @param string $message
-     * @param array  $context
-     */
-    public function debug($message, array $context = array());
-
-    /**
-     * Logs with an arbitrary level.
-     *
-     * @param mixed  $level
-     * @param string $message
-     * @param array  $context
-     */
-    public function log($level, $message, array $context = array());
 }

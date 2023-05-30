@@ -11,7 +11,13 @@ class MustacheRender{
     }
 
     public function render($contentFile , $data = array() ){
-        $contentAsString =  file_get_contents("view/". $contentFile . "_view.mustache");
-        echo  $this->mustache->render($contentAsString, $data);
+        echo  $this->generateHtml($contentFile, $data);
+    }
+
+    public function generateHtml($contentFile, $data = array()) {
+        $contentAsString = file_get_contents('view/partial/header.mustache');
+        $contentAsString .= file_get_contents('view/' . $contentFile . '_view.mustache');
+        $contentAsString .= file_get_contents('view/partial/footer.mustache');
+        return $this->mustache->render($contentAsString, $data);
     }
 }
