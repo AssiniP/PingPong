@@ -15,9 +15,15 @@ class MustacheRender{
     }
 
     public function generateHtml($contentFile, $data = array()) {
-        $contentAsString = file_get_contents('view/partial/header.mustache');
-        $contentAsString .= file_get_contents('view/' . $contentFile . '_view.mustache');
-        $contentAsString .= file_get_contents('view/partial/footer.mustache');
+
+        if (strpos($contentFile, "register") !== false || strpos($contentFile, "login") !== false) {
+            $contentAsString = file_get_contents('view/' . $contentFile . '_view.mustache');
+        } else {
+            $contentAsString = file_get_contents('view/partial/header.mustache');
+            $contentAsString .= file_get_contents('view/' . $contentFile . '_view.mustache');
+            $contentAsString .= file_get_contents('view/partial/footer.mustache');
+        }
+
         return $this->mustache->render($contentAsString, $data);
     }
 }
