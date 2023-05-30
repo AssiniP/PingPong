@@ -1,5 +1,8 @@
 <?php
 define ('SITE_ROOT', realpath(dirname(__FILE__)));
+require_once('helpers/Session.php');
+$session = new Session();
+
 include_once('Configuration.php');
 $configuration = new Configuration();
 $router = $configuration->getRouter();

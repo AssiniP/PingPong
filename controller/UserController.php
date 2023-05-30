@@ -1,31 +1,30 @@
 <?php
-
+require_once( SITE_ROOT . '/helpers/Session.php');
 class UserController {
     private $renderer;
     private $userModel;
+    private $session;
     public function __construct($userModel, $renderer){
         $this->renderer = $renderer;
         $this->userModel = $userModel;
+        $this->session = new Session();
     }
 
     public function list() {
-        session_start();
-        if(empty($_SESSION['nickname'])) {
-            $this->renderer->render('pingPong');
-        } else {
-            $data["usuario"] = $this->userModel->getUsers($_SESSION['nickname']);
-            $this->renderer->render('users',$data);
+        if($this->session->get('logged')){
+            $data["usuario"] = $this->userModel->getUsers($this->session->get('nickname'));
+            $this->renderer->render('users', $data);
+        }else{
+            header('location: /');
         }
-
     }
 
     public function mostrar(){
-        session_start();
-        if(empty($_SESSION['nickname'])) {
-            $this->renderer->render('pingPong');
-        } else {
-            $data["usuario"] = $this->userModel->getUsers($_SESSION['nickname']);
-            $this->renderer->render('lobby',$data);
+        if($this->session->get('logged')){
+            $data["usuario"] = $this->userModel->getUsers($this->session->get('nickname'));
+            $this->renderer->render('lobby', $data);
+        }else{
+            header('location: /');
         }
     }
 
@@ -36,21 +35,21 @@ class UserController {
             $this->userModel->actualizarCuentaValidada($email);
             $data["usuario"] = $this->userModel->validarMail($email);
             $this->renderer->render('login', $data);
+
         } else {
-            $this->renderer->render('pingPong');
+            header('location: /');
         }
     }
 
 
     public function seeProfile(){
-        session_start();
-        if(empty($_SESSION['nickname'])) {
-            $this->renderer->render('pingPong');
-        } else {
-            if(!empty($_GET['nick'])) {
+        if($this->session->get('logged')){
+            if(!empty($_GET['nick'])){
                 $data["usuario"] = $this->userModel->getUsers($_GET['nick']);
                 $this->renderer->render('users', $data);
             }
-    }
+        }else{
+            header('location: /');
+        }
 
 }}

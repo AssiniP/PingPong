@@ -1,10 +1,13 @@
 <?php
+require_once( SITE_ROOT . '/helpers/Session.php');
 class LoginController{
     private $renderer;
     private $userModel;
+    private $session;
     public function __construct($userModel, $renderer) {
         $this->renderer = $renderer;
         $this->userModel = $userModel;
+        $this->session = new Session();
     }
 
     public function list() {
@@ -17,14 +20,12 @@ class LoginController{
         $password = md5($_POST['password']);
 
         $data["usuario"] = $this->userModel->validarLogin($nickname, $password);
-        // Validar las credenciales del usuario
         if (count($data["usuario"])>0) {
-            // Iniciar sesión exitosamente
-            session_start();
-            $_SESSION['nickname'] = $nickname;
-            $rol = $data["usuario"][0]["rol"];
-            $_SESSION['rol'] = $rol;
-            $this->renderer->render('lobby',$data); // Redirijo al login // Redirigir a la página de inicio después de iniciar sesión
+            $this->session->set('nickname', $nickname);
+            $this->session->set('rol', $data["usuario"][0]["rol"]);
+            //no sé como llamar esta chota pero indica si la persona esta logeada o no (lol)
+            $this->session->set('logged', true);
+            header('location: /lobby/list');
             exit();
         } else {
             $errorMsg[] = 'Usuario o contraseña incorrectos.';
@@ -35,9 +36,8 @@ class LoginController{
     }
 
     public function logout() {
-        session_start();
-        session_destroy();
-        $this->renderer->render('pingPong'); // Redirijo al login
-        exit();
+        $this->session->destroy();
+        header('location: /');
+        exit;
     }
 }
