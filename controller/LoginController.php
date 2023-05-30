@@ -21,6 +21,12 @@ class LoginController{
 
         $data["usuario"] = $this->userModel->validarLogin($nickname, $password);
         if (count($data["usuario"])>0) {
+            if (!$data["usuario"][0]["cuentaValida"]){
+                $errorMsg[] = 'Cuenta no validada, verifica tu mail.';
+                $data['errorMsg'] = $errorMsg;
+                $this->renderer->render('login', $data);
+                exit();
+            }
             $this->session->set('nickname', $nickname);
             $this->session->set('rol', $data["usuario"][0]["rol"]);
             //no sé como llamar esta chota pero indica si la persona esta logeada o no (lol)
@@ -31,7 +37,7 @@ class LoginController{
             $errorMsg[] = 'Usuario o contraseña incorrectos.';
             $data['errorMsg'] = $errorMsg;
             $this->renderer->render('login', $data);
-            exit;
+            exit();
         }
     }
 
