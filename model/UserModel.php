@@ -7,7 +7,11 @@ class UserModel {
         $this->database = $database;
     }
 
-    public function getUsers($nickname) {
+    public function getAllUsers() {
+        return $this->database->query("select u.*, G.nombre genero from usuario U, genero G  where U.idGenero =G.id ");
+    }
+
+    public function getUser($nickname) {
         return $this->database->query("select u.*, G.nombre genero from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
 
@@ -29,9 +33,9 @@ class UserModel {
     }
 
     public function enviarMail($mail) {
-        //include_once("vendor/EmailSend.php");
+        include_once("vendor/SendEmail.php");
 
-        //enviarMail($mail);
+        enviarMail($mail);
     }
 
     public function validarMail($email){
@@ -49,7 +53,7 @@ class UserModel {
         $tempDir = SITE_ROOT . '/public/qr-perfil/qr_code_' . $nickname . '.png';
 
         // here our data
-        $url = 'http://localhost/index.php?module=user&method=seeProfile&nick=' . $nickname;
+        $url = 'http://localhost/user/seeProfile&nick=' . $nickname;
 
         // generating
         //Nara si el tamaño del QR es feo cambialo acá!!

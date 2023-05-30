@@ -1,11 +1,11 @@
 {{> headerUser}}
 <div class=" flex flex-col justify-center items-center justify-items-center">
  {{#usuario}}
- <div class="lobby-container">
+ <div class="lobby-container mt-10">
     <div class="lobby-user">
         <h1 class="text-white text-3xl mb-20 uppercase">{{nickName}}</h1>
         <h2 class="text-white text-3xl mb-20">100 Puntos</h2>
-        <a href="/index.php?module=user&method=list" ><img src="/public/foto-perfil/{{imagenPerfil}}" class="w-16 h-16 rounded-full border border-yellow-400"></a>
+        <a href="/user/mostrar" ><img src="/public/foto-perfil/{{imagenPerfil}}" class="w-16 h-16 rounded-full border border-yellow-400"></a>
     </div>
     <div class="linea"></div>
     <div class="lobby-buttons">
