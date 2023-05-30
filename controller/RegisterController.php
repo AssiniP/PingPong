@@ -1,6 +1,5 @@
 <?php
 
-
 class RegisterController
 {  private $renderer;
     private $userModel;
@@ -53,11 +52,9 @@ class RegisterController
             'ciudad' => $_POST['ciudad'],
             'idRol' => 3];
         $this->userModel->addUser($userData);
-        $data['msg'] = "Se registro correctamente ";
         $this->userModel->enviarMail($_POST['email']);
         $this->userModel->generateQR($_POST['nickName']);
-        //$this->renderer->render('login', $data);
-        header('location:index.php?module=login');
+        header('location: /login/list');
     }
 
     private function checkThatUserFormIsNotEmpty(){
