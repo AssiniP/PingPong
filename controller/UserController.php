@@ -12,7 +12,7 @@ class UserController {
 
     public function list() {
         if($this->session->get('logged')){
-            $data["usuario"] = $this->userModel->getUsers($this->session->get('nickname'));
+            $data["usuario"] = $this->userModel->getAllUsers();
             $this->renderer->render('users', $data);
         }else{
             header('location: /');
@@ -21,8 +21,8 @@ class UserController {
 
     public function mostrar(){
         if($this->session->get('logged')){
-            $data["usuario"] = $this->userModel->getUsers($this->session->get('nickname'));
-            $this->renderer->render('lobby', $data);
+            $data["usuario"] = $this->userModel->getUser($this->session->get('nickname'));
+            $this->renderer->render('users', $data);
         }else{
             header('location: /');
         }
@@ -45,7 +45,7 @@ class UserController {
     public function seeProfile(){
         if($this->session->get('logged')){
             if(!empty($_GET['nick'])){
-                $data["usuario"] = $this->userModel->getUsers($_GET['nick']);
+                $data["usuario"] = $this->userModel->getUser($_GET['nick']);
                 $this->renderer->render('users', $data);
             }
         }else{

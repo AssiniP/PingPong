@@ -7,7 +7,11 @@ class UserModel {
         $this->database = $database;
     }
 
-    public function getUsers($nickname) {
+    public function getAllUsers() {
+        return $this->database->query("select u.*, G.nombre genero from usuario U, genero G  where U.idGenero =G.id ");
+    }
+
+    public function getUser($nickname) {
         return $this->database->query("select u.*, G.nombre genero from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
 
