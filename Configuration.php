@@ -19,6 +19,7 @@ include_once('controller/UserController.php');
 include_once ('controller/RegisterController.php');
 //include_once ('controller/MailValiderController.php');
 include_once ('third-party/phpqrcode/qrlib.php');
+include_once('controller/LobbyController.php');
 
 include_once ('model/UserModel.php');
 //include_once ('model/EmailModel.php');
@@ -52,13 +53,13 @@ class Configuration {
         return new PingPongController($this->getRenderer());
     }
 
-   /* public function getMailValiderController() {
-        return new MailValiderController(new EmailModel(),$this->getRenderer());
-    }*/
-
 
     public function getRegisterController(){
         return new RegisterController(new UserModel($this->getDatabase()),$this->getRenderer());
+    }
+
+    public function getLobbyController(){
+        return new LobbyController(new UserModel($this->getDatabase()), $this->getRenderer());
     }
 
 
