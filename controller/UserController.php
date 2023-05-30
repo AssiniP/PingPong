@@ -35,10 +35,6 @@ class UserController {
             $email = $_GET['email'];
             $this->userModel->actualizarCuentaValidada($email);
             $data["usuario"] = $this->userModel->validarMail($email);
-            session_start();
-            $_SESSION['nickname'] = $data["usuario"][0]["nickName"];
-            $rol = $data["usuario"][0]["rol"];
-            $_SESSION['rol'] = $rol;
             $this->renderer->render('login', $data);
         } else {
             $this->renderer->render('pingPong');
