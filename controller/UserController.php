@@ -11,23 +11,20 @@ class UserController {
     }
 
     public function list() {
-        session_start();
-        if(empty($_SESSION['nickname'])) {
-            $this->renderer->render('pingPong');
-        } else {
-            $data["usuario"] = $this->userModel->getUsers($_SESSION['nickname']);
-            $this->renderer->render('users',$data);
+        if($this->session->get('logged')){
+            $data["usuario"] = $this->userModel->getUsers($this->session->get('nickname'));
+            $this->renderer->render('users', $data);
+        }else{
+            header('location: /');
         }
-
     }
 
     public function mostrar(){
-        session_start();
-        if(empty($_SESSION['nickname'])) {
-            $this->renderer->render('pingPong');
-        } else {
-            $data["usuario"] = $this->userModel->getUsers($_SESSION['nickname']);
-            $this->renderer->render('lobby',$data);
+        if($this->session->get('logged')){
+            $data["usuario"] = $this->userModel->getUsers($this->session->get('nickname'));
+            $this->renderer->render('lobby', $data);
+        }else{
+            header('location: /');
         }
     }
 
@@ -37,26 +34,24 @@ class UserController {
             $email = $_GET['email'];
             $this->userModel->actualizarCuentaValidada($email);
             $data["usuario"] = $this->userModel->validarMail($email);
-            session_start();
-            $_SESSION['nickname'] = $data["usuario"][0]["nickName"];
-            $rol = $data["usuario"][0]["rol"];
-            $_SESSION['rol'] = $rol;
+            $this->session->set('nickname', $data["usuario"][0]["nickName"]);
+            $this->session->set('rol', $data["usuario"][0]["rol"]);
+            //header('location: /lob');
             $this->renderer->render('lobby', $data);
         } else {
-            $this->renderer->render('pingPong');
+            header('location: /');
         }
     }
 
 
     public function seeProfile(){
-        session_start();
-        if(empty($_SESSION['nickname'])) {
-            $this->renderer->render('pingPong');
-        } else {
-            if(!empty($_GET['nick'])) {
+        if($this->session->get('logged')){
+            if(!empty($_GET['nick'])){
                 $data["usuario"] = $this->userModel->getUsers($_GET['nick']);
                 $this->renderer->render('users', $data);
             }
-    }
+        }else{
+            header('location: /');
+        }
 
 }}
