@@ -3,11 +3,10 @@ require_once( SITE_ROOT . '/helpers/Session.php');
 class UserController {
     private $renderer;
     private $userModel;
-    private $session;
+
     public function __construct($userModel, $renderer){
         $this->renderer = $renderer;
         $this->userModel = $userModel;
-        $this->session = new Session();
     }
 
     public function list() {
@@ -16,7 +15,7 @@ class UserController {
     }
 
     public function mostrar(){
-        $data["usuario"] = $this->userModel->getUser($this->session->get('nickname'));
+        $data["usuario"] = $this->userModel->getUser($_SESSION['nickname']);
         $this->renderer->render('users', $data);
     }
 

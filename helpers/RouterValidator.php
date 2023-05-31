@@ -3,11 +3,9 @@ require_once('helpers/Session.php');
 class RouterValidator{
     private $configuration;
     private $router;
-    private $session;
     public function __construct($configuration) {
         $this->configuration = $configuration;
         $this->router = $this->configuration->getRouter();
-        $this->session = new Session();
     }
 
     public function validateRoute($module, $method){
@@ -40,15 +38,15 @@ class RouterValidator{
     }
 
     private function userIsLogged(){
-        if($this->session->get('logged')){
+        if($_SESSION['logged']){
             return true;
         }
         return false;
     }
 
-    //clases al pepe, las dejo porque las pense
+    //funciones al pepe, las dejo porque las pense
     private function userRoleIs($value){
-        if($this->session->get('rol') == $value){
+        if($_SESSION['rol'] == $value){
             return true;
         }
         return false;
