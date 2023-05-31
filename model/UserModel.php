@@ -42,6 +42,15 @@ class UserModel {
         return $this->database->query("SELECT * FROM usuario U join rol R on U.idRol = R.id where U.email like '".$email."'");
 
     }
+
+    public function getAllGenero(){
+        return $this->database->query("SELECT * FROM genero ");
+    }
+
+    public function getAllRol(){
+        return $this->database->query("SELECT * FROM rol ");
+    }
+
    public function actualizarCuentaValidada($email){
         $esValido = true;
        return $this->database->queryBoolean("UPDATE Usuario SET cuentaValida  = ". $esValido ." where email like '".$email."'");

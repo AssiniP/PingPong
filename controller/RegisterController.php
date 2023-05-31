@@ -9,7 +9,8 @@ class RegisterController
     }
 
     public function list(){
-        $this->renderer->render('register');
+        $data["verGenero"] = $this->userModel->getAllGenero();
+        $this->renderer->render('register',$data);
     }
 
     public function validateFields(){
