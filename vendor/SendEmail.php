@@ -26,6 +26,8 @@ function enviarMail($EMAIL){
 
 //Set the hostname of the mail server
     $mail->Host = 'smtp-mail.outlook.com';
+  //  $mail->Host = 'smtp.gmail.com';
+
 //Use `$mail->Host = gethostbyname('smtp.gmail.com');`
 //if your network does not support SMTP over IPv6,
 //though this may cause issues with TLS
@@ -39,15 +41,17 @@ function enviarMail($EMAIL){
 // - SMTPS (implicit TLS on port 465) or
 // - STARTTLS (explicit TLS on port 587)
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+
 
 //Whether to use SMTP authentication
     $mail->SMTPAuth = true;
 
 //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = 'pingponggame.unlam@outlook.com';
+    $mail->Username = 'sandoval.patricia.9999@outlook.com';
 
 //Password to use for SMTP authentication
-    $mail->Password = 'Argentina2023';
+    $mail->Password = 'Milualma74';
 
 //Set who the message is to be sent from
 //Note that with gmail you can only use your account address (same as `Username`)
@@ -64,7 +68,7 @@ function enviarMail($EMAIL){
 //convert HTML into a basic plain-text alternative body
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject="¡Bienvenido a PingPong!";
-    $url = 'http://localhost/index.php?module=user&method=validate&email='.$EMAIL;
+    $url = 'http://localhost/user/validate&email='.$EMAIL;
     $logo = "https://i.postimg.cc/Zq2SGxjf/logo-pingpong.png";
     $mail->Body = '<div style="color: white; background-color: darkgreen; font-size: larger;">
   <center>

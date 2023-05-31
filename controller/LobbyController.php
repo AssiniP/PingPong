@@ -11,7 +11,8 @@ class LobbyController{
     }
     public function list() {
         if($this->session->get('logged')){
-            $this->renderer->render('lobby');
+            $data["usuario"] = $this->userModel->getUser($this->session->get('nickname'));
+            $this->renderer->render('lobby',$data);
         }else{
             header('location: /');
         }

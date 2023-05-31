@@ -33,9 +33,9 @@ header {
 
 .mayus {
     text-transform: uppercase;
-    box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 14px 20px -7px rgba(0,0,0,0.75);
+    box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
     border-radius: 0px 0px 50px 50px / 0px 0px 25px 25px;
 }
 
@@ -46,11 +46,18 @@ header {
 }
 
 .boton {
-    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 700;
     color: white;
     box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.75);
     -webkit-box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.75);
     -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    height: 50px !important;
+    margin-top: 25px;
+    font-size: 1.7rem;
 }
 
 /* Home */
@@ -73,7 +80,6 @@ header {
 .home a:hover {
     color: #ffaa24;
 }
-
 
 @keyframes blink {
     0% {
@@ -98,6 +104,7 @@ header {
 }
 
 /* Header for User */
+
 .header-user {
     background-color: transparent;
     background-color: #cb3860;
@@ -192,7 +199,6 @@ footer {
     border-radius: 40px;
 }
 
-
 @media (max-width: 768px) {
     .lobby-user {
         flex-direction: column;
@@ -214,15 +220,17 @@ footer {
 
     .lobby-user h2 {
         order: 1;
-
     }
 
     .linea {
-        width: 400px;
+        width: 300px;
         margin: 0px 0px;
     }
-}
 
+    .lobby-buttons a:last-of-type {
+        margin-bottom: 50px;
+    }
+}
 
 .lobby-buttons {
     display: flex;
@@ -237,4 +245,52 @@ footer {
 
 .lobby-buttons a:last-of-type {
     margin-bottom: 50px;
+}
+
+/* Partida */
+
+.partida {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: auto;
+    height: 75vh;
+}
+
+.pregunta-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 30% 70% 81% 19% / 30% 30% 70% 70%;
+    width: 30rem;
+    height: 4rem;
+    margin-bottom: 25px;
+}
+
+.pregunta-container p {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.opciones-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10rem;
+}
+
+.opcion-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.opcion-col a {
+    margin-top: 3rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: white;
 }

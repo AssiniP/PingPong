@@ -14,7 +14,7 @@ INSERT INTO Categoria (nombre) VALUES ('Ciencia');
 INSERT INTO Categoria (nombre) VALUES ('Arte');
 INSERT INTO Categoria (nombre) VALUES ('Deportes');
 
-INSERT INTO `pingpong`.`usuario` (`id`, `nickName`, `password`, `nombre`, `email`, `ubicacion`, `imagenPerfil`, `pais`, `ciudad`, `idRol`, `cuentaValida`, `idGenero`) VALUES ('100', 'admin', 'admin', 'admin', 'admin@mail.com', 'admin', '', 'admin', 'admin', '1', '1', '3');
+INSERT INTO `pingpong`.`usuario` (`id`, `nickName`, `password`, `nombre`, `email`, `ubicacion`, `imagenPerfil`, `pais`, `ciudad`, `idRol`, `cuentaValida`, `idGenero`,`fecharegistro`) VALUES ('100', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'admin@mail.com', 'admin', '', 'admin', 'admin', '1', '1', '3',now());
 
 -- Opciones para la pregunta 1
 INSERT INTO Opcion (opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
