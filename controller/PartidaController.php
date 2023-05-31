@@ -11,11 +11,7 @@ class PartidaController{
     }
 
     public function list(){
-        if($this->session->get('logged')){
-            $this->renderer->render('nuevaPartida');
-        } else{
-            header('location: /');
-        }
+        $this->renderer->render('nuevaPartida');
     }
 
     public function jugar(){

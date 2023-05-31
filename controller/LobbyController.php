@@ -10,12 +10,8 @@ class LobbyController{
         $this->session = new Session();
     }
     public function list() {
-        if($this->session->get('logged')){
-            $data["usuario"] = $this->userModel->getUser($this->session->get('nickname'));
-            $this->renderer->render('lobby',$data);
-        }else{
-            header('location: /');
-        }
+        $data["usuario"] = $this->userModel->getUser($this->session->get('nickname'));
+        $this->renderer->render('lobby',$data);
     }
 
 }
