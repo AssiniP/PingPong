@@ -1,5 +1,8 @@
 {{> headerUser}}
-<h1>Titutlo</h1>
-<p>Imaginate que estas jugando y se ve re lindo o algo flashero</p>
-<a href="/partida/jugar"> Hace click aca para empezar o te mato</a>
+<h1>Título</h1>
+{{#partidas}}
+<p>Fecha: {{fecha}}</p>
+<p>ID Usuario: {{idUsuario}}</p>
+{{/partidas}}
+<a href="/partida/jugar">JUGAR</a>
 {{> footer}}
