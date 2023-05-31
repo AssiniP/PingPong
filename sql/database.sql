@@ -33,9 +33,9 @@ CREATE TABLE usuario (
 CREATE TABLE Partida (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE NOT NULL,
-    tiempo TIME NOT NULL
+	idUsuario INT NOT NULL,
+	FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
-
 
 CREATE TABLE Opcion (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -66,12 +66,12 @@ CREATE TABLE Pregunta (
 
 CREATE TABLE Jugada (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    idPartida INT NOT NULL,
     idPregunta INT NOT NULL,
-    idUsuario INT NOT NULL,
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id),
+    idPartida INT NOT NULL,
+	tiempo TIME NOT NULL,
     FOREIGN KEY (idPartida) REFERENCES Partida (id),
-    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id)
+    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
+	respondidoCorrectamente BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE PreguntaReportada (
@@ -83,3 +83,4 @@ CREATE TABLE PreguntaReportada (
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
+
