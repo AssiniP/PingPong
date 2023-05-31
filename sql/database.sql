@@ -83,3 +83,4 @@ CREATE TABLE PreguntaReportada (
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
+

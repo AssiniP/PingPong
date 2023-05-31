@@ -21,8 +21,7 @@ class PartidaModel
 
     public function insertPartida($idUsuario) {
         $fechaActual = date("d-m-Y");
-        $tiempo = 0;
-        $query = "INSERT INTO Partida (fecha, tiempo, idUsuario) VALUES ('$fechaActual', $tiempo, $idUsuario)";
+        $query = "INSERT INTO Partida (fecha, idUsuario) VALUES ('$fechaActual', $idUsuario)";
         return $this->database->query($query);
     }
 
