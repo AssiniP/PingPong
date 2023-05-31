@@ -59,12 +59,12 @@
             </div>
             <div class="flex flex-row md:grid-cols-1  justify-center items-center">
                 <label for="idGenero" class="mr-2 ml-2">Género:</label>
-                <select id="idGenero" name="idGenero" required
+                  <select id="idGenero" name="idGenero" required
                     class="rounded border border-2 border-green-300 h-4/5 px-2">
                     <option value="">Seleccionar</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
-                    <option value="3">Prefiero no cargarlo</option>
+                  {{#verGenero}}
+                        <option value={{id}}>{{nombre}}</option>
+                   {{/verGenero}}
                 </select><br><br>
 
                 <input type="submit" value="Enviar"
