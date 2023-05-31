@@ -69,6 +69,7 @@ CREATE TABLE Jugada (
     idPartida INT NOT NULL,
     idPregunta INT NOT NULL,
     idUsuario INT NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES Usuario (id),
     FOREIGN KEY (idPartida) REFERENCES Partida (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id),
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id)
