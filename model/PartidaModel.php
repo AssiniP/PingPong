@@ -19,11 +19,39 @@ class PartidaModel
         return $this->database->query($query);
     }
 
-    public function insertPartida($idUsuario) {
-        $fechaActual = date("d-m-Y");
-        $query = "INSERT INTO Partida (fecha, idUsuario) VALUES ('$fechaActual', $idUsuario)";
+    public function getPartidas($idUsuario) {
+        $query = "SELECT p.id, p.fecha, p.idUsuario FROM Partida p WHERE p.idUsuario = $idUsuario";
         return $this->database->query($query);
     }
+
+    public function getLastPartida($idUsuario) {
+        $query = "SELECT p.id, p.fecha, p.idUsuario 
+                  FROM Partida p 
+                  WHERE p.idUsuario = $idUsuario 
+                  ORDER BY p.id DESC 
+                  LIMIT 1";
+        return $this->database->query($query);
+    }
+
+    public function addPartida(){
+        $query = "INSERT INTO partida (fecha, idUsuario) VALUES (NOW(), 1)";
+        return $this->database->query($query);
+    }
+
+    public function getPregunta() {
+        $query = "SELECT p.pregunta, o.* 
+                  FROM Pregunta p
+                  JOIN Opcion o ON p.idOpcion = o.id
+                  ORDER BY p.id DESC 
+                  LIMIT 1";
+        return $this->database->query($query);
+    }
+
+    
+
+
+
+
 
 
 

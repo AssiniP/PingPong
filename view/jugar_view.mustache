@@ -1,0 +1,24 @@
+{{> headerUser}}
+
+<div class="flex flex-col justify-center items-center justify-items-center">
+{{#preguntas}}
+    <div class="partida">
+        <div class="pregunta-container cuadro text-center">
+            <p>{{pregunta}}</p>
+        </div>
+        <div class="opciones-container">
+            <div class="opcion-col">
+                <a href="/partida/pregunta">{{opcion1}}</a>
+                <a href="/partida/pregunta">{{opcion2}}</a>
+            </div>
+            <div class="opcion-col">
+                <a href="/partida/pregunta">{{opcion3}}</a>
+                <a href="/partida/pregunta">{{opcion4}}</a>
+            </div>
+        </div>
+    </div>
+{{/preguntas}}
+
+</div>
+
+{{> footer}}

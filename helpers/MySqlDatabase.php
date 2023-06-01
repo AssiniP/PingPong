@@ -19,9 +19,19 @@ class MySqlDatabase {
         mysqli_close($this->connection);
     }
 
-    public function query($sql) {
-        $result = mysqli_query($this->connection, $sql);
-        return mysqli_fetch_all($result, MYSQLI_BOTH);
+    public function query($query) {
+        $result = $this->connection->query($query);
+        
+        if ($result === false) {
+            if (stripos($query, 'INSERT') === 0) {
+                return $this->connection->insert_id;
+            }
+            throw new Exception("Error en la consulta: " . $this->connection->error);
+        }
+        if (stripos($query, 'SELECT') === 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return true;
     }
 
     public function queryBoolean($sql) {
@@ -36,4 +46,9 @@ class MySqlDatabase {
         $stmt->execute();
         $stmt->close();
     }
+
+    public function getLastInsertId() {
+        return mysqli_insert_id($this->connection);
+    }
+
 }
