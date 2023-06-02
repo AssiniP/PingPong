@@ -12,18 +12,14 @@ class PartidaController
         $this->session = new Session();
     }
 
-    public function list()
-    {
+    public function list() {
         if ($this->session->get('logged')) {
-            $this->partidaModel->addPartida();
-            if ($this->session->get('logged')) {
-                $idUsuario = 1; // Reemplaza esto con la forma de obtener el ID del usuario
-                $partidas = $this->partidaModel->getLastPartida($idUsuario);
-                $data = array('partidas' => $partidas);
-                $this->renderer->render('nuevaPartida', $data);
-            } else {
-                header('location: /');
-            }
+            $this->partidaModel->addPartida($this->getUsuario());
+            $partidas = $this->partidaModel->getLastPartida($this->getUsuario());
+            $data = array('partidas' => $partidas);
+            $this->renderer->render('nuevaPartida', $data);
+        } else {
+            header('location: /');
         }
     }
 
@@ -53,5 +49,12 @@ class PartidaController
         } else {
             header('location: /');
         }
+    }
+
+    private function getUsuario()
+    {
+        $nickname = $this->session->get('nickname');
+        $user = $this->partidaModel->getUserByNickname($nickname);
+        return $user[0]['id'];
     }
 }

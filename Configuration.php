@@ -56,7 +56,7 @@ class Configuration {
     }
 
     public function getPartidaController(){
-        return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer());
+        return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer(), new UserModel($this->getDatabase()));
     }
 
 
