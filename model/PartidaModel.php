@@ -42,14 +42,16 @@ class PartidaModel
         $query = "SELECT p.pregunta, o.* 
                   FROM Pregunta p
                   JOIN Opcion o ON p.idOpcion = o.id
-                  ORDER BY p.id DESC 
+                  ORDER BY RAND()
                   LIMIT 1";
         return $this->database->query($query);
     }
 
-    
-
-
+    public function createJugada($idPregunta, $idPartida, $resCpondidoorrectamente) {
+        $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
+                  VALUES ($idPregunta, $idPartida, null, null)";
+        return $this->database->query($query);
+    }
 
 
 

@@ -31,6 +31,22 @@ class PartidaController
             if ($this->session->get('logged')) {
                 $pregunta = $this->partidaModel->getPregunta();
                 $data = array('preguntas' => $pregunta);
+    
+                // Verificar si se ha seleccionado una opción
+                if (isset($_GET['opcion'])) {
+                    $opcionSeleccionada = $_GET['opcion'];
+                    // acá se verífica q la opcion sea correcta pero todavía no sé como c: 
+                    // Procesar la opción seleccionada y actualizar la lógica según tus necesidades
+                    // Obtener una nueva pregunta
+                    $nuevaPregunta = $this->partidaModel->getPregunta();
+                    $p = $nuevaPregunta[0];
+                    $preguntaId = $p['id'];
+                    $nuevaJugada = $this->partidaModel->createJugada($preguntaId, 1, 1);
+
+
+                    $data['preguntas'] = $nuevaPregunta;
+                }
+    
                 $this->renderer->render('jugar', $data);
             } else {
                 header('location: /');
