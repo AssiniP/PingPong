@@ -14,46 +14,47 @@ class PartidaController
 
     public function list() {
         if ($this->session->get('logged')) {
-            $this->partidaModel->addPartida();
-            if ($this->session->get('logged')) {
-                $idUsuario = 1; // Reemplaza esto con la forma de obtener el ID del usuario
-                $partidas = $this->partidaModel->getLastPartida($idUsuario);
-                $data = array('partidas' => $partidas);
-                $this->renderer->render('nuevaPartida', $data);
-            } else {
-                header('location: /');
-            }
+            $this->partidaModel->addPartida($this->getUsuario());
+            $partidas = $this->partidaModel->getLastPartida($this->getUsuario());
+            $data = array('partidas' => $partidas);
+            $this->renderer->render('nuevaPartida', $data);
+        } else {
+            header('location: /');
         }
     }
 
-     public function jugar() {
+    public function jugar()
+    {
         if ($this->session->get('logged')) {
-            if ($this->session->get('logged')) {
-                $pregunta = $this->partidaModel->getPregunta();
-                $data = array('preguntas' => $pregunta);
-                $partida = $this->partidaModel->getLastPartida(1);
-                $pr = $partida[0];
-                $partidaId = $pr['id'];
-                if (isset($_GET['opcion'])) {
-                    $opcionSeleccionada = $_GET['opcion'];
-                    // acá se verífica q la opcion sea correcta pero todavía no sé como c: 
-                    // Procesar la opción seleccionada y actualizar la lógica según tus necesidades
-                    // Obtener una nueva pregunta
-                    $nuevaPregunta = $this->partidaModel->getPregunta();
-                    $p = $nuevaPregunta[0];
-                    $preguntaId = $p['id'];
-                    $nuevaJugada = $this->partidaModel->createJugada($preguntaId, $partidaId);
+            $pregunta = $this->partidaModel->getPregunta();
+            $data = array('preguntas' => $pregunta);
+            $partida = $this->partidaModel->getLastPartida(1);
+            $pr = $partida[0];
+            $partidaId = $pr['id'];
+            if (isset($_GET['opcion'])) {
+                $opcionSeleccionada = $_GET['opcion'];
+                // acá se verífica q la opcion sea correcta pero todavía no sé como c: 
+                // Procesar la opción seleccionada y actualizar la lógica según tus necesidades
+                // Obtener una nueva pregunta
+                $nuevaPregunta = $this->partidaModel->getPregunta();
+                $p = $nuevaPregunta[0];
+                $preguntaId = $p['id'];
+                $nuevaJugada = $this->partidaModel->createJugada($preguntaId, $partidaId);
 
 
-                    $data['preguntas'] = $nuevaPregunta;
-                }
-    
-                $this->renderer->render('jugar', $data);
-            } else {
-                header('location: /');
+                $data['preguntas'] = $nuevaPregunta;
             }
+
+            $this->renderer->render('jugar', $data);
+        } else {
+            header('location: /');
         }
     }
-    
-    
+
+    private function getUsuario()
+    {
+        $nickname = $this->session->get('nickname');
+        $user = $this->partidaModel->getUserByNickname($nickname);
+        return $user[0]['id'];
+    }
 }

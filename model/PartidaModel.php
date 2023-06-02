@@ -26,8 +26,8 @@ class PartidaModel
         return $this->database->query($query);
     }
 
-    public function addPartida(){
-        $query = "INSERT INTO partida (fecha, idUsuario) VALUES (NOW(), 1)";
+    public function addPartida($idUsuario){
+        $query = "INSERT INTO partida (fecha, idUsuario) VALUES (NOW(), $idUsuario)";
         return $this->database->query($query);
     }
 
@@ -54,6 +54,12 @@ class PartidaModel
         return $this->database->query($query);
     }
 
+    public function getUserByNickname($nickname) {
+        $query = "SELECT u.id
+                  FROM Usuario u
+                  WHERE u.nickName LIKE '$nickname'";
+        return $this->database->query($query);
+    }
 
 
 }
