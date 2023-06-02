@@ -12,13 +12,6 @@ class PartidaModel
         return $this->database->query("SELECT * FROM Pregunta");
     }
 
-    public function getPreguntasConOpciones() {
-        $query = "SELECT p.id, p.pregunta, o.opcion1, o.opcion2, o.opcion3, o.opcion4, o.respuestaCorrecta
-                  FROM Pregunta p
-                  INNER JOIN Opcion o ON p.idOpcion = o.id";
-        return $this->database->query($query);
-    }
-
     public function getPartidas($idUsuario) {
         $query = "SELECT p.id, p.fecha, p.idUsuario FROM Partida p WHERE p.idUsuario = $idUsuario";
         return $this->database->query($query);
@@ -42,16 +35,24 @@ class PartidaModel
         $query = "SELECT p.pregunta, o.* 
                   FROM Pregunta p
                   JOIN Opcion o ON p.idOpcion = o.id
-                  ORDER BY p.id DESC 
+                  ORDER BY RAND()
                   LIMIT 1";
         return $this->database->query($query);
     }
 
-    
+    public function createJugada($idPregunta, $idPartida) {
+        $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
+                  VALUES ($idPregunta, $idPartida, null, null)";
+        return $this->database->query($query);
+    }
 
-
-
-
+    public function getRespuestaCorrecta($idPregunta) {
+        $query = "SELECT o.respuestaCorrecta
+                  FROM Pregunta p
+                  INNER JOIN Opcion o ON p.idOpcion = o.id
+                  WHERE p.id = $idPregunta";
+        return $this->database->query($query);
+    }
 
 
 
