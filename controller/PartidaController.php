@@ -12,7 +12,8 @@ class PartidaController
         $this->session = new Session();
     }
 
-    public function list() {
+    public function list()
+    {
         if ($this->session->get('logged')) {
             $this->partidaModel->addPartida($this->getIDUsuarioActual());
             $partidas = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
@@ -27,24 +28,20 @@ class PartidaController
     {
         if ($this->session->get('logged')) {
             $pregunta = $this->partidaModel->getPregunta();
+            $p = $pregunta[0];
+            $preguntaId = $p['id'];
             $data = array('preguntas' => $pregunta);
-            $partida = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
-            $pr = $partida[0];
-            $partidaId = $pr['id'];
+            $partidaId = $this->getIDPartidaActual();         
+            $this->partidaModel->createJugada($preguntaId, $partidaId);
             if (isset($_GET['opcion'])) {
                 $opcionSeleccionada = $_GET['opcion'];
-                // acá se verífica q la opcion sea correcta pero todavía no sé como c: 
-                // Procesar la opción seleccionada y actualizar la lógica según tus necesidades
-                // Obtener una nueva pregunta
-                $nuevaPregunta = $this->partidaModel->getPregunta();
-                $p = $nuevaPregunta[0];
-                $preguntaId = $p['id'];
-                $nuevaJugada = $this->partidaModel->createJugada($preguntaId, $partidaId);
-
-
-                $data['preguntas'] = $nuevaPregunta;
+                $opcionCorrecta = $p['respuestaCorrecta'];
+                if ($opcionSeleccionada == $opcionCorrecta) {
+                    var_dump("Correcta: " . $opcionCorrecta);
+                    var_dump("Seleccionado: " . $opcionSeleccionada);
+                }
             }
-
+            
             $this->renderer->render('jugar', $data);
         } else {
             header('location: /');
@@ -58,15 +55,10 @@ class PartidaController
         return $user[0]['id'];
     }
 
-    private function getIDPartidaActual(){
+    private function getIDPartidaActual()
+    {
         $partida = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
         $pr = $partida[0];
         return $pr['id'];
-    }
-
-    private function getIDPreguntaActual(){
-        $nuevaPregunta = $this->partidaModel->getPregunta();
-        $p = $nuevaPregunta[0];
-        $return = $p['id'];
     }
 }

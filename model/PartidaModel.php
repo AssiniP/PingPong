@@ -61,5 +61,20 @@ class PartidaModel
         return $this->database->query($query);
     }
 
+    public function setPreguntaUsuario($idUsuario, $idPregunta) {
+        $query = "INSERT INTO usuario_pregunta (idUsuario, idPregunta) VALUES ($idUsuario, $idPregunta)";
+        return $this->database->query($query);
+    }
+
+    public function getPreguntasUsuario($idUsuario, $idPregunta) {
+        $query = "SELECT *
+                  FROM usuario_pregunta
+                  WHERE idUsuario = $idUsuario 
+                  AND idPregunta = $idPregunta";
+        return  $this->database->query($query);
+    }
+
+
+
 
 }
