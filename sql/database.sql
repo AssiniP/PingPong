@@ -91,3 +91,4 @@ CREATE TABLE usuario_pregunta (
   FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
   FOREIGN KEY (idPregunta) REFERENCES Pregunta(id)
 );
+
