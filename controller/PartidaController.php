@@ -14,8 +14,8 @@ class PartidaController
 
     public function list() {
         if ($this->session->get('logged')) {
-            $this->partidaModel->addPartida($this->getUsuario());
-            $partidas = $this->partidaModel->getLastPartida($this->getUsuario());
+            $this->partidaModel->addPartida($this->getIDUsuarioActual());
+            $partidas = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
             $data = array('partidas' => $partidas);
             $this->renderer->render('nuevaPartida', $data);
         } else {
@@ -28,7 +28,7 @@ class PartidaController
         if ($this->session->get('logged')) {
             $pregunta = $this->partidaModel->getPregunta();
             $data = array('preguntas' => $pregunta);
-            $partida = $this->partidaModel->getLastPartida(1);
+            $partida = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
             $pr = $partida[0];
             $partidaId = $pr['id'];
             if (isset($_GET['opcion'])) {
@@ -51,10 +51,22 @@ class PartidaController
         }
     }
 
-    private function getUsuario()
+    private function getIDUsuarioActual()
     {
         $nickname = $this->session->get('nickname');
         $user = $this->partidaModel->getUserByNickname($nickname);
         return $user[0]['id'];
+    }
+
+    private function getIDPartidaActual(){
+        $partida = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
+        $pr = $partida[0];
+        return $pr['id'];
+    }
+
+    private function getIDPreguntaActual(){
+        $nuevaPregunta = $this->partidaModel->getPregunta();
+        $p = $nuevaPregunta[0];
+        $return = $p['id'];
     }
 }
