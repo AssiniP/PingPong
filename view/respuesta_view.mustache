@@ -2,18 +2,21 @@
 <div class="respuesta">
     <div>
         {{#puntaje}}
-        <p>{{puntaje}}</p>
+        <p>Puntaje: {{puntaje}}</p>
         {{/puntaje}}
     </div>
     <div>
-    {{#pregunta}}
-    <p>{{pregunta}}</p>
-    {{/pregunta}}
+        {{#pregunta}}
+        <p>{{pregunta}}</p>
+        {{/pregunta}}
+        {{#correcto}}
+        <p>Respuesta Correcta </p>
+        {{/correcto}}
     </div>
     <div>
-    {{#mensaje}}
-    <p>{{mensaje}}</p>
-    {{/mensaje}}
+        {{#mensaje}}
+        <p>{{mensaje}}</p>
+        {{/mensaje}}
     </div>
     <a href="{{url}}">{{texto}}</a>
 

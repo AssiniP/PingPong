@@ -108,7 +108,7 @@ class PartidaModel
     {
         $query = "SELECT COUNT(*) AS count
                   FROM Jugada
-                  WHERE idPartida = $partidaId AND respondidoCorrectamente = true";
+                  WHERE idPartida = $partidaId AND respondidoCorrectamente = 1";
         $result = $this->database->query($query);
         return $result[0]['count'];
     }
@@ -144,6 +144,11 @@ class PartidaModel
         $query = "SELECT id AS count FROM Pregunta ORDER BY id DESC LIMIT 1";
         $result = $this->database->query($query);
         return $result[0]['count'];
+    }
+
+    public function obtenerPuntajeDeLaPartida($idPartida){
+        $query = "SELECT puntaje FROM partida WHERE id = $idPartida";
+        return $this->database->query($query);
     }
 
 
