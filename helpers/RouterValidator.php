@@ -3,9 +3,11 @@ require_once('helpers/Session.php');
 class RouterValidator{
     private $configuration;
     private $router;
+    private $database;
     public function __construct($configuration) {
         $this->configuration = $configuration;
         $this->router = $this->configuration->getRouter();
+        $this->database = $this->configuration->getDatabase();
     }
 
     public function validateRoute($module, $method){
@@ -27,9 +29,9 @@ class RouterValidator{
             case 'pingPong':
             case 'register':
                 return true;
-            case 'partida':
             case 'lobby':
             case 'user':
+            case 'partida':
                 if($this->userIsLogged()){
                     return true;
                 }
@@ -39,6 +41,12 @@ class RouterValidator{
 
     private function userIsLogged(){
         if($_SESSION['logged']){
+            return true;
+        }
+        return false;
+    }
+    private function userIsPlaying() {
+        if (isset($_SESSION['jugando']) && $_SESSION['jugando']) {
             return true;
         }
         return false;
@@ -53,6 +61,30 @@ class RouterValidator{
     }
 
     private function checkMethod($method){
-        return true;
+        switch($method){
+            case 'respuesta':
+                if($this->userIsLogged() && $this->userIsPlaying() && $this->questionExists()){
+                    return true;
+                }
+                return false;
+            default:
+                return true;
+        }
+
+    }
+
+    private function questionExists()
+    {
+        if (isset($_GET['opcion']) || isset($_GET['pregunta'])) {
+            $pregunta = $_GET['pregunta'];
+            $opcion = $_GET['opcion'];
+            $preguntaExistentes = $this->database->query("select count(id) as 'cantidad' from pregunta order by id;");
+            $value = $preguntaExistentes[0]["cantidad"];
+            if ($opcion < 1 || $opcion > 4 || intval($value) < intval($pregunta)) {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
