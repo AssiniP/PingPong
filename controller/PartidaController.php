@@ -31,17 +31,18 @@ class PartidaController
             $p = $pregunta[0];
             $preguntaId = $p['id'];
             $data = array('preguntas' => $pregunta);
-            $partidaId = $this->getIDPartidaActual();         
+            $partidaId = $this->getIDPartidaActual();  
             $this->partidaModel->createJugada($preguntaId, $partidaId);
             if (isset($_GET['opcion'])) {
                 $opcionSeleccionada = $_GET['opcion'];
                 $opcionCorrecta = $p['respuestaCorrecta'];
                 if ($opcionSeleccionada == $opcionCorrecta) {
-                    var_dump("Correcta: " . $opcionCorrecta);
-                    var_dump("Seleccionado: " . $opcionSeleccionada);
+                    $this->partidaModel->updateJugada($preguntaId, $partidaId, true);
                 }
             }
-            
+            $countRespuestasCorrectas = $this->partidaModel->countRespuestasCorrectas($partidaId);
+            $variable = 100 * $countRespuestasCorrectas;
+            var_dump($variable);
             $this->renderer->render('jugar', $data);
         } else {
             header('location: /');
@@ -61,4 +62,6 @@ class PartidaController
         $pr = $partida[0];
         return $pr['id'];
     }
+
+
 }
