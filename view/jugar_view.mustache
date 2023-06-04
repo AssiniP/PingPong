@@ -4,16 +4,17 @@
 {{#preguntas}}
     <div class="partida">
         <div class="pregunta-container cuadro text-center">
-            <p>{{pregunta}}</p>
+            <p>{{pregunta}}</p>.
+            <p>{{id}}</p>
         </div>
         <div class="opciones-container">
             <div class="opcion-col">
-                <a href="/partida/jugar?opcion=1">{{opcion1}}</a>
-                <a href="/partida/jugar?opcion=2">{{opcion2}}</a>
+                <a href="/partida/respuesta?opcion=1&pregunta={{id}}">{{opcion1}}</a>
+                <a href="/partida/respuesta?opcion=2&pregunta={{id}}">{{opcion2}}</a>
             </div>
             <div class="opcion-col">
-                <a href="/partida/jugar?opcion=3">{{opcion3}}</a>
-                <a href="/partida/jugar?opcion=4">{{opcion4}}</a>
+                <a href="/partida/respuesta?opcion=3&pregunta={{id}}">{{opcion3}}</a>
+                <a href="/partida/respuesta?opcion=4&pregunta={{id}}">{{opcion4}}</a>
             </div>
         </div>
     </div>
@@ -21,4 +22,3 @@
 
 </div>
 
-{{> footer}}
