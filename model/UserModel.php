@@ -16,7 +16,7 @@ class UserModel {
     }
 
     public function getHistorial($idUsuario) {
-        return $this->database->query("select fecha, if((puntaje is null),0,puntaje) as puntaje  from Partida   where idUsuario=".$idUsuario . " order by fecha LIMIT 10");
+        return $this->database->query("select fecha, if((puntaje is null),0,puntaje) as puntaje  from Partida   where idUsuario=".$idUsuario . " order by fecha desc LIMIT 10");
     }
     //validar que ni el usuario ni el email ya se encuentren registrados.
     public function check_user($nickname,$email) {
