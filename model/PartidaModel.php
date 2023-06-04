@@ -46,6 +46,13 @@ class PartidaModel
         return $this->database->query($query);
     }
 
+    public function updateJugada($idPregunta, $idPartida, $respondidoCorrectamente) {
+        $query = "UPDATE Jugada
+                  SET respondidoCorrectamente = '$respondidoCorrectamente'
+                  WHERE idPregunta = $idPregunta AND idPartida = $idPartida";
+        return $this->database->query($query);
+    }
+
     public function getRespuestaCorrecta($idPregunta) {
         $query = "SELECT o.respuestaCorrecta
                   FROM Pregunta p
@@ -72,6 +79,14 @@ class PartidaModel
                   WHERE idUsuario = $idUsuario 
                   AND idPregunta = $idPregunta";
         return  $this->database->query($query);
+    }
+
+    public function countRespuestasCorrectas($partidaId) {
+        $query = "SELECT COUNT(*) AS count
+                  FROM Jugada
+                  WHERE idPartida = $partidaId AND respondidoCorrectamente = true";
+        $result = $this->database->query($query);
+        return $result[0]['count'];
     }
 
 
