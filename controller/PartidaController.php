@@ -49,14 +49,21 @@ class PartidaController
                 $this->partidaModel->updateJugada($preguntaId, $idPartida, 1);
             } else {
                 $data['mensaje'] = "FIN DEL JUEGO";
-                $data['url'] = "/lobby/list"; 
-                $data['texto'] = "Fracasado de mierda";
+                $data['url'] = "/lobby/list";
+                $data['texto'] = "Volver al Lobby";
                 $this->partidaModel->updateJugada($preguntaId, $idPartida, 0);
             }
             $data['pregunta'] = $this->partidaModel->getPreguntaByID($preguntaId);
+            $lastPreguntaID = $this->partidaModel->getLastInsertedPreguntaId();
             $this->partidaModel->setPreguntaUsuario($this->partidaModel->getIDUsuarioActual(), $preguntaId);
+            if (intval($lastPreguntaID) == intval($preguntaId)) {
+                $this->partidaModel->deleteUsuarioPartida($this->partidaModel->getIDUsuarioActual());
+            }
             $respuestasCorrectas = $this->partidaModel->countRespuestasCorrectas($idPartida);
+            $puntaje = $this->partidaModel->updatePuntajePartida($idPartida, $respuestasCorrectas);
+            $data['puntaje'] = $puntaje;
 
+            
         } 
         $this->renderer->render('respuesta', $data);
     }

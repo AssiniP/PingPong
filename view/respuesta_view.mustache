@@ -1,6 +1,11 @@
 {{> headerUser}}
 <div class="respuesta">
     <div>
+        {{#puntaje}}
+        <p>{{puntaje}}</p>
+        {{/puntaje}}
+    </div>
+    <div>
     {{#pregunta}}
     <p>{{pregunta}}</p>
     {{/pregunta}}
@@ -11,6 +16,5 @@
     {{/mensaje}}
     </div>
     <a href="{{url}}">{{texto}}</a>
-
 
 </div>
