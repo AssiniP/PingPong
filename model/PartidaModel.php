@@ -38,6 +38,7 @@ class PartidaModel
 
     public function getPregunta($idUsuario)
     {
+
         $query = "SELECT p.pregunta, p.id as 'idPregunta', o.*
         FROM Pregunta p
         JOIN Opcion o ON p.idOpcion = o.id
