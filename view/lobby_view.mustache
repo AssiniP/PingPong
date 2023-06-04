@@ -4,15 +4,15 @@
  <div class="lobby-container mt-10">
     <div class="lobby-user">
         <h1 class="text-white text-3xl mb-20 uppercase">{{nickName}}</h1>
-        <h2 class="text-white text-3xl mb-20">100 Puntos</h2>
+        <h2 class="text-white text-3xl mb-20">{{puntaje}} Puntos</h2>
         <a href="/user/mostrar" ><img src="/public/foto-perfil/{{imagenPerfil}}" class="w-16 h-16 rounded-full border border-yellow-400"></a>
     </div>
     <div class="linea"></div>
     <div class="lobby-buttons">
         <a href="/partida/list" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Crear Partida</a>
         <a href="#" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Crear Pregunta</a>
-        <a href="#" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Ranking</a>
-        <a href="#" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Historial</a>
+        <a href="/lobby/ranking" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Ranking</a>
+        <a href="/lobby/historial" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Historial</a>
         <a href="#" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Salir</a>
     </div>
 </div>

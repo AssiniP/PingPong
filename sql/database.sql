@@ -49,7 +49,8 @@ CREATE TABLE Opcion (
 
 CREATE TABLE Categoria (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL
+    nombre VARCHAR(255) NOT NULL,
+    color VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Pregunta (
