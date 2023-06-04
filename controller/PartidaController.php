@@ -21,6 +21,15 @@ class PartidaController
 
     public function jugar()
     {
+        if ($this->session->get('logged')) {
+            $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
+            var_dump($pregunta);
+            $data = array('preguntas' => $pregunta);
+            $this->renderer->render('jugar', $data);
+        } else {
+            header('location: /');
+        }
+
         $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
         $data = array('preguntas' => $pregunta);
         $this->renderer->render('jugar', $data);

@@ -38,7 +38,8 @@ class PartidaModel
 
     public function getPregunta($idUsuario)
     {
-        $query = "SELECT p.pregunta, p.id, o.* 
+
+        $query = "SELECT p.pregunta, p.id as 'idPregunta', o.*
         FROM Pregunta p
         JOIN Opcion o ON p.idOpcion = o.id
         WHERE p.id NOT IN (
@@ -60,7 +61,7 @@ class PartidaModel
     public function createJugada($idPregunta, $idPartida)
     {
         $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
-                  VALUES ($idPregunta, $idPartida, null, null)";
+                  VALUES ($idPregunta, $idPartida, null, 0)";
         return $this->database->query($query);
     }
 
