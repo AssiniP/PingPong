@@ -42,8 +42,10 @@ class PartidaController
             $this->partidaModel->createJugada($preguntaId, $this->partidaModel->getIDPartidaActual());
             $opcionSeleccionada = $_GET['opcion'];
             $respuestaCorrecta = $this->partidaModel->getRespuestaCorrecta($preguntaId);
+            var_dump($respuestaCorrecta[0]['respuestaCorrecta']);
+            var_dump($opcionSeleccionada);
             $idPartida = $this->partidaModel->getIDPartidaActual();
-            if (intval($opcionSeleccionada) == intval($respuestaCorrecta)) {
+            if (intval($opcionSeleccionada) == intval($respuestaCorrecta[0]['respuestaCorrecta'])) {
                 $data['mensaje'] = "CORRECTO";
                 $data['url'] = "/partida/jugar";
                 $data['texto'] = "Siguiente Pregunta";
