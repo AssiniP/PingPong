@@ -8,13 +8,16 @@ class UserModel {
     }
 
     public function getAllUsers() {
-        return $this->database->query("select u.*, G.nombre genero from usuario U, genero G  where U.idGenero =G.id ");
+        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje from usuario U, genero G  where U.idGenero =G.id ");
     }
 
     public function getUser($nickname) {
-        return $this->database->query("select u.*, G.nombre genero from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
+        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
 
+    public function getHistorial($idUsuario) {
+        return $this->database->query("select fecha, if((puntaje is null),0,puntaje) as puntaje  from Partida   where idUsuario=".$idUsuario . " order by fecha LIMIT 10");
+    }
     //validar que ni el usuario ni el email ya se encuentren registrados.
     public function check_user($nickname,$email) {
         return $this->database->query("SELECT * FROM `usuario` WHERE nickname like '".$nickname."' OR email like '".$email."'");
