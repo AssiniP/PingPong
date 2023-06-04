@@ -3,9 +3,14 @@
 <div class="flex flex-col justify-center items-center justify-items-center">
 {{#preguntas}}
     <div class="partida">
+
+        <div class="pregunta-container cuadro text-center" style="background-color:{{color}}">
+             <p>{{categoria}}</p>
+
+        </div>
         <div class="pregunta-container cuadro text-center">
-            <p>{{pregunta}}</p>.
-            <p>{{idPregunta}}</p>
+            <p>{{pregunta}}</p>
+
         </div>
         <div class="opciones-container">
             <div class="opcion-col">

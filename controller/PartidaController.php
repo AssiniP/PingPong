@@ -21,18 +21,10 @@ class PartidaController
 
     public function jugar()
     {
-        if ($this->session->get('logged')) {
             $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
             var_dump($pregunta);
             $data = array('preguntas' => $pregunta);
             $this->renderer->render('jugar', $data);
-        } else {
-            header('location: /');
-        }
-
-        $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
-        $data = array('preguntas' => $pregunta);
-        $this->renderer->render('jugar', $data);
     }
 
     public function respuesta (){
@@ -41,8 +33,8 @@ class PartidaController
             $this->partidaModel->createJugada($preguntaId, $this->partidaModel->getIDPartidaActual());
             $opcionSeleccionada = $_GET['opcion'];
             $respuestaCorrecta = $this->partidaModel->getRespuestaCorrecta($preguntaId);
-            var_dump($respuestaCorrecta[0]['respuestaCorrecta']);
-            var_dump($opcionSeleccionada);
+            var_dump("Respuesta Correcta". $respuestaCorrecta[0]['respuestaCorrecta']);
+            var_dump("Respuesta Seleccionada" . $opcionSeleccionada);
             $idPartida = $this->partidaModel->getIDPartidaActual();
             if (intval($opcionSeleccionada) == intval($respuestaCorrecta[0]['respuestaCorrecta'])) {
                 $data['mensaje'] = "CORRECTO";
@@ -50,13 +42,13 @@ class PartidaController
                 $data['texto'] = "Siguiente Pregunta";
                 $this->partidaModel->updateJugada($preguntaId, $idPartida, 1);
             } else {
-                $data['mensaje'] = "FIN DEL JUEGO";
+                $data['mensaje'] = "FIN DEL JUEGO. LA RESPUESTA ERA: ".$respuestaCorrecta[0]['opcion'.$respuestaCorrecta[0]['respuestaCorrecta']];
                 $data['url'] = "/lobby/list";
                 $data['texto'] = "Volver al Lobby";
                 $_SESSION['jugando'] = false;
                 $this->partidaModel->updateJugada($preguntaId, $idPartida, 0);
             }
-            $data['pregunta'] = $this->partidaModel->getPreguntaByID($preguntaId);
+           $data['pregunta'] = $this->partidaModel->getPreguntaByID($preguntaId);
             $lastPreguntaID = $this->partidaModel->getLastInsertedPreguntaId();
             $this->partidaModel->setPreguntaUsuario($this->partidaModel->getIDUsuarioActual(), $preguntaId);
             if (intval($lastPreguntaID) == intval($preguntaId)) {
