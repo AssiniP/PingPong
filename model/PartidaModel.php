@@ -38,7 +38,7 @@ class PartidaModel
 
     public function getPregunta($idUsuario)
     {
-        $query = "SELECT p.pregunta, o.* 
+        $query = "SELECT p.pregunta, p.id, o.* 
         FROM Pregunta p
         JOIN Opcion o ON p.idOpcion = o.id
         WHERE p.id NOT IN (
