@@ -15,8 +15,8 @@ class PartidaController
     public function list()
     {
         if ($this->session->get('logged')) {
-            $this->partidaModel->addPartida($this->getIDUsuarioActual());
-            $partidas = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
+            $this->partidaModel->addPartida($this->partidaModel->getIDUsuarioActual());
+            $partidas = $this->partidaModel->getLastPartida($this->partidaModel->getIDUsuarioActual());
             $data = array('partidas' => $partidas);
             $this->renderer->render('nuevaPartida', $data);
         } else {
@@ -27,41 +27,41 @@ class PartidaController
     public function jugar()
     {
         if ($this->session->get('logged')) {
-            $pregunta = $this->partidaModel->getPregunta();
-            $p = $pregunta[0];
-            $preguntaId = $p['id'];
+            $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
             $data = array('preguntas' => $pregunta);
-            $partidaId = $this->getIDPartidaActual();  
-            $this->partidaModel->createJugada($preguntaId, $partidaId);
-            if (isset($_GET['opcion'])) {
-                $opcionSeleccionada = $_GET['opcion'];
-                $opcionCorrecta = $p['respuestaCorrecta'];
-                if ($opcionSeleccionada == $opcionCorrecta) {
-                    $this->partidaModel->updateJugada($preguntaId, $partidaId, true);
-                }
-            }
-            $countRespuestasCorrectas = $this->partidaModel->countRespuestasCorrectas($partidaId);
-            $variable = 100 * $countRespuestasCorrectas;
-            var_dump($variable);
             $this->renderer->render('jugar', $data);
         } else {
             header('location: /');
         }
     }
 
-    private function getIDUsuarioActual()
-    {
-        $nickname = $this->session->get('nickname');
-        $user = $this->partidaModel->getUserByNickname($nickname);
-        return $user[0]['id'];
+    public function respuesta (){
+        if (isset($_GET['opcion']) && isset($_GET['pregunta'])) {
+            $preguntaId = $_GET['pregunta'];
+            $this->partidaModel->createJugada($preguntaId, $this->partidaModel->getIDPartidaActual());
+            $opcionSeleccionada = $_GET['opcion'];
+            $respuestaCorrecta = $this->partidaModel->getRespuestaCorrecta($preguntaId);
+            $idPartida = $this->partidaModel->getIDPartidaActual();
+            if (intval($opcionSeleccionada) == intval($respuestaCorrecta)) {
+                $data['mensaje'] = "CORRECTO";
+                $data['url'] = "/partida/jugar";
+                $data['texto'] = "Siguiente Pregunta";
+                $this->partidaModel->updateJugada($preguntaId, $idPartida, 1);
+            } else {
+                $data['mensaje'] = "FIN DEL JUEGO";
+                $data['url'] = "/lobby/list"; 
+                $data['texto'] = "Fracasado de mierda";
+                $this->partidaModel->updateJugada($preguntaId, $idPartida, 0);
+            }
+            $data['pregunta'] = $this->partidaModel->getPreguntaByID($preguntaId);
+            $this->partidaModel->setPreguntaUsuario($this->partidaModel->getIDUsuarioActual(), $preguntaId);
+            $respuestasCorrectas = $this->partidaModel->countRespuestasCorrectas($idPartida);
+
+        } 
+        $this->renderer->render('respuesta', $data);
     }
 
-    private function getIDPartidaActual()
-    {
-        $partida = $this->partidaModel->getLastPartida($this->getIDUsuarioActual());
-        $pr = $partida[0];
-        return $pr['id'];
-    }
+
 
 
 }
