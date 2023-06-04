@@ -39,13 +39,14 @@ class PartidaModel
     public function getPregunta($idUsuario)
     {
 
-        $query = "SELECT p.pregunta, p.id as 'idPregunta', o.*
+        $query = "SELECT p.pregunta, p.id as 'idPregunta', o.*, C.nombre as 'categoria' , C.color as color
         FROM Pregunta p
         JOIN Opcion o ON p.idOpcion = o.id
+        JOIN categoria C ON p.idCategoria  = C.id
         WHERE p.id NOT IN (
             SELECT up.idPregunta
             FROM usuario_pregunta up
-            WHERE up.idUsuario = $idUsuario
+            WHERE up.idUsuario =  $idUsuario
         )
         ORDER BY p.id
         LIMIT 1";
@@ -75,7 +76,8 @@ class PartidaModel
 
     public function getRespuestaCorrecta($idPregunta)
     {
-        $query = "SELECT o.respuestaCorrecta
+       // $query = "SELECT  o.respuestaCorrecta
+        $query = "SELECT  o.*
                   FROM Pregunta p
                   INNER JOIN Opcion o ON p.idOpcion = o.id
                   WHERE p.id = $idPregunta";
