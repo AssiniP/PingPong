@@ -51,7 +51,8 @@ class PartidaModel
         return $this->database->query($query);
     }
 
-    public function getPreguntaByID ($idPregunta){
+    public function getPreguntaByID($idPregunta)
+    {
         $query = "SELECT p.pregunta FROM pregunta p WHERE id = $idPregunta";
         return $this->database->query($query);
     }
@@ -126,7 +127,24 @@ class PartidaModel
         return $pr['id'];
     }
 
+    public function updatePuntajePartida($idPartida, $nuevoPuntaje)
+    {
+        $query = "UPDATE Partida
+                  SET puntaje = $nuevoPuntaje
+                  WHERE id = $idPartida";
+        return $this->database->query($query);
+    }
 
+    public function deleteUsuarioPartida($idUsuario){
+        $query = "DELETE FROM usuario_pregunta WHERE idUsuario = $idUsuario";
+        return $this->database->query($query);
+    }
+
+    public function getLastInsertedPreguntaId() {
+        $query = "SELECT id AS count FROM Pregunta ORDER BY id DESC LIMIT 1";
+        $result = $this->database->query($query);
+        return $result[0]['count'];
+    }
 
 
 }
