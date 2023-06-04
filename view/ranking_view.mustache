@@ -11,8 +11,9 @@
     <div>
      {{#usuario}}
         <div class="lobby-user">
+                {{nick}}
                 <img src="/public/foto-perfil/{{imagenPerfil}}" class="w-16 h-16 rounded-full border border-yellow-400">
-                  <a href="/user/seeProfile&{{nick}}" ><img src="/public/qr-perfil/qr_code_{{nick}}.png" class="w-16 h-16 rounded-full border border-yellow-400"></a>
+                  <a href="/user/seeProfile&nick={{nickName}}" ><img src="/public/qr-perfil/qr_code_{{nickName}}.png" class="w-16 h-16 rounded-full border border-yellow-400"></a>
                   <p>{{puntaje}} </p>
         </div>
 
