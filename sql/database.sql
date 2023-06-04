@@ -34,6 +34,7 @@ CREATE TABLE Partida (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE NOT NULL,
 	idUsuario INT NOT NULL,
+    puntaje INT,
 	FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
 
@@ -68,7 +69,7 @@ CREATE TABLE Jugada (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idPregunta INT NOT NULL,
     idPartida INT NOT NULL,
-	tiempo TIME NOT NULL,
+	tiempo TIME,
     FOREIGN KEY (idPartida) REFERENCES Partida (id),
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
 	respondidoCorrectamente BOOLEAN DEFAULT FALSE
@@ -91,4 +92,3 @@ CREATE TABLE usuario_pregunta (
   FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
   FOREIGN KEY (idPregunta) REFERENCES Pregunta(id)
 );
-

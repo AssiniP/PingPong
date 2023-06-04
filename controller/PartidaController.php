@@ -52,15 +52,14 @@ class PartidaController
                 $this->partidaModel->deleteUsuarioPartida($this->partidaModel->getIDUsuarioActual());
             }
             $respuestasCorrectas = $this->partidaModel->countRespuestasCorrectas($idPartida);
-            $puntaje = $this->partidaModel->updatePuntajePartida($idPartida, $respuestasCorrectas);
+            $this->partidaModel->updatePuntajePartida($idPartida, $respuestasCorrectas);
+            $puntaje = $this->partidaModel->obtenerPuntajeDeLaPartida($idPartida);
             $data['puntaje'] = $puntaje;
-        }
-        //header('location: /partida/respuesta');
-        $this->renderer->render('respuesta', $data);
+            $this->renderer->render('respuesta', $data);
 
     }
 
 
 
 
-}
+}}
