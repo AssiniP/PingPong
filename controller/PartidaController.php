@@ -22,7 +22,6 @@ class PartidaController
     public function jugar()
     {
             $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
-            var_dump($pregunta);
             $data = array('preguntas' => $pregunta);
             $this->renderer->render('jugar', $data);
     }
