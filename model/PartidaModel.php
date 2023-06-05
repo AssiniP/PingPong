@@ -76,7 +76,7 @@ class PartidaModel
 
     public function getRespuestaCorrecta($idPregunta)
     {
-       // $query = "SELECT  o.respuestaCorrecta
+        // $query = "SELECT  o.respuestaCorrecta
         $query = "SELECT  o.*
                   FROM Pregunta p
                   INNER JOIN Opcion o ON p.idOpcion = o.id
@@ -138,21 +138,75 @@ class PartidaModel
         return $this->database->query($query);
     }
 
-    public function deleteUsuarioPartida($idUsuario){
+    public function deleteUsuarioPartida($idUsuario)
+    {
         $query = "DELETE FROM usuario_pregunta WHERE idUsuario = $idUsuario";
         return $this->database->query($query);
     }
 
-    public function getLastInsertedPreguntaId() {
+    public function getLastInsertedPreguntaId()
+    {
         $query = "SELECT id AS count FROM Pregunta ORDER BY id DESC LIMIT 1";
         $result = $this->database->query($query);
         return $result[0]['count'];
     }
 
-    public function obtenerPuntajeDeLaPartida($idPartida){
+    public function obtenerPuntajeDeLaPartida($idPartida)
+    {
         $query = "SELECT puntaje FROM partida WHERE id = $idPartida";
         return $this->database->query($query);
     }
+
+    public function jugarJuego()
+    {
+        $preguntaId = $_GET['pregunta'];
+        $this->createJugada($preguntaId, $this->getIDPartidaActual());
+        $idPartida = $this->getIDPartidaActual();
+        $data['pregunta'] = $this->getPreguntaByID($preguntaId);
+        $lastPreguntaID = $this->getLastInsertedPreguntaId();
+        $this->setPreguntaUsuario($this->getIDUsuarioActual(), $preguntaId);
+        if (intval($lastPreguntaID) == intval($preguntaId)) {
+            $this->deleteUsuarioPartida($this->getIDUsuarioActual());
+        }
+        $respuestasCorrectas = $this->countRespuestasCorrectas($idPartida);
+        $this->updatePuntajePartida($idPartida, $respuestasCorrectas);
+        $puntaje = $this->obtenerPuntajeDeLaPartida($idPartida);
+        $data['puntaje'] = $puntaje;
+    }
+
+    public function juego()
+    {
+        $arrayDatos = array();
+        $idPartida = $this->getIDPartidaActual();
+        $preguntaId = $_GET['pregunta'];
+        $this->createJugada($preguntaId, $this->getIDPartidaActual());
+        $opcionSeleccionada = $_GET['opcion'];
+        $respuestaCorrecta = $this->getRespuestaCorrecta($preguntaId);
+        if (intval($opcionSeleccionada) == intval($respuestaCorrecta[0]['respuestaCorrecta'])) {
+            $arrayDatos['mensaje'] = "CORRECTO";
+            $arrayDatos['url'] = "/partida/jugar";
+            $arrayDatos['texto'] = "Siguiente Pregunta";
+            $this->updateJugada($preguntaId, $idPartida, 1);
+        } else {
+            $arrayDatos['mensaje'] = "FIN DEL JUEGO. LA RESPUESTA ERA: " . $respuestaCorrecta[0]['opcion' . $respuestaCorrecta[0]['respuestaCorrecta']];
+            $arrayDatos['url'] = "/lobby/list";
+            $arrayDatos['texto'] = "Volver al Lobby";
+            $_SESSION['jugando'] = false;
+            $this->updateJugada($preguntaId, $idPartida, 0);
+        }
+        $lastPreguntaID = $this->getLastInsertedPreguntaId();
+        $this->setPreguntaUsuario($this->getIDUsuarioActual(), $preguntaId);
+        if (intval($lastPreguntaID) == intval($preguntaId)) {
+            $this->deleteUsuarioPartida($this->getIDUsuarioActual());
+        }
+        $arrayDatos['pregunta'] = $this->getPreguntaByID($preguntaId);
+        $respuestasCorrectas = $this->countRespuestasCorrectas($idPartida);
+        $this->updatePuntajePartida($idPartida, $respuestasCorrectas);
+        $puntaje = $this->obtenerPuntajeDeLaPartida($idPartida);
+        $arrayDatos['puntaje'] = $puntaje;
+        return array('arrayDatos' => $arrayDatos);
+    }
+
 
 
 }
