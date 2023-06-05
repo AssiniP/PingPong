@@ -21,46 +21,18 @@ class PartidaController
 
     public function jugar()
     {
-            $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
-            var_dump($pregunta);
-            $data = array('preguntas' => $pregunta);
-            $this->renderer->render('jugar', $data);
+        $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
+        $data = array('preguntas' => $pregunta);
+        $this->renderer->render('jugar', $data);
     }
-
-    public function respuesta (){
-        if (isset($_GET['opcion']) && isset($_GET['pregunta'])) {
-            $preguntaId = $_GET['pregunta'];
-            $this->partidaModel->createJugada($preguntaId, $this->partidaModel->getIDPartidaActual());
-            $opcionSeleccionada = $_GET['opcion'];
-            $respuestaCorrecta = $this->partidaModel->getRespuestaCorrecta($preguntaId);
-            $idPartida = $this->partidaModel->getIDPartidaActual();
-            if (intval($opcionSeleccionada) == intval($respuestaCorrecta[0]['respuestaCorrecta'])) {
-                $data['mensaje'] = "CORRECTO";
-                $data['url'] = "/partida/jugar";
-                $data['texto'] = "Siguiente Pregunta";
-                $this->partidaModel->updateJugada($preguntaId, $idPartida, 1);
-            } else {
-                $data['mensaje'] = "FIN DEL JUEGO. LA RESPUESTA ERA: ".$respuestaCorrecta[0]['opcion'.$respuestaCorrecta[0]['respuestaCorrecta']];
-                $data['url'] = "/lobby/list";
-                $data['texto'] = "Volver al Lobby";
-                $_SESSION['jugando'] = false;
-                $this->partidaModel->updateJugada($preguntaId, $idPartida, 0);
-            }
-           $data['pregunta'] = $this->partidaModel->getPreguntaByID($preguntaId);
-            $lastPreguntaID = $this->partidaModel->getLastInsertedPreguntaId();
-            $this->partidaModel->setPreguntaUsuario($this->partidaModel->getIDUsuarioActual(), $preguntaId);
-            if (intval($lastPreguntaID) == intval($preguntaId)) {
-                $this->partidaModel->deleteUsuarioPartida($this->partidaModel->getIDUsuarioActual());
-            }
-            $respuestasCorrectas = $this->partidaModel->countRespuestasCorrectas($idPartida);
-            $this->partidaModel->updatePuntajePartida($idPartida, $respuestasCorrectas);
-            $puntaje = $this->partidaModel->obtenerPuntajeDeLaPartida($idPartida);
-            $data['puntaje'] = $puntaje;
-            $this->renderer->render('respuesta', $data);
-
+    public function respuesta()
+    {
+        $arrayDatos = $this->partidaModel->juego();
+        $data['mensaje'] = $arrayDatos['arrayDatos']['mensaje'];
+        $data['url'] = $arrayDatos['arrayDatos']['url'];
+        $data['texto'] = $arrayDatos['arrayDatos']['texto'];
+        $data['pregunta'] = $arrayDatos['arrayDatos']['pregunta'];
+        $data['puntaje'] = $arrayDatos['arrayDatos']['puntaje'];
+        $this->renderer->render('respuesta', $data);
     }
-
-
-
-
-}}
+}
