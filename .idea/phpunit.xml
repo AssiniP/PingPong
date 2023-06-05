@@ -21,7 +21,10 @@
         <option value="$PROJECT_DIR$/third-party/mustache/tests" />
         <option value="$PROJECT_DIR$/third-party/mustache/tests" />
         <option value="$PROJECT_DIR$/third-party/mustache/tests" />
+<<<<<<< HEAD
+=======
         <option value="$PROJECT_DIR$/third-party/mustache/tests" />
+>>>>>>> b8643664a6a1f185f2204b40023e1af942c012bb
       </list>
     </option>
   </component>

@@ -1,23 +1,30 @@
 {{> headerUser}}
-<div class="respuesta">
-    <div>
-        {{#puntaje}}
-        <p>Puntaje: {{puntaje}}</p>
-        {{/puntaje}}
-    </div>
-    <div>
+<div class="flex flex-col justify-center items-center justify-items-center">
+<div class="partida">
+
+ <div class="pregunta-container cuadro text-center">
         {{#pregunta}}
         <p>{{pregunta}}</p>
         {{/pregunta}}
+
         {{#correcto}}
         <p>Respuesta Correcta </p>
         {{/correcto}}
     </div>
-    <div>
-        {{#mensaje}}
-        <p>{{mensaje}}</p>
-        {{/mensaje}}
-    </div>
-    <a href="{{url}}">{{texto}}</a>
 
+    <div class="pregunta-container cuadro text-center">
+            {{#mensaje}}
+            <p>{{mensaje}}</p>
+            {{/mensaje}}
+     </div>
+
+     <div class="pregunta-container cuadro text-center">
+        {{#puntaje}}
+        <p>Puntaje: {{puntaje}}</p>
+        {{/puntaje}}
+    </div>
+
+
+    <a href="{{url}}" class="bg-yellow-500 border border-back text-black rounded p-2">{{texto}}</a>
+    </div>
 </div>
