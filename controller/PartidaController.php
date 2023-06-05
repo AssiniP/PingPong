@@ -25,7 +25,6 @@ class PartidaController
         $data = array('preguntas' => $pregunta);
         $this->renderer->render('jugar', $data);
     }
-
     public function respuesta()
     {
         $arrayDatos = $this->partidaModel->juego();
