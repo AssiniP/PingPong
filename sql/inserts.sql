@@ -8,11 +8,13 @@ insert into genero (nombre) values ('Masculino');
 insert into genero (nombre) values ('Femenino');
 insert into genero (nombre) values ('Prefiero no cargarlo');
 
-INSERT INTO Categoria (nombre,color) VALUES ('Historia','#4BA3C3');
-INSERT INTO Categoria (nombre,color) VALUES ('Geografía','#175676');
-INSERT INTO Categoria (nombre,color) VALUES ('Ciencia','yellow');
-INSERT INTO Categoria (nombre,color) VALUES ('Arte','orange');
-INSERT INTO Categoria (nombre,color) VALUES ('Deportes','green');
+
+INSERT INTO Categoria (nombre) VALUES ('Historia','#4BA3C3');
+INSERT INTO Categoria (nombre) VALUES ('Geografía','#175676');
+INSERT INTO Categoria (nombre) VALUES ('Ciencia','yellow');
+INSERT INTO Categoria (nombre) VALUES ('Arte','orange');
+INSERT INTO Categoria (nombre) VALUES ('Deportes','green');
+
 
 INSERT INTO `pingpong`.`usuario` (`id`, `nickName`, `password`, `nombre`, `email`, `ubicacion`, `imagenPerfil`, `pais`, `ciudad`, `idRol`, `cuentaValida`, `idGenero`,`fecharegistro`) VALUES ('100', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'admin@mail.com', 'admin', '', 'admin', 'admin', '1', '1', '3',now());
 
