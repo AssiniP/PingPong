@@ -1,30 +1,44 @@
 {{> headerUser}}
 <div class="flex flex-col justify-center items-center justify-items-center">
-<div class="partida">
+    <div class="partida">
 
- <div class="pregunta-container cuadro text-center">
-        {{#pregunta}}
-        <p>{{pregunta}}</p>
-        {{/pregunta}}
+        <div class="pregunta-container cuadro text-center">
+            {{#pregunta}}
+                <p>{{pregunta}}</p>
+            {{/pregunta}}
 
-        {{#correcto}}
-        <p>Respuesta Correcta </p>
-        {{/correcto}}
-    </div>
+            {{#correcto}}
+                <p>Respuesta Correcta </p>
+            {{/correcto}}
+        </div>
 
-    <div class="pregunta-container cuadro text-center">
+        <div class="pregunta-container cuadro text-center">
             {{#mensaje}}
-            <p>{{mensaje}}</p>
+                <p>{{mensaje}}</p>
             {{/mensaje}}
-     </div>
+        </div>
 
-     <div class="pregunta-container cuadro text-center">
-        {{#puntaje}}
-        <p>Puntaje: {{puntaje}}</p>
-        {{/puntaje}}
-    </div>
+        <div class="pregunta-container cuadro text-center">
+            {{#puntaje}}
+                <p>Puntaje: {{puntaje}}</p>
+            {{/puntaje}}
+        </div>
 
 
-    <a href="{{url}}" class="bg-yellow-500 border border-back text-black rounded p-2">{{texto}}</a>
+        <a href="{{url}}" class="bg-yellow-500 border border-back text-black rounded p-2">{{texto}}</a>
+
+
     </div>
 </div>
+<footer class="footer">
+    <div class="footer-text">
+        <p>&copy; Programación Web II 2023 </p>
+    </div>
+</footer>
+<script>
+    setTimeout(function() {
+        window.location.href = "{{url}}";
+    }, 5000);
+</script>
+</body>
+</html>
