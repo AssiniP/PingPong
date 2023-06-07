@@ -1,5 +1,4 @@
 <?php
-require_once('helpers/Session.php');
 class RouterValidator{
     private $configuration;
     private $router;
