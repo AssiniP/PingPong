@@ -8,21 +8,12 @@ insert into genero (nombre) values ('Masculino');
 insert into genero (nombre) values ('Femenino');
 insert into genero (nombre) values ('Prefiero no cargarlo');
 
-
-<<<<<<< HEAD
-INSERT INTO Categoria (nombre) VALUES ('Historia','#4BA3C3');
-INSERT INTO Categoria (nombre) VALUES ('Geografía','#175676');
-INSERT INTO Categoria (nombre) VALUES ('Ciencia','yellow');
-INSERT INTO Categoria (nombre) VALUES ('Arte','orange');
-INSERT INTO Categoria (nombre) VALUES ('Deportes','green');
-
-=======
 INSERT INTO Categoria (nombre,color) VALUES ('Historia','#4BA3C3');
 INSERT INTO Categoria (nombre,color) VALUES ('Geografía','#175676');
 INSERT INTO Categoria (nombre,color) VALUES ('Ciencia','yellow');
 INSERT INTO Categoria (nombre,color) VALUES ('Arte','orange');
 INSERT INTO Categoria (nombre,color) VALUES ('Deportes','green');
->>>>>>> 1f070fe8bb760e76a6494518fb9efb8fffc1c92b
+
 
 -- Opciones para la pregunta 1
 INSERT INTO Opcion (opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
@@ -62,8 +53,6 @@ VALUES ('¿Quién descubrió la ley de la gravedad?', 4, 3, 1, 0, 0);
 
 -- Pregunta 5
 INSERT INTO Pregunta (pregunta, idOpcion, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias)
-<<<<<<< HEAD
-VALUES ('¿Quién escribió la obra "Romeo y Julieta"?', 5, 1, 100, 0, 0);
-=======
+
 VALUES ('¿Quién escribió la obra "Romeo y Julieta"?', 5, 1, 1, 0, 0);
->>>>>>> 1f070fe8bb760e76a6494518fb9efb8fffc1c92b
+

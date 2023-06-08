@@ -1,6 +1,11 @@
 {{> headerUser}}
 
 <div class="flex flex-col justify-center items-center justify-items-center">
+    <div class="container flex flex-col justify-center items-center mt-5 shadow-lg rounded-full bg-black p-2 w-28 h-28 border border-orange-300 ">
+        <div class="clock text-gray-200 text-6xl text-center">
+            <input class="number" id="startNumber" type="text" maxlength="2" value="10">
+        </div>
+    </div>
 {{#preguntas}}
     <div class="partida">
 
@@ -26,4 +31,58 @@
 {{/preguntas}}
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
+<script>
+    let input, clock, alarm, number, repeater; /* Declaro todas las variables que necesito */
 
+    window.addEventListener('load', () => {
+        /* Espero a que cargue el documento */
+        input = document.getElementById('startNumber'); /* Busco los inputs */
+        clock = document.querySelector('.clock'); /* Busco el reloj */
+        startTimer();
+    });
+
+    /* Funcion principal */
+    function startTimer() {
+        parseTime(); /* Busco y transformo los valores del input a numeros */
+        setTimer(); /* Seteo el timer visualmente */
+        countdown() /* Arranco el contador */
+    }
+
+    /* Funcion para cambiar el timer en la pantalla y en la pestaña */
+    function setTimer() {
+        /* Cambio la hora en pantalla */
+        clock.innerHTML = `<p class="number">${number > 9 ? number : ('0' + number)}</p>`;
+
+
+    }
+
+    /* Funcion para convertir el string del input a numeros */
+    function parseTime() {
+
+        number = Number(input.value);
+
+    }
+
+    /* Funcion que arranca el contador */
+    function countdown() {
+        repeater = setInterval(runner, 1000);
+    }
+
+    /* Funcion que cuenta */
+    function runner() {
+
+
+        if (number > 0) {
+            number--;
+        } else {
+            //poner una animacion de que perdio
+            setTimeout(function() { window.location.href = "/lobby/list"}, 1000);
+        }
+
+        setTimer();
+    }
+
+
+
+</script>
