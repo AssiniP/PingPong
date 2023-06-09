@@ -26,6 +26,9 @@ class RegisterController
             $errorMsg[] = 'Ya existe el mail y/o el usuario';
         }
 
+        if(!$this->checkUbicacionMapa()) {
+            $errorMsg[] = "Marcar la Ubicacion del Mapa con click Derecho";
+        }
         $data['errorMsg'] = $errorMsg;
 
         if(!empty($errorMsg)){
@@ -46,9 +49,10 @@ class RegisterController
             'password' => md5($_POST['password']),
             'email' => $_POST['email'],
             'nombre' => $_POST['nombre'],
-            'ubicacion' => $_POST['ubicacion'],
             'imagenPerfil' => $imgPath,
             'pais' => $_POST['pais'],
+            'latitud' => $_POST['latitud'],
+            'longitud' => $_POST['longitud'],
             'idGenero' => $_POST['idGenero'],
             'ciudad' => $_POST['ciudad'],
             'idRol' => 3];
@@ -60,7 +64,7 @@ class RegisterController
 
     private function checkThatUserFormIsNotEmpty(){
         if(empty($_POST['nickName']) || empty($_POST['email']) || empty($_POST['password']) ||
-            empty($_POST['repassword']) || empty($_POST['nombre']) || empty($_POST['ubicacion']) ||
+            empty($_POST['repassword']) || empty($_POST['nombre']) ||
             $_FILES['imagenPerfil']['error'] == 4 || empty($_POST['pais']) || empty($_POST['idGenero']) ||
             empty($_POST['ciudad'])){
             return false;
@@ -70,6 +74,14 @@ class RegisterController
 
     private function checkMatchingPassword(){
         if($_POST['password'] != $_POST['repassword']){
+            return false;
+        }
+        return true;
+    }
+
+
+    private function checkUbicacionMapa(){
+        if(empty($_POST['latitud'] ) || empty($_POST['longitud'])){
             return false;
         }
         return true;
