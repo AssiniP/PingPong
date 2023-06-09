@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/public/css/estilo.css">
-</head>
 
-<body class="m-auto font-sans bg-cyan-100 h-4/5 w-8/12 opacity-90 mt-32 p-0">
+     <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyAiq3xISXSZYgkd9GDAOdajy4NK2d3L7dY"&libraries=places></script>
+    </head>
+    <body onload="loadMap()" class="m-auto font-sans bg-cyan-100 h-4/5 w-8/12 opacity-90 mt-32 p-0">
     <div
         class="cuadro flex flex-col justify-center items-center justify-items-center text-center text-green-700 bg-white p-5 w-full rounded">
         <a class="header-logo" id="logo-header" href="/"><img src="../../public/img/prueba-logo.png" alt="LOGO" class="h-32 w-40 m-auto"></a>
@@ -38,10 +39,10 @@
                 <label for="email" class="mr-2 ml-2">Email:</label>
                 <input type="email" id="email" name="email" required
                     class=" rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-
-                <label for="ubicacion" class="mr-2 ml-2">Ubicación:</label>
-                <input type="text" id="ubicacion" name="ubicacion" required
+            <label for="ciudad" class="mr-2 ml-2">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" required
                     class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+
             </div>
             <div class="flex flex-row md:grid-cols-1  justify-center items-center">
                 <label for="imagenPerfil" class="mr-2 ml-2">Imagen de Perfil:</label>
@@ -53,23 +54,29 @@
                 <input type="text" id="pais" name="pais" required
                     class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
 
-                <label for="ciudad" class="mr-2 ml-2">Ciudad:</label>
-                <input type="text" id="ciudad" name="ciudad" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
             </div>
-            <div class="flex flex-row md:grid-cols-1  justify-center items-center">
-                <label for="idGenero" class="mr-2 ml-2">Género:</label>
-                  <select id="idGenero" name="idGenero" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2">
-                    <option value="">Seleccionar</option>
-                  {{#verGenero}}
-                        <option value={{id}}>{{nombre}}</option>
-                   {{/verGenero}}
-                </select><br><br>
+             <div class="flex flex-row md:grid-cols-1  justify-center items-center">
+            <label for="idGenero" class="mr-2 ml-2">Género:</label>
+                              <select id="idGenero" name="idGenero" required
+                                class="rounded border border-2 border-green-300 h-4/5 px-2">
+                                <option value="">Seleccionar</option>
+                              {{#verGenero}}
+                                    <option value={{id}}>{{nombre}}</option>
+                               {{/verGenero}}
+                            </select><br><br>
 
+
+
+            </div>
+              <input type="text" id="latitud" name="latitud" hidden >
+              <input type="text" id="longitud" name="longitud" hidden >
+        <div class="flex flex-row md:grid-cols-1  justify-center items-center">
+            <div id="mapa" style="width:500px; height:200px;">
+            </div>
                 <input type="submit" value="Enviar"
                     class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5">
-            </div>
+       </div>
+
         </form>
 
     </div>
@@ -80,6 +87,7 @@
 
 </html>
 <!--Perdon me daba cosa dejar la foto de perfil sin chequear-->
+ <script src="/public/js/scripts.js"></script>
 <script type="text/javascript">
     function checkFileSize(maxSize) {
         let input = document.getElementById("imagenPerfil");

@@ -40,9 +40,9 @@ class MySqlDatabase {
     public function insertUser($query, $userData){
         $stmt = $this->connection->prepare($query);
 
-        $stmt->bind_param("sssssssiss",$userData['nickName'], $userData['password'], $userData['nombre'],
-            $userData['email'], $userData['ubicacion'], $userData['imagenPerfil'], $userData['pais'],
-            $userData['idRol'], $userData['idGenero'], $userData['ciudad']);
+        $stmt->bind_param("ssssssissdd",$userData['nickName'], $userData['password'], $userData['nombre'],
+            $userData['email'], $userData['imagenPerfil'], $userData['pais'],
+            $userData['idRol'], $userData['idGenero'], $userData['ciudad'], $userData['latitud'], $userData['longitud']);
         $stmt->execute();
         $stmt->close();
     }
