@@ -27,14 +27,16 @@ class RouterValidator{
             case 'login':
             case 'pingPong':
             case 'register':
+            case 'api':
                 return true;
             case 'lobby':
             case 'user':
             case 'partida':
                 if($this->userIsLogged()){
                     return true;
+                }else {
+                    return false;
                 }
-                return false;
         }
     }
 

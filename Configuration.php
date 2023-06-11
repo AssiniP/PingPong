@@ -47,9 +47,14 @@ class Configuration {
         include_once ('controller/PartidaController.php');
         include_once ('model/PartidaModel.php');
         include_once ('model/UserModel.php');
-        return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer(), new UserModel($this->getDatabase()));
+        return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer());
     }
 
+    public function getAPIController()
+    {
+        include_once('controller/APIController.php');
+        return new APIController();
+    }
 
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);

@@ -1,18 +1,18 @@
 {{> headerUser}}
 <div class="flex flex-col items-center justify-center mt-24 text-white">
     <div class="clock text-gray-200 text-6xl text-center">
-        <p id="numero" class="hidden">10</p>
+  <p id="numero" class="number">10</p>
     </div>
-{{#partidas}}
-<p class="m-5 hidden">Fecha: {{fecha}}</p>
-<p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
-{{/partidas}}
-    <a class="bg-yellow-500 border border-back text-black text-6xl rounded p-5" id="btn-jugar" onclick="consultarAPI()">JUGAR</a>
+    {{#partidas}}
+        <p class="m-5 hidden">Fecha: {{fecha}}</p>
+        <p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
+    {{/partidas}}
+
     <div id="contenedor-categoria">
         <p id="categoria" class="text-6xl"></p>
     </div>
     <div id="contenedor-pregunta">
-    <p id="pregunta" class="text-6xl"></p>
+        <p id="pregunta" class="text-6xl"></p>
     </div>
     <div class="opciones-container">
         <div class="opcion-col">
@@ -26,3 +26,8 @@
     </div>
 </div>
 <script src="/public/js/consultaApiPregunta.js"></script>
+<script>
+    window.addEventListener('load', () => {
+        consultarAPI();
+    });
+</script>

@@ -34,7 +34,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
 <script>
     let input, clock, alarm, number, repeater; /* Declaro todas las variables que necesito */
-
     window.addEventListener('load', () => {
         /* Espero a que cargue el documento */
         input = document.getElementById('startNumber'); /* Busco los inputs */
@@ -54,7 +53,6 @@
         /* Cambio la hora en pantalla */
         clock.innerHTML = `<p class="number">${number > 9 ? number : ('0' + number)}</p>`;
 
-
     }
 
     /* Funcion para convertir el string del input a numeros */
@@ -71,8 +69,6 @@
 
     /* Funcion que cuenta */
     function runner() {
-
-
         if (number > 0) {
             number--;
         } else {
@@ -82,7 +78,6 @@
 
         setTimer();
     }
-
-
-
 </script>
+
+

@@ -184,7 +184,7 @@ class PartidaModel
         $respuestaCorrecta = $this->getRespuestaCorrecta($preguntaId);
         if (intval($opcionSeleccionada) == intval($respuestaCorrecta[0]['respuestaCorrecta'])) {
             $arrayDatos['mensaje'] = "CORRECTO";
-            $arrayDatos['url'] = "/partida/jugar";
+            $arrayDatos['url'] = "/partida/jugada";
             $arrayDatos['texto'] = "Siguiente Pregunta";
             $this->updateJugada($preguntaId, $idPartida, 1);
         } else {
