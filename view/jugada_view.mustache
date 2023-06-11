@@ -1,8 +1,9 @@
 {{> headerUser}}
-<div class="flex flex-col items-center justify-center mt-24 text-white">
-    <div class="clock text-gray-200 text-6xl text-center">
-  <p id="numero" class="number">10</p>
-    </div>
+<div class="flex flex-row items-center justify-center">
+<div class="clock text-gray-200 text-5xl text-center">
+    <p id="numero" class="hidden">10</p>
+</div>
+<div class="flex flex-col items-center justify-center m-12 text-white">
     {{#partidas}}
         <p class="m-5 hidden">Fecha: {{fecha}}</p>
         <p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
@@ -24,6 +25,7 @@
             <a id="opcion4" ></a>
         </div>
     </div>
+</div>
 </div>
 <script src="/public/js/consultaApiPregunta.js"></script>
 <script>
