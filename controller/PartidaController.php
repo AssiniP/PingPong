@@ -19,11 +19,11 @@ class PartidaController
         $this->renderer->render('nuevaPartida', $data);
     }
 
-    public function jugar()
-    {
-        $pregunta = $this->partidaModel->getPregunta($this->partidaModel->getIDUsuarioActual());
-        $data = array('preguntas' => $pregunta);
-        $this->renderer->render('jugar', $data);
+    public function jugada()
+    { $this->partidaModel->addPartida($this->partidaModel->getIDUsuarioActual());
+        $partidas = $this->partidaModel->getLastPartida($this->partidaModel->getIDUsuarioActual());
+        $data = array('partidas' => $partidas);
+        $this->renderer->render('jugada', $data);
     }
     public function respuesta()
     {

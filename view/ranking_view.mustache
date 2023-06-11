@@ -10,10 +10,10 @@
     </div>
     <div>
      {{#usuario}}
-        <div class="flex flex-col md:flex-row">
-                <img src="/public/foto-perfil/{{imagenPerfil}}" class="w-20 h-20 rounded-full border border-yellow-400 m-5">
-               <div class="w-32 m-5"> <p class="text-white font-sans text-3xl uppercase">{{nickName}} </p></div>
-                <a href="/user/seeProfile&nick={{nickName}}" class="m-5"><img src="/public/qr-perfil/qr_code_{{nickName}}.png" class="w-24 h-24 rounded border border-yellow-400"></a>
+        <div class="flex flex-col md:flex-row text-gray-200 items-center">
+                <img src="/public/foto-perfil/{{imagenPerfil}}" class="w-28 h-28 rounded-full border border-yellow-400 m-5">
+               <div class="w-32 m-5 text-center"> <p class="text-white font-sans text-3xl uppercase">{{nickName}} </p></div>
+                <a href="/user/seeProfile&nick={{nickName}}" class="m-5"><img src="/public/qr-perfil/qr_code_{{nickName}}.png" class="w-28 h-28 rounded border border-yellow-400"></a>
                 <p class="text-white font-sans text-6xl m-5">{{puntaje}} </p>
         </div>
 
