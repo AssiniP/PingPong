@@ -20,7 +20,7 @@ class PartidaController
     }
 
     public function jugada()
-    { $this->partidaModel->addPartida($this->partidaModel->getIDUsuarioActual());
+    {
         $partidas = $this->partidaModel->getLastPartida($this->partidaModel->getIDUsuarioActual());
         $data = array('partidas' => $partidas);
         $this->renderer->render('jugada', $data);
