@@ -1,13 +1,14 @@
 {{> headerUser}}
-<div class="flex flex-col items-center justify-center mt-24 text-white">
-    <div class="clock text-gray-200 text-6xl text-center">
+<div class="flex flex-row items-center justify-center">
+    <div class="clock text-gray-200 text-5xl text-center">
         <p id="numero" class="hidden">10</p>
     </div>
+    <div class="flex flex-col items-center justify-center m-12 text-white">
 {{#partidas}}
 <p class="m-5 hidden">Fecha: {{fecha}}</p>
 <p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
 {{/partidas}}
-    <a class="bg-yellow-500 border border-back text-black text-6xl rounded p-5" id="btn-jugar" onclick="consultarAPI()">JUGAR</a>
+    <a class="bg-yellow-500 border border-back text-black text-5xl rounded p-5 m-5" id="btn-jugar" onclick="consultarAPI()">JUGAR</a>
     <div id="contenedor-categoria">
         <p id="categoria" class="text-6xl"></p>
     </div>
@@ -23,6 +24,7 @@
             <a id="opcion3" ></a>
             <a id="opcion4" ></a>
         </div>
+    </div>
     </div>
 </div>
 <script src="/public/js/consultaApiPregunta.js"></script>
