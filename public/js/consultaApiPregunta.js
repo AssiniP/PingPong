@@ -48,6 +48,8 @@ function consultarAPI() {
             opcion4HTML.classList.add('boton-opcion');
             opcion4HTML.style.backgroundColor = primeraPregunta.categoria.color;
             console.log(data);
+            let idPregunta = document.getElementById("idPregunta");
+            idPregunta.innerText = primeraPregunta.id;
 
         })
         .catch(error => {

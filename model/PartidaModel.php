@@ -225,4 +225,15 @@ class PartidaModel
         $arrayDatos['puntaje'] = $puntaje;
         return array('arrayDatos' => $arrayDatos);
     }
+
+    public function reportarPregunta($motivo, $idUsuario, $idPregunta){
+        $reportData = [
+            'motivo' => $motivo,
+            'idUsuario' => $idUsuario,
+            'idPregunta' => $idPregunta
+        ];
+        $query = "INSERT INTO preguntaReportada (motivo, idUsuario, idPregunta, fecha) VALUES (?, ?, ?, NOW())";
+        $this->database->reportarPregunta($query, $reportData);
+    }
 }
+
