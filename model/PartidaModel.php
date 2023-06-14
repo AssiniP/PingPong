@@ -9,17 +9,6 @@ class PartidaModel
         $this->database = $database;
     }
 
-    public function getPreguntas()
-    {
-        return $this->database->query("SELECT * FROM Pregunta");
-    }
-
-    public function getPartidas($idUsuario)
-    {
-        $query = "SELECT p.id, p.fecha, p.idUsuario FROM Partida p WHERE p.idUsuario = $idUsuario";
-        return $this->database->query($query);
-    }
-
     public function getLastPartida($idUsuario)
     {
         $query = "SELECT p.id, p.fecha, p.idUsuario 
@@ -33,23 +22,6 @@ class PartidaModel
     public function addPartida($idUsuario)
     {
         $query = "INSERT INTO partida (fecha, idUsuario) VALUES (NOW(), $idUsuario)";
-        return $this->database->query($query);
-    }
-
-    public function getPregunta($idUsuario)
-    {
-
-        $query = "SELECT p.pregunta, p.id as 'idPregunta', o.*, C.nombre as 'categoria' , C.color as color
-        FROM Pregunta p
-        JOIN Opcion o ON p.idOpcion = o.id
-        JOIN categoria C ON p.idCategoria  = C.id
-        WHERE p.id NOT IN (
-            SELECT up.idPregunta
-            FROM usuario_pregunta up
-            WHERE up.idUsuario =  $idUsuario
-        )
-        ORDER BY p.id
-        LIMIT 1";
         return $this->database->query($query);
     }
 
@@ -96,15 +68,6 @@ class PartidaModel
     {
         $query = "INSERT INTO usuario_pregunta (idUsuario, idPregunta) VALUES ($idUsuario, $idPregunta)";
         return $this->database->query($query);
-    }
-
-    public function getPreguntasUsuario($idUsuario, $idPregunta)
-    {
-        $query = "SELECT *
-                  FROM usuario_pregunta
-                  WHERE idUsuario = $idUsuario 
-                  AND idPregunta = $idPregunta";
-        return  $this->database->query($query);
     }
 
     public function countRespuestasCorrectas($partidaId)
