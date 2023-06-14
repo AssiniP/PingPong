@@ -32,6 +32,7 @@ class RouterValidator{
             case 'lobby':
             case 'user':
             case 'partida':
+            case 'sugerir':
                 if($this->userIsLogged()){
                     return true;
                 }else {
