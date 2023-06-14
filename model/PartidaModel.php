@@ -187,6 +187,7 @@ class PartidaModel
             $arrayDatos['url'] = "/partida/jugada";
             $arrayDatos['texto'] = "Siguiente Pregunta";
             $this->updateJugada($preguntaId, $idPartida, 1);
+            /* aumentar cantidadDeAciertos en las 2 tablas */
         } else {
             $arrayDatos['mensaje'] = "FIN DEL JUEGO. LA RESPUESTA ERA: " . $respuestaCorrecta[0]['opcion' . $respuestaCorrecta[0]['respuestaCorrecta']];
             $arrayDatos['url'] = "/lobby/list";
