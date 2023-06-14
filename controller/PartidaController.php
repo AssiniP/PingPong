@@ -35,4 +35,16 @@ class PartidaController
         $data['puntaje'] = $arrayDatos['arrayDatos']['puntaje'];
         $this->renderer->render('respuesta', $data);
     }
+
+    public function reportarPregunta(){
+        echo 'AJAX request received';
+        $motivo = $_POST['motivo'];
+        $idUsuario = $_POST['idUsuario'];
+        $idPregunta = $_POST['idPregunta'];
+        var_dump($motivo);
+        var_dump($idUsuario);
+        var_dump($idPregunta);
+        header('location:/register/list');
+        $this->partidaModel->reportarPregunta($motivo, $idUsuario, $idPregunta);
+    }
 }

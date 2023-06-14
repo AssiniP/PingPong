@@ -1,7 +1,7 @@
 {{> headerUser}}
 <div class="flex flex-row items-center justify-center">
 <div class="clock text-gray-200 text-5xl text-center">
-    <p id="numero" class="hidden">10</p>
+    <p id="numero" class="hidden">100</p>
 </div>
 <div class="flex flex-col items-center justify-center m-12 text-white">
     {{#partidas}}
@@ -14,6 +14,7 @@
     </div>
     <div id="contenedor-pregunta">
         <p id="pregunta" class="text-6xl"></p>
+        <p id="idPregunta" class="hidden"></p>
     </div>
     <div class="opciones-container">
         <div class="opcion-col">
@@ -27,9 +28,57 @@
     </div>
 </div>
 </div>
+<button id="btn-reportar-pregunta" onclick="mostrarPopup()">Reportar Pregunta</button>
+<div id="popup" style="display: none;">
+    <h2>¿Por qué quieres reportar la pregunta?</h2>
+    <textarea id="motivo-reportar" rows="4" cols="50"></textarea>
+    <button onclick="enviarReporte()">Enviar Reporte</button>
+</div>
 <script src="/public/js/consultaApiPregunta.js"></script>
 <script>
     window.addEventListener('load', () => {
         consultarAPI();
     });
+
+    function mostrarPopup() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "block";
+    }
+
+    function enviarReporte() {
+        var motivo = document.getElementById("motivo-reportar").value;
+        var idUsuario = document.getElementById("usuario").innerHTML;
+        var idPregunta = document.getElementById("idPregunta").innerHTML;
+
+        var data = {
+            motivo: motivo,
+            idUsuario: idUsuario,
+            idPregunta: idPregunta
+        };
+
+        var requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+        var url = 'http://localhost/partida/reportarPregunta';
+
+        fetch(url, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        console.log(motivo);
+                        console.log(idUsuario);
+                        console.log(idPregunta);
+                        // Redirigir al usuario al lobby del juego
+                        //window.location.href = '/lobby/list';
+                    } else {
+                        console.log('Hubo un error al enviar el reporte.');
+                    }
+                })
+                .catch(error => {
+                    console.log('Hubo un error en la solicitud AJAX:', error);
+                });
+    }
 </script>

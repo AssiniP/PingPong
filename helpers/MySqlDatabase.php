@@ -46,6 +46,15 @@ class MySqlDatabase {
         $stmt->execute();
         $stmt->close();
     }
+    public function reportarPregunta($query, $reportData){
+        $stmt = $this->connection->prepare($query);
+        //CONTEXTO: Como el reporte es un string que manda el usuario,
+        //lo hago así no tengo que sufrir pensando en el sql injection
+        $stmt->bind_param("sii",$reportData['motivo'], $reportData['idUsuario'], $reportData['idPregunta']);
+        $stmt->execute();
+        $stmt->close();
+    }
+
 
     public function getLastInsertId() {
         return mysqli_insert_id($this->connection);
