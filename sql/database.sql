@@ -67,6 +67,20 @@ CREATE TABLE Pregunta (
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
 
+CREATE TABLE aparicion_pregunta (
+
+                                    idUsuario INT not null,
+
+                                    idPregunta INT not null,
+
+                                    PRIMARY KEY (idUsuario, idPregunta),
+
+                                    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
+
+                                    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+
+);
+
 CREATE TABLE Jugada (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idPregunta INT NOT NULL,
