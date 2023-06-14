@@ -12,5 +12,6 @@ class AdminController
 
     public function list()
     {
+        $this->renderer->render('admin');
     }
 }
