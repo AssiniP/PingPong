@@ -12,7 +12,7 @@ class UserModel {
     }
 
     public function getUser($nickname) {
-        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
+        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje ,YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
 
     public function getHistorial($idUsuario) {
@@ -29,12 +29,12 @@ class UserModel {
     }
 
     public function addUser($userData){
+        //
         //deberia cambiar imagen perfil por otra cosa
         $query = "INSERT INTO usuario (nickname, password, nombre, email,  imagenPerfil,
-                     pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud) VALUES (?, ?, ?, ?, ? , ?, ?, ?, NOW(), ? , ? , ?)";
+                     pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud,fechaNacimiento,nivelJugador) VALUES (?, ?, ?, ?, ? , ?, ?, ?, NOW(), ? , ? , ?,?,'PRINCIPIANTE')";
         $this->database->insertUser($query, $userData);
     }
-
     public function enviarMail($mail) {
         include_once("vendor/SendEmail.php");
 

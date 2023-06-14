@@ -38,11 +38,12 @@ class MySqlDatabase {
         mysqli_query($this->connection, $sql);
     }
     public function insertUser($query, $userData){
-        $stmt = $this->connection->prepare($query);
 
-        $stmt->bind_param("ssssssissdd",$userData['nickName'], $userData['password'], $userData['nombre'],
-            $userData['email'], $userData['imagenPerfil'], $userData['pais'],
-            $userData['idRol'], $userData['idGenero'], $userData['ciudad'], $userData['latitud'], $userData['longitud']);
+        $stmt = $this->connection->prepare($query);
+        var_dump($userData['fechaNacimiento']);
+        $stmt->bind_param("ssssssiisdds",$userData['nickName'], $userData['password'], $userData['nombre'],
+            $userData['email'], $userData['imagenPerfil'], $userData['pais'], $userData['idRol'], $userData['idGenero'],
+            $userData['ciudad'], $userData['latitud'], $userData['longitud'], $userData['fechaNacimiento']);
         $stmt->execute();
         $stmt->close();
     }

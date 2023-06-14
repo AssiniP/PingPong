@@ -8,22 +8,15 @@ class Pregunta extends MySQLMethods
     function obtenerPreguntas($id)
     {
 
-        $query = $this->connect()->query("SELECT * FROM pregunta p where p.id  NOT IN (
-            SELECT up.idPregunta
-            FROM usuario_pregunta up
-            WHERE up.idUsuario = " . $id . ")");
+        $query = $this->connect()->query("SELECT * FROM pregunta p where p.id NOT IN (select idPregunta from aparicion_pregunta where idUsuario =" .$id ." )");
         return $query;
     }
 
-    function obtenerOpcionesById($id)
-    {
-        $query = $this->connect()->query('SELECT * FROM opcion where id=' . $id);
-        return $query;
-    }
 
-    function borrarPregunta($idOpcion)
+
+    function borrarPregunta($id)
     {
-        $query = $this->connect()->query('delete pregunta,opcion from pregunta join opcion on opcion.id=pregunta.idOpcion where opcion.id=' . $idOpcion);
+        $query = $this->connect()->query('delete pregunta from pregunta p where  p.id=' . $id);
         return $query;
     }
 
@@ -43,8 +36,7 @@ class Pregunta extends MySQLMethods
     {
         $idUsuario = $this->obtenerIdUsuario($usuario);
         $idCategoria = $this->obtenerIdCategoria($categoria);
-        $idOpcion = $this->darDeAltaOpcion($opcion1, $opcion2, $opcion3, $opcion4, $correcta);
-        $this->connect()->query("insert into pregunta (pregunta,idOpcion,idCategoria,idUsuario,cantidadAciertos,cantidadOcurrencias) VALUES ('" . $pregunta . "','" . $idOpcion . "','" . $idCategoria . "','" . $idUsuario . "0,0)");
+        $this->connect()->query("insert into pregunta (pregunta,idCategoria,idUsuario,cantidadAciertos,cantidadOcurrencias) VALUES ('" . $pregunta . "','" . $idOpcion . "','" . $idCategoria . "','" . $idUsuario . "0,0)");
         return "se agrego pregunta";
     }
 
