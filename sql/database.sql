@@ -111,3 +111,17 @@ CREATE TABLE Pregunta_sugerida (
                                    FOREIGN KEY (idCategoria) REFERENCES Categoria (id),
                                    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
+
+CREATE TABLE aparicion_pregunta (
+
+    idUsuario INT not null,
+
+    idPregunta INT not null,
+
+    PRIMARY KEY (idUsuario, idPregunta),
+
+    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
+
+    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+
+);
