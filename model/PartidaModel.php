@@ -1,5 +1,4 @@
 <?php
-
 class PartidaModel
 {
     private $database;
@@ -237,3 +236,4 @@ class PartidaModel
         $this->database->reportarPregunta($query, $reportData);
     }
 }
+

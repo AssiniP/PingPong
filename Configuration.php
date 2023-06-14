@@ -58,6 +58,13 @@ class Configuration {
         return new PartidaController(new PartidaModel($this->getDatabase()), $this->getRenderer());
     }
 
+    public function getAdminController(){
+        include_once ('controller/AdminController.php');
+        include_once ('model/AdminModel.php');
+        include_once ('model/UserModel.php');
+        return new AdminController(new AdminModel($this->getDatabase()), $this->getRenderer());
+    }
+
     public function getAPIController()
     {
         include_once('controller/APIController.php');
