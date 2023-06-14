@@ -49,9 +49,7 @@ class PartidaModel
     public function getRespuestaCorrecta($idPregunta)
     {
         // $query = "SELECT  o.respuestaCorrecta
-        $query = "SELECT  o.*
-                  FROM Pregunta p
-                  INNER JOIN Opcion o ON p.idOpcion = o.id
+        $query = "SELECT  p.respuestaCorrecta   FROM Pregunta p
                   WHERE p.id = $idPregunta";
         return $this->database->query($query);
     }
@@ -66,7 +64,7 @@ class PartidaModel
 
     public function setPreguntaUsuario($idUsuario, $idPregunta)
     {
-        $query = "INSERT INTO usuario_pregunta (idUsuario, idPregunta) VALUES ($idUsuario, $idPregunta)";
+        $query = "INSERT INTO aparicion_pregunta (idUsuario, idPregunta) VALUES ($idUsuario, $idPregunta)";
         return $this->database->query($query);
     }
 
@@ -103,7 +101,7 @@ class PartidaModel
 
     public function deleteUsuarioPartida($idUsuario)
     {
-        $query = "DELETE FROM usuario_pregunta WHERE idUsuario = $idUsuario";
+        $query = "DELETE FROM aparicion_pregunta WHERE idUsuario = $idUsuario";
         return $this->database->query($query);
     }
 
