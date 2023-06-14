@@ -18,6 +18,14 @@ class Configuration {
             $this->getRenderer());
     }
 
+    public function getSugerirController() {
+        include_once('controller/SugerirController.php');
+        include_once ('model/UserModel.php');
+        return new SugerirController(
+            new UserModel($this->getDatabase()),
+            $this->getRenderer());
+    }
+
     public function getLoginController() {
         include_once ('controller/LoginController.php');
         include_once ('model/UserModel.php');
