@@ -52,6 +52,7 @@ class RegisterController
             'imagenPerfil' => $imgPath,
             'pais' => $_POST['pais'],
             'latitud' => $_POST['latitud'],
+            'fechaNacimiento' => $_POST['fechaNacimiento'],
             'longitud' => $_POST['longitud'],
             'idGenero' => $_POST['idGenero'],
             'ciudad' => $_POST['ciudad'],
@@ -64,7 +65,7 @@ class RegisterController
 
     private function checkThatUserFormIsNotEmpty(){
         if(empty($_POST['nickName']) || empty($_POST['email']) || empty($_POST['password']) ||
-            empty($_POST['repassword']) || empty($_POST['nombre']) ||
+            empty($_POST['repassword']) || empty($_POST['nombre']) || empty($_POST['fechaNacimiento']) ||
             $_FILES['imagenPerfil']['error'] == 4 || empty($_POST['pais']) || empty($_POST['idGenero']) ||
             empty($_POST['ciudad'])){
             return false;
