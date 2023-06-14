@@ -1,5 +1,4 @@
 <?php
-
 class PartidaModel
 {
     private $database;
