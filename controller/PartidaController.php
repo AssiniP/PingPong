@@ -37,14 +37,15 @@ class PartidaController
     }
 
     public function reportarPregunta(){
-        echo 'AJAX request received';
-        $motivo = $_POST['motivo'];
-        $idUsuario = $_POST['idUsuario'];
-        $idPregunta = $_POST['idPregunta'];
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+
+        $motivo = $data['motivo'];
+        $idUsuario = $data['idUsuario'];
+        $idPregunta = $data['idPregunta'];
         var_dump($motivo);
         var_dump($idUsuario);
         var_dump($idPregunta);
-        header('location:/register/list');
         $this->partidaModel->reportarPregunta($motivo, $idUsuario, $idPregunta);
     }
 }

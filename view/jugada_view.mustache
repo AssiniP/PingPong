@@ -50,6 +50,11 @@
         var idUsuario = document.getElementById("usuario").innerHTML;
         var idPregunta = document.getElementById("idPregunta").innerHTML;
 
+        if (motivo.trim() === '') {
+            alert('Por favor, ingresa un motivo para reportar la pregunta.');
+            return;
+        }
+
         var data = {
             motivo: motivo,
             idUsuario: idUsuario,
@@ -72,7 +77,7 @@
                         console.log(idUsuario);
                         console.log(idPregunta);
                         // Redirigir al usuario al lobby del juego
-                        //window.location.href = '/lobby/list';
+                        window.location.href = '/lobby/list';
                     } else {
                         console.log('Hubo un error al enviar el reporte.');
                     }
