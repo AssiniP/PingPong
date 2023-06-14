@@ -17,10 +17,9 @@ INSERT INTO Categoria (nombre,color) VALUES ('Arte','orange');
 INSERT INTO Categoria (nombre,color) VALUES ('Deportes','green');
 
 
-
-
 INSERT INTO pingpong.usuario (nickName, password, nombre, email, imagenPerfil, pais, ciudad, idRol, cuentaValida,idGenero, fechaNacimiento, latitud, longitud)
 VALUES ( 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'admin@mail.com', 'admin.jpg', 'Argentina', 'San Justo', '1', '1', '3','1974-05-25',-58.5614947,-34.6686986);
+
 
 -- Pregunta 1
 INSERT INTO Pregunta (pregunta, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias,opcion1,opcion2, opcion3, opcion4, respuestaCorrecta)
