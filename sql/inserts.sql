@@ -1,5 +1,7 @@
 USE pingPong;
 
+
+
 insert into rol (rol) values ('Administrador');
 insert into rol (rol) values ('Editor');
 insert into rol (rol) values ('Jugador');
@@ -15,44 +17,30 @@ INSERT INTO Categoria (nombre,color) VALUES ('Arte','orange');
 INSERT INTO Categoria (nombre,color) VALUES ('Deportes','green');
 
 
--- Opciones para la pregunta 1
-INSERT INTO Opcion (opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
-VALUES ('París', 'Londres', 'Roma', 'Madrid', 1);
 
--- Opciones para la pregunta 2
-INSERT INTO Opcion (opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
-VALUES ('Leonardo da Vinci', 'Vincent van Gogh', 'Pablo Picasso', 'Miguel Ángel', 1);
 
--- Opciones para la pregunta 3
-INSERT INTO Opcion (opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
-VALUES ('Amazonas', 'Nilo', 'Misisipi', 'Yangtsé', 2);
+INSERT INTO pingpong.usuario (nickName, password, nombre, email, imagenPerfil, pais, ciudad, idRol, cuentaValida,
+                              idGenero, fechaNacimiento, latitud, longitud) VALUES ( 'admin', 'admin', 'admin', 'admin@mail.com', '', 'admin', 'admin', '1', '1', '3','1974-05-25',0,0);
 
--- Opciones para la pregunta 4
-INSERT INTO Opcion (opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
-VALUES ('Albert Einstein', 'Isaac Newton', 'Marie Curie', 'Charles Darwin', 2);
 
--- Opciones para la pregunta 5
-INSERT INTO Opcion (opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
-VALUES ('William Shakespeare', 'Mario Vargas Llosa', 'Julio Cortázar', 'Pablo Neruda', 1);
+
 
 -- Pregunta 1
-INSERT INTO Pregunta (pregunta, idOpcion, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias)
-VALUES ('¿Cuál es la capital de Francia?', 1, 1, 1, 0, 0);
+INSERT INTO Pregunta (pregunta, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias,opcion1,opcion2, opcion3, opcion4, respuestaCorrecta)
+VALUES ('¿Cuál es la capital de Francia?', 1, 1, 0, 0,'París', 'Londres', 'Roma', 'Madrid', 1);
 
 -- Pregunta 2
-INSERT INTO Pregunta (pregunta, idOpcion, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias)
-VALUES ('¿Quién pintó la Mona Lisa?', 2, 4, 1, 0, 0);
+INSERT INTO Pregunta (pregunta, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias,opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
+VALUES ('¿Quién pintó la Mona Lisa?',  4, 1, 0, 0,'Leonardo da Vinci', 'Vincent van Gogh', 'Pablo Picasso', 'Miguel Ángel', 1);
 
 -- Pregunta 3
-INSERT INTO Pregunta (pregunta, idOpcion, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias)
-VALUES ('¿Cuál es el río más largo del mundo?', 3, 2, 1, 0, 0);
+INSERT INTO Pregunta (pregunta, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias,opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
+VALUES ('¿Cuál es el río más largo del mundo?',  2, 1, 0, 0,'Amazonas', 'Nilo', 'Misisipi', 'Yangtsé', 2);
 
 -- Pregunta 4
-INSERT INTO Pregunta (pregunta, idOpcion, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias)
-VALUES ('¿Quién descubrió la ley de la gravedad?', 4, 3, 1, 0, 0);
+INSERT INTO Pregunta (pregunta, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias,opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
+VALUES ('¿Quién descubrió la ley de la gravedad?',  3, 1, 0, 0,'Albert Einstein', 'Isaac Newton', 'Marie Curie', 'Charles Darwin', 2);
 
 -- Pregunta 5
-INSERT INTO Pregunta (pregunta, idOpcion, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias)
-
-VALUES ('¿Quién escribió la obra "Romeo y Julieta"?', 5, 1, 1, 0, 0);
-
+INSERT INTO Pregunta (pregunta, idCategoria, idUsuario, cantidadAciertos, cantidadOcurrencias,opcion1, opcion2, opcion3, opcion4, respuestaCorrecta)
+VALUES ('¿Quién escribió la obra "Romeo y Julieta"?',  1, 1, 0, 0,'William Shakespeare', 'Mario Vargas Llosa', 'Julio Cortázar', 'Pablo Neruda', 1);
