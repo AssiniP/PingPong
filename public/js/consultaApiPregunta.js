@@ -1,7 +1,7 @@
 
 function consultarAPI() {
         let usuario = document.getElementById("usuario");
-    fetch('http://localhost:80/api/list?usuario=' + parseInt(usuario.textContent))
+    fetch('http://localhost:80/api/list?usuario=' + usuario.innerText)
         .then(response => response.json())
         .then(data => {
                 console.log(data)
@@ -28,22 +28,22 @@ function consultarAPI() {
             preguntaHTML.innerText = primeraPregunta.pregunta;
 
             let opcion1HTML = document.getElementById("opcion1");
-            opcion1HTML.innerText = primeraPregunta.opciones[0].opcion_1;
+            opcion1HTML.innerText = primeraPregunta.opciones.opcion_1;
             opcion1HTML.href = '/partida/respuesta?opcion=1&pregunta='+primeraPregunta.id;
             opcion1HTML.classList.add('boton-opcion');
             opcion1HTML.style.backgroundColor = primeraPregunta.categoria.color;
             let opcion2HTML = document.getElementById("opcion2");
-            opcion2HTML.innerText = primeraPregunta.opciones[0].opcion_2;
+            opcion2HTML.innerText = primeraPregunta.opciones.opcion_2;
             opcion2HTML.href = '/partida/respuesta?opcion=2&pregunta='+primeraPregunta.id;
             opcion2HTML.classList.add('boton-opcion');
             opcion2HTML.style.backgroundColor = primeraPregunta.categoria.color;
             let opcion3HTML = document.getElementById("opcion3");
-            opcion3HTML.innerText = primeraPregunta.opciones[0].opcion_3;
+            opcion3HTML.innerText = primeraPregunta.opciones.opcion_3;
             opcion3HTML.href = '/partida/respuesta?opcion=3&pregunta='+primeraPregunta.id;
             opcion3HTML.classList.add('boton-opcion');
             opcion3HTML.style.backgroundColor = primeraPregunta.categoria.color;
             let opcion4HTML = document.getElementById("opcion4");
-            opcion4HTML.innerText = primeraPregunta.opciones[0].opcion_4;
+            opcion4HTML.innerText = primeraPregunta.opciones.opcion_4;
             opcion4HTML.href = '/partida/respuesta?opcion=4&pregunta='+primeraPregunta.id;
             opcion4HTML.classList.add('boton-opcion');
             opcion4HTML.style.backgroundColor = primeraPregunta.categoria.color;
