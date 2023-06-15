@@ -31,10 +31,21 @@ class RegisterController
         }
         $data['errorMsg'] = $errorMsg;
 
-        if(!empty($errorMsg)){
+        /*if(!empty($errorMsg)){
             $this->renderer->render('register', $data);
             exit;
         } else{
+            $this->add();
+        }*/
+
+        if (!empty($errorMsg)) {
+            // Enviar respuesta con errores en formato JSON
+            $response = ['errorMsg' => $errorMsg];
+            echo json_encode($response);
+        } else {
+            // Enviar respuesta exitosa en formato JSON
+            $response = ['success' => true];
+            echo json_encode($response);
             $this->add();
         }
     }
