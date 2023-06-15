@@ -48,8 +48,8 @@ class PartidaModel
     public function getRespuestaCorrecta($idPregunta)
     {
         // $query = "SELECT  o.respuestaCorrecta
-        $query = "SELECT  p.respuestaCorrecta   FROM Pregunta p
-                  WHERE p.id = $idPregunta";
+        $query = "SELECT  p.opcion1, p.opcion2, p.opcion3,p.opcion4 ,p.respuestaCorrecta   FROM Pregunta p
+                  WHERE p.id =". $idPregunta;
         return $this->database->query($query);
     }
 
