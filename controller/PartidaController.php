@@ -39,7 +39,6 @@ class PartidaController
     public function reportarPregunta(){
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
-
         $motivo = $data['motivo'];
         $idUsuario = $data['idUsuario'];
         $idPregunta = $data['idPregunta'];

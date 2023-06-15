@@ -2,8 +2,6 @@
 class AdminModel
 {
     private $database;
-    private $idUsuario = $this->getIDUsuarioActual();
-
     public function __construct($database)
     {
         $this->database = $database;
@@ -38,6 +36,13 @@ class AdminModel
         return $user[0]['id'];
     }
 
+    public function getTotalUsuarios()
+    {
+        $query = "SELECT COUNT(*) AS TotalUsuarios
+                  FROM Usuario";
+        $result = $this->database->query($query);
+        return $result[0]['TotalUsuarios'];
+    }
     public function getTotalJugadores()
     {
         $query = "SELECT COUNT(*) AS total FROM Usuario WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Jugador')";
@@ -47,8 +52,9 @@ class AdminModel
 
     public function getTotalEditores()
     {
-        $query = "SELECT * FROM Usuario WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Editor')";
-        return $this->database->query($query);
+        $query = "SELECT COUNT(*) AS total FROM Usuario WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Editor')";
+        $result = $this->database->query($query);
+        return $result[0]['total'];
     }
 
     public function getTotalAdministradores()
@@ -60,7 +66,7 @@ class AdminModel
 
     public function getTotalJugadoresConAlMenosUnaPartida()
     {
-        $query = "SELECT COUNT(DISTINCT p.idUsuario) AS total FROM Partida p INNER JOIN Usuario u ON p.idUsuario = u.id WHERE u.idRol = (SELECT id FROM Rol WHERE rol = 'Jugador')";
+        $query = "SELECT COUNT(DISTINCT idUsuario) AS total FROM Partida";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -72,14 +78,12 @@ class AdminModel
     }
     public function getTotalPreguntasCreadas()
     {
-        $query = "SELECT COUNT(*) AS total FROM Pregunta";
-        $result = $this->database->query($query);
-        return $result[0]['total'];
+       /* Acá entra la API */
     }
 
     public function getCantidadUsuariosNuevosDesdeFecha($fecha)
     {
-        $query = "SELECT COUNT(*) AS total FROM Usuario WHERE fecha_registro >= '$fecha'";
+        $query = "SELECT COUNT(*) AS total FROM Usuario WHERE fecharegistro >= '$fecha'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -103,7 +107,7 @@ class AdminModel
     public function getCantidadUsuariosPorPais()
     {
         $query = "SELECT Pais, COUNT(*) AS CantidadUsuarios
-              FROM Usuarios
+              FROM Usuario
               GROUP BY Pais";
         $result = $this->database->query($query);
         return $result;
@@ -112,18 +116,44 @@ class AdminModel
     public function getCantidadUsuariosPorSexo()
     {
         $query = "SELECT Sexo, COUNT(*) AS CantidadUsuarios
-              FROM Usuarios
+              FROM Usuario
               GROUP BY Sexo";
         $result = $this->database->query($query);
         return $result;
     }
 
-    public function adminModelMethodController()
+    public function adminModelMethodsTest()
     {
+        $arrayDatos = array();
+        $fecha = '1960-01-01';
+
+        $totalUsuarios = $this->getTotalUsuarios();
+        $totalJugadores = $this->getTotalJugadores();
+        $totalEditores = $this->getTotalEditores();
+        $totalAdministradores = $this->getTotalAdministradores();
+        $totalJugadoresConAlMenosUnaPartida = $this->getTotalJugadoresConAlMenosUnaPartida();
+        $cantidadPartidasJugadas = $this->getCantidadPartidasJugadas();
+        $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($fecha);
+
+
+        $arrayDatos["totalUsuarios"] = $totalUsuarios;
+        $arrayDatos["totalJugadores"] = $totalJugadores;
+        $arrayDatos["totalEditores"] = $totalEditores;
+        $arrayDatos["totalAdministradores"] = $totalAdministradores;
+        $arrayDatos["totalJugadoresConAlMenosUnaPartida"] = $totalJugadoresConAlMenosUnaPartida;
+        $arrayDatos["cantidadPartidasJugadas"] = $cantidadPartidasJugadas;
+        $arrayDatos["cantidadUsuariosNuevosDesdeFecha"] = $cantidadUsuariosNuevosDesdeFecha;
+
+
+
+
+
+        return array('arrayDatos' => $arrayDatos);
     }
-
-
-
-
     
+
+
+
+
+
 }
