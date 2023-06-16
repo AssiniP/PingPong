@@ -23,6 +23,14 @@ class UserModel {
         return $this->database->query("SELECT * FROM `usuario` WHERE nickname like '".$nickname."' OR email like '".$email."'");
     }
 
+    public function getQuestionUser($nickname){
+        return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where idCategoria =c.id  and  p.idUsuario in (select id from usuario where nickName like '".$nickname."') ");
+    }
+
+    public function delQuestionId($id){
+        return $this->database->query("delete from pregunta_sugerida where id=".$id);
+    }
+
     //validar que el usuario y la password existan
     public function validarLogin(String $nickname, String $password){
         return $this->database->query("SELECT  u.* , r.rol FROM usuario U, rol  R  where R.id=U.idRol and nickname like '".$nickname."' and password like '".$password."'");
@@ -59,6 +67,7 @@ class UserModel {
     public function getAllRol(){
         return $this->database->query("SELECT * FROM rol ");
     }
+
 
    public function actualizarCuentaValidada($email){
         $esValido = true;

@@ -1,0 +1,22 @@
+{{> headerUser}}
+      <div class="flex flex-col text-green-700 bg-green-200 opacity-90 p-5 w-4/5 rounded m-auto mt-10 mb-10">
+       <table >
+             <tr>
+                <th>categoria</th>
+                 <th>Pregunta</th>
+                 <th>Eliminar</th>
+                 <th>Editar</th>
+             </tr>
+
+             {{#preguntas}}
+             <tr>
+                 <td>{{categoria}}</td>
+                 <td>{{pregunta}}</td>
+                 <td><a href='/sugerir/eliminar/id={{id}}'>del</a></td>
+                 <td><a href='/sugerir/editar/id={{id}}'>edit</a></td>
+             </tr>
+             {{/preguntas}}
+
+         </table>
+        <a href='/sugerir/add'>Alta</a>
+    </div>
