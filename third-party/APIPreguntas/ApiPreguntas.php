@@ -57,4 +57,20 @@ class ApiPreguntas
             return json_encode(array('mensaje' => 'No existen categorias con el id buscado.'));
         }
     }
+
+    function altaPregunta($pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria,$usuario){
+        $preguntaClass = new Pregunta();
+
+      return  json_encode(array('mensaje'=> $preguntaClass->darDeAltaPregunta($pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria,$usuario)));
+    }
+
+    function bajaPregunta($idPregunta){
+        $preguntaClass = new Pregunta();
+        return  json_encode(array('mensaje'=> $preguntaClass->borrarPregunta($idPregunta)));
+    }
+
+    function modificarPregunta($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria){
+        $preguntaClass = new Pregunta();
+        return  json_encode(array('mensaje'=> $preguntaClass->modificarPregunta($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria)));
+    }
 }

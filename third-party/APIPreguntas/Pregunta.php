@@ -16,8 +16,11 @@ class Pregunta extends MySQLMethods
 
     function borrarPregunta($id)
     {
-        $query = $this->connect()->query('delete pregunta from pregunta p where  p.id=' . $id);
-        return $query;
+        $query = "DELETE FROM pregunta WHERE id = :id";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return "Se eliminó la pregunta.";
     }
 
     function obtenerPreguntaConPregunta($pregunta)
@@ -36,31 +39,67 @@ class Pregunta extends MySQLMethods
     {
         $idUsuario = $this->obtenerIdUsuario($usuario);
         $idCategoria = $this->obtenerIdCategoria($categoria);
-        $this->connect()->query("insert into pregunta (pregunta,idCategoria,idUsuario,cantidadAciertos,cantidadOcurrencias) VALUES ('" . $pregunta . "','" . $idOpcion . "','" . $idCategoria . "','" . $idUsuario . "0,0)");
-        return "se agrego pregunta";
+
+        $query = "INSERT INTO pregunta (idCategoria, idUsuario, pregunta, opcion1, opcion2, opcion3, opcion4, respuestaCorrecta, cantidadAciertos, cantidadOcurrencias) VALUES (:idCategoria, :idUsuario, :pregunta, :opcion1, :opcion2, :opcion3, :opcion4, :correcta, 0, 0)";
+
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(':idCategoria', $idCategoria);
+        $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->bindParam(':pregunta', $pregunta);
+        $stmt->bindParam(':opcion1', $opcion1);
+        $stmt->bindParam(':opcion2', $opcion2);
+        $stmt->bindParam(':opcion3', $opcion3);
+        $stmt->bindParam(':opcion4', $opcion4);
+        $stmt->bindParam(':correcta', $correcta);
+
+        $stmt->execute();
+
+        return "Se agregó la pregunta.";
     }
 
-    function darDeAltaOpcion($opcion1, $opcion2, $opcion3, $opcion4, $correcta)
-    {
-        $this->connect()->query("insert into opcion (opcion1,opcion2,opcion3,opcion4,repuestaCorrecta) VALUES('" . $opcion1 . "', '" . $opcion2 . "','" . $opcion3 . "','" . $opcion4 . "','" . $correcta . "')");
-        $id = $this->connect()->query("select id from opcion where opcion1 LIKE '" . $opcion1 . "' and opcion2 like '" . $opcion2 . "' and opcion3 LIKE '" . $opcion3 . "' and opcion4 like '" . $opcion4 . "'");
-        return $id;
-    }
 
     function obtenerIdCategoria($categoria)
     {
-        $id = $this->connect()->query("select id from categoria where nombre like '" . $categoria . "'");
+        $query = "SELECT id FROM categoria WHERE nombre LIKE :categoria";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(':categoria', $categoria);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id = $row['id'];
         return $id;
     }
 
+
     function obtenerIdUsuario($usuario)
     {
-        $id = $this->connect()->query("select id from usuario where nickName like '" . $usuario . "'");
+        $query = "SELECT id FROM usuario WHERE nickName LIKE :usuario";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(':usuario', $usuario);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id = $row['id'];
         return $id;
     }
 
     function  obtenerCategoriaById($id){
         $categoria = $this->connect()->query("select * from categoria where id = " . $id );
         return $categoria;
+    }
+
+    function modificarPregunta($id,$pregunta, $opcion1, $opcion2, $opcion3, $opcion4, $respuestaCorrecta, $categoria)
+    {
+        $idCategoria = $this->obtenerIdCategoria($categoria);
+        $query = "UPDATE pregunta SET pregunta = :pregunta, opcion1 = :opcion1, opcion2 = :opcion2, opcion3 = :opcion3, opcion4 = :opcion4, respuestaCorrecta = :respuestaCorrecta, idCategoria = :idCategoria where id = ". $id;
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(':pregunta', $pregunta);
+        $stmt->bindParam(':opcion1', $opcion1);
+        $stmt->bindParam(':opcion2', $opcion2);
+        $stmt->bindParam(':opcion3', $opcion3);
+        $stmt->bindParam(':opcion4', $opcion4);
+        $stmt->bindParam(':respuestaCorrecta', $respuestaCorrecta);
+        $stmt->bindParam(':idCategoria', $idCategoria);
+        $stmt->execute();
+
+        return "se modifico la pregunta " . $pregunta ;
     }
 }

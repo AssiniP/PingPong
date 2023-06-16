@@ -98,9 +98,9 @@ header {
 .precarga {
     background: transparent url("../img/pingpong-unscreen.gif") center no-repeat;
     width: 100%;
-    height: 85%;
+    height: 100%;
     position: absolute;
-    top: 10%;
+    top:-5%;
 }
 
 /* Header for User */
