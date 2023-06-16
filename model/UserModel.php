@@ -28,12 +28,18 @@ class UserModel {
         return $this->database->query("SELECT  u.* , r.rol FROM usuario U, rol  R  where R.id=U.idRol and nickname like '".$nickname."' and password like '".$password."'");
     }
 
+    public function createJugada($idPregunta, $idPartida)
+    {
+        $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
+                  VALUES ($idPregunta, $idPartida, null, 0)";
+        return $this->database->query($query);
+    }
     public function addUser($userData){
-        //
-        //deberia cambiar imagen perfil por otra cosa
-        $query = "INSERT INTO usuario (nickname, password, nombre, email,  imagenPerfil,
-                     pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud,fechaNacimiento,nivelJugador) VALUES (?, ?, ?, ?, ? , ?, ?, ?, NOW(), ? , ? , ?,?,'PRINCIPIANTE')";
-        $this->database->insertUser($query, $userData);
+        $query = "INSERT INTO usuario (nickname, password, nombre, email,  imagenPerfil, pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud,fechaNacimiento,nivelJugador) VALUES ('".
+            $userData['nickName']."','" .$userData['password']."','".  $userData['nombre']."','".  $userData['email']."','".   $userData['imagenPerfil'] ."','".
+            $userData['pais']."',".$userData['idRol'].",".$userData['idGenero']." ,NOW(),'".$userData['ciudad']."',".   $userData['latitud'] .",".
+            $userData['longitud'].",'".$userData['fechaNacimiento']."','PRINCIPIANTE')";
+        return $this->database->query($query);
     }
     public function enviarMail($mail) {
         include_once("vendor/SendEmail.php");

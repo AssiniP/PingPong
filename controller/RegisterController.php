@@ -13,40 +13,38 @@ class RegisterController
         $this->renderer->render('register',$data);
     }
 
-    public function validateFields(){
+    public function validateFields()
+    {
         $errorMsg = [];
-        if(!$this->checkThatUserFormIsNotEmpty()){
+
+        if (!$this->checkThatUserFormIsNotEmpty()) {
             $errorMsg[] = "Llena todos los campos";
         }
-        if(!$this->checkMatchingPassword()){
+        if (!$this->checkMatchingPassword()) {
             $errorMsg[] = "Las contraseñas no coinciden";
         }
 
-        if(count($this->checkEmailAndNick())>0){
+        if (count($this->checkEmailAndNick()) > 0) {
             $errorMsg[] = 'Ya existe el mail y/o el usuario';
         }
 
-        if(!$this->checkUbicacionMapa()) {
+        if (!$this->checkUbicacionMapa()) {
             $errorMsg[] = "Marcar la Ubicacion del Mapa con click Derecho";
         }
-        $data['errorMsg'] = $errorMsg;
 
-        /*if(!empty($errorMsg)){
-            $this->renderer->render('register', $data);
-            exit;
-        } else{
-            $this->add();
-        }*/
+        $response = ['errorMsg' => $errorMsg];
 
         if (!empty($errorMsg)) {
             // Enviar respuesta con errores en formato JSON
-            $response = ['errorMsg' => $errorMsg];
             echo json_encode($response);
         } else {
-            // Enviar respuesta exitosa en formato JSON
+            // Llamar a la función add() dentro de un bloque try-catch
             $response = ['success' => true];
             echo json_encode($response);
-            $this->add();
+            try{
+                $this->add();
+            } catch (Exception $e) {
+            }
         }
     }
 
@@ -68,10 +66,10 @@ class RegisterController
             'idGenero' => $_POST['idGenero'],
             'ciudad' => $_POST['ciudad'],
             'idRol' => 3];
-        $this->userModel->addUser($userData);
-        $this->userModel->enviarMail($_POST['email']);
-        $this->userModel->generateQR($_POST['nickName']);
-        header('location: /login/list');
+
+           $this->userModel->addUser($userData);
+           $this->userModel->enviarMail($_POST['email']);
+           $this->userModel->generateQR($_POST['nickName']);
     }
 
     private function checkThatUserFormIsNotEmpty(){
@@ -105,5 +103,4 @@ class RegisterController
         $data["usuario"] = $this->userModel->check_user($nickname, $email);
         return $data["usuario"];
     }
-    
 }
