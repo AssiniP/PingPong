@@ -1,6 +1,6 @@
 <?php
 require_once( SITE_ROOT . '/helpers/Session.php');
-class SugerirController{
+class SugerirController {
     private $renderer;
     private $userModel;
 
@@ -10,7 +10,18 @@ class SugerirController{
     }
 
     public function list() {
-        $data["usuario"] = $this->userModel->getAllUsers();
+        $data['preguntas'] = $this->userModel->getQuestionUser($_SESSION['nickname']);
         $this->renderer->render('sugerir', $data);
     }
+
+    public function eliminar() {
+        $this->userModel->delQuestionId($_GET["id"]);
+        header('location: /sugerir/list');
+    }
+
+    public function editar() {
+        header('location: /sugerir/editar&id='.$_GET["id"]);
+    }
+
+
 }

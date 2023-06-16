@@ -37,16 +37,6 @@ class MySqlDatabase {
     public function queryBoolean($sql) {
         mysqli_query($this->connection, $sql);
     }
-    public function insertUser($query, $userData){
-
-        $stmt = $this->connection->prepare($query);
-        var_dump($userData['fechaNacimiento']);
-        $stmt->bind_param("ssssssiisdds",$userData['nickName'], $userData['password'], $userData['nombre'],
-            $userData['email'], $userData['imagenPerfil'], $userData['pais'], $userData['idRol'], $userData['idGenero'],
-            $userData['ciudad'], $userData['latitud'], $userData['longitud'], $userData['fechaNacimiento']);
-        $stmt->execute();
-        $stmt->close();
-    }
     public function reportarPregunta($query, $reportData){
         $stmt = $this->connection->prepare($query);
         //CONTEXTO: Como el reporte es un string que manda el usuario,
