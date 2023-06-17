@@ -13,7 +13,7 @@ class MySQLMethods
         $this->host     = "localhost";
         $this->db       = "pingpong";
         $this->user     = "root";
-        $this->password = "";
+        $this->password = "root";
         $this->charset  = 'utf8mb4';
     }
 

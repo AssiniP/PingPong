@@ -67,7 +67,6 @@ CREATE TABLE Pregunta (
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
 
-
 CREATE TABLE Jugada (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idPregunta INT NOT NULL,
@@ -121,9 +120,9 @@ CREATE TABLE aparicion_pregunta (
 );
 
 CREATE TABLE Trampita (
-                          id INT AUTO_INCREMENT PRIMARY KEY,
-                          idUsuario INT NOT NULL,
-                          fechaCompra DATE NOT NULL,
-                          utilizada BOOLEAN DEFAULT FALSE,
-                          FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idUsuario INT NOT NULL,
+    fechaCompra DATE NOT NULL,
+    utilizada BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
