@@ -32,21 +32,6 @@ class SugerirController {
         if (empty($errorMsg)) {
             $this->addPregunta();
         }
-/*
-        if (!empty($errorMsg)) {
-            // Enviar respuesta con errores en formato JSON
-            echo json_encode($response);
-        } else {
-            // Llamar a la función add() dentro de un bloque try-catch
-
-            try{
-                $capturarError=$this->addPregunta();
-                $errorMsg[] = $capturarError;
-            } catch (Exception $e) {
-            }
-            $response = ['success' => true];
-            echo json_encode($response);
-        }*/
     }
     public function addPregunta(){
         $preguntaEdit = isset($_POST['idPregunta']) ? intval($_POST['idPregunta']): intval('0');
