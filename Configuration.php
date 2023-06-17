@@ -71,6 +71,12 @@ class Configuration {
         return new APIController();
     }
 
+    public function getEditorController(){
+        include_once('controller/EditorController.php');
+        include_once ('model/EditorModel.php');
+        return new EditorController(new EditorModel($this->getDatabase()), $this->getRenderer());
+    }
+
     private function getArrayConfig() {
         return parse_ini_file($this->configFile);
     }
