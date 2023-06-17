@@ -33,64 +33,12 @@
     <h2>No tenes trampitas!</h2>
     <button onClick="comprarTrampita()">Comprar</button>
 </div>
-
-<button id="btn-reportar-pregunta" onclick="mostrarPopup()">Reportar Pregunta</button>
-<div id="popup-reporte" style="display: none;">
-    <h2>¿Por qué quieres reportar la pregunta?</h2>
-    <textarea id="motivo-reportar" rows="4" cols="50"></textarea>
-    <button onclick="enviarReporte()">Enviar Reporte</button>
-</div>
 <script src="/public/js/consultaApiPregunta.js"></script>
 <script>
     window.addEventListener('load', () => {
         consultarAPI();
     });
 
-    function mostrarPopup() {
-        var popup = document.getElementById("popup-reporte");
-        popup.style.display = "block";
-    }
-
-    function enviarReporte() {
-        var motivo = document.getElementById("motivo-reportar").value;
-        var idUsuario = document.getElementById("usuario").innerHTML;
-        var idPregunta = document.getElementById("idPregunta").innerHTML;
-
-        if (motivo.trim() === '') {
-            alert('Por favor, ingresa un motivo para reportar la pregunta.');
-            return;
-        }
-
-        var data = {
-            motivo: motivo,
-            idUsuario: idUsuario,
-            idPregunta: idPregunta
-        };
-
-        var requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        };
-        var url = 'http://localhost:80/partida/reportarPregunta';
-
-        fetch(url, requestOptions)
-                .then(response => {
-                    if (response.ok) {
-                        console.log(motivo);
-                        console.log(idUsuario);
-                        console.log(idPregunta);
-                        window.location.href = '/lobby/list';
-                    } else {
-                        console.log('Hubo un error al enviar el reporte.');
-                    }
-                })
-                .catch(error => {
-                    console.log('Hubo un error en la solicitud AJAX:', error);
-                });
-    }
     function usarTrampita(){
         var idUsuario = document.getElementById("usuario").innerHTML;
         var idPregunta = document.getElementById("idPregunta").innerHTML;

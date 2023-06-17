@@ -33,6 +33,8 @@ class PartidaController
         $data['texto'] = $arrayDatos['arrayDatos']['texto'];
         $data['pregunta'] = $arrayDatos['arrayDatos']['pregunta'];
         $data['puntaje'] = $arrayDatos['arrayDatos']['puntaje'];
+        $data['preguntaId'] = $arrayDatos['arrayDatos']['preguntaId'];
+        $data['usuarioId'] = $arrayDatos['arrayDatos']['usuarioId'];
         $this->renderer->render('respuesta', $data);
     }
 
