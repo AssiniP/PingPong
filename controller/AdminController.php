@@ -27,6 +27,13 @@ class AdminController
         $data['porcentajePreguntasAcertadas'] = $arrayDatos['arrayDatos']['porcentajePreguntasAcertadas'];
         $data['porcentajePreguntasAcertadasPorUsuario'] = $arrayDatos['arrayDatos']['porcentajePreguntasAcertadasPorUsuario'];
         $data['cantidadUsuariosPorSexo'] = $arrayDatos['arrayDatos']['cantidadUsuariosPorSexo'];
+        $data['partidasNuevasDesdeFecha'] = $arrayDatos['arrayDatos']['partidasNuevasDesdeFecha'];
+        $data['nombreMes'] = $arrayDatos['arrayDatos']['nombreMes'];
+
+
+
+
+        
 
         $this->renderer->render('admin', $data);
     }

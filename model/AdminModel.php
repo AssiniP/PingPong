@@ -36,6 +36,38 @@ class AdminModel
         return $user[0]['id'];
     }
 
+    public function getDiaUnoMesAnterior()
+    {
+        $currentDate = new DateTime();
+        $currentDate->modify('first day of previous month');
+        $firstDay = $currentDate->format('Y-m-d');
+        return $firstDay;
+    }
+
+    public function getNombreDelMes($date)
+    {
+        $dateTime = new DateTime($date);
+        $numeroMes = $dateTime->format('n'); // Obtiene el número de mes (1 a 12)
+        
+        $nombresMeses = [
+            1 => 'enero',
+            2 => 'febrero',
+            3 => 'marzo',
+            4 => 'abril',
+            5 => 'mayo',
+            6 => 'junio',
+            7 => 'julio',
+            8 => 'agosto',
+            9 => 'septiembre',
+            10 => 'octubre',
+            11 => 'noviembre',
+            12 => 'diciembre'
+        ];
+        $nombreMes = $nombresMeses[$numeroMes];
+        $nombreMes = ucfirst($nombreMes); // mayus primer letra del mes
+        return $nombreMes;
+    }
+
     public function getTotalUsuarios()
     {
         $query = "SELECT COUNT(*) AS TotalUsuarios
@@ -85,7 +117,14 @@ class AdminModel
 
     public function getCantidadUsuariosNuevosDesdeFecha($fecha)
     {
-        $query = "SELECT COUNT(*) AS total FROM pingpong.usuario WHERE fechaRegistro >= $fecha";
+        $query = "SELECT COUNT(*) AS total FROM usuario WHERE fechaRegistro >= $fecha";
+        $result = $this->database->query($query);
+        return $result[0]['total'];
+    }
+
+    public function getPartidasNuevasDesdeFecha($fecha)
+    {
+        $query = "SELECT COUNT(*) AS total FROM partida WHERE fecha >= $fecha";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -124,7 +163,8 @@ class AdminModel
     public function adminModelMethodsTest()
     {
         $arrayDatos = array();
-        $usuarioCreadoFechaDesde = '1960-01-01';
+        $mesAnterior = $this->getDiaUnoMesAnterior();
+        $nombreMes = $this->getNombreDelMes($mesAnterior);
 
         $totalUsuarios = $this->getTotalUsuarios();
         $totalJugadores = $this->getTotalJugadores();
@@ -133,11 +173,12 @@ class AdminModel
         $totalJugadoresConAlMenosUnaPartida = $this->getTotalJugadoresConAlMenosUnaPartida();
         $cantidadPartidasJugadas = $this->getCantidadPartidasJugadas();
         $cantidadPreguntas = $this->getTotalPreguntasCreadas();
-        $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($usuarioCreadoFechaDesde);
+        $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($mesAnterior);
         $porcentajePreguntasAcertadas = $this->getPorcentajePreguntasAcertadas();
         // puede ser cualquier Id. debería estar la posibilidad de seleccionar un ID desde la vista
-        $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual()); 
+        $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual());
         $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
+        $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
 
         $arrayDatos["totalUsuarios"] = $totalUsuarios;
         $arrayDatos["totalJugadores"] = $totalJugadores;
@@ -150,6 +191,10 @@ class AdminModel
         $arrayDatos["porcentajePreguntasAcertadas"] = $porcentajePreguntasAcertadas;
         $arrayDatos["porcentajePreguntasAcertadasPorUsuario"] = $porcentajePreguntasAcertadasPorUsuario;
         $arrayDatos["cantidadUsuariosPorSexo"] = $cantidadUsuariosPorSexo;
+        $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
+        $arrayDatos["nombreMes"] = $nombreMes;
+
+
 
 
 
@@ -162,10 +207,4 @@ class AdminModel
 
         return array('arrayDatos' => $arrayDatos);
     }
-    
-
-
-
-
-
 }
