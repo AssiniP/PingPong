@@ -4,7 +4,7 @@
 
         <h1 class="text-4xl text-center mb-10 font-bold">Sugerir Pregunta</h1>
 
-              <form id="preguntaForm" action="/sugerir/addPregunta" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
+              <form id="preguntaForm" action="" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                    <input type="text" id="idPregunta" name="idPregunta" style="display: none;">
 
@@ -106,4 +106,41 @@
  </script>
  {{/editarPregunta}}
 
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('preguntaForm');
+    var errorMessages = document.getElementById('errorMsg');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
+        var formData = new FormData(form);
 
+        fetch('/sugerir/validateFields', {
+            method: 'POST',
+            body: formData
+        })
+        .then(function(response) {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error en la solicitud AJAX: ' + response.statusText);
+            }
+        })
+        .then(function(response) {
+            if (response.errorMsg) {
+                var errorMsgs = response.errorMsg;
+                for (var i = 0; i < errorMsgs.length; i++) {
+                    var errorMessage = document.createElement('p');
+                    errorMessage.textContent = errorMsgs[i];
+                    errorMessages.appendChild(errorMessage);
+                }
+            } else {
+                 window.location.assign('/sugerir/list');
+            }
+        })
+        .catch(function(error) {
+            window.location.assign('/sugerir/list');
+        });
+    });
+});
+</script>

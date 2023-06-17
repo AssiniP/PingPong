@@ -29,8 +29,19 @@ class SugerirController {
             $errorMsg[] = "Llena todos los campos";
         }
         $response = ['errorMsg' => $errorMsg];
-        if (empty($errorMsg)) {
-            $this->addPregunta();
+
+        if (!empty($errorMsg)) {
+            // Enviar respuesta con errores en formato JSON
+            echo json_encode($response);
+        } else {
+            // Llamar a la función add() dentro de un bloque try-catch
+
+            try{
+                $this->addPregunta();
+            } catch (Exception $e) {
+            }
+            $response = ['success' => true];
+            echo json_encode($response);
         }
     }
     public function addPregunta(){
