@@ -10,7 +10,7 @@ class RouterValidator{
     }
 
     public function validateRoute($module, $method){
-        if($module == 'user' && $method == 'validate'){
+        if($module == 'user' && $method == 'validate' || $method == 'getUserData'){
             $this->router->route($module, $method);
             exit();
         }

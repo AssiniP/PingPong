@@ -35,4 +35,15 @@ class UserController {
             $data["usuario"] = $this->userModel->getUser($_GET['nick']);
             $this->renderer->render('users', $data);
         }}
+
+    public function getUserData(){
+        $userData = array(
+            'rol' => $_SESSION['rol'],
+            'logueado' => $_SESSION['logged'],
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($userData);
+        exit();
+    }
 }
