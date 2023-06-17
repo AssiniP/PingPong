@@ -68,17 +68,11 @@ CREATE TABLE Pregunta (
 );
 
 CREATE TABLE aparicion_pregunta (
-
-                                    idUsuario INT not null,
-
-                                    idPregunta INT not null,
-
-                                    PRIMARY KEY (idUsuario, idPregunta),
-
-                                    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
-
-                                    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
-
+    idUsuario INT not null,
+    idPregunta INT not null,
+    PRIMARY KEY (idUsuario, idPregunta),
+    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
+    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
 
 CREATE TABLE Jugada (
