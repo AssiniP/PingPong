@@ -47,4 +47,21 @@ class PartidaController
         var_dump($idPregunta);
         $this->partidaModel->reportarPregunta($motivo, $idUsuario, $idPregunta);
     }
+
+    public function usarTrampita()
+    {
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+        $idUsuario = $data['idUsuario'];
+
+        $tieneTrampitas = $this->partidaModel->verificarTrampitas($idUsuario);
+
+        if ($tieneTrampitas) {
+            $this->partidaModel->trampitaUsada($idUsuario);
+        }
+
+        $response = array('tieneTrampita' => $tieneTrampitas);
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }
