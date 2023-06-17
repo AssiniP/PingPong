@@ -1,4 +1,4 @@
-
+let dataAPI;
 function consultarAPI() {
         let usuario = document.getElementById("usuario");
     fetch('http://localhost:80/api/list?usuario=' + usuario.innerText)
@@ -48,6 +48,7 @@ function consultarAPI() {
             opcion4HTML.classList.add('boton-opcion');
             opcion4HTML.style.backgroundColor = primeraPregunta.categoria.color;
             console.log(data);
+            dataAPI = data.preguntas;
             let idPregunta = document.getElementById("idPregunta");
             idPregunta.innerText = primeraPregunta.id;
 
@@ -68,7 +69,7 @@ function consultarAPI() {
         }
         function runner() {
                 if (number > 0) {
-                        number--;
+                        number = 10;
                 }else {
                         window.location.href = "/lobby/list";
                 }

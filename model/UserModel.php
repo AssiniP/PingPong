@@ -12,7 +12,7 @@ class UserModel {
     }
 
     public function getUser($nickname) {
-        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje ,YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
+        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje, (select COALESCE(COUNT(*), 0) from trampita  t where t.idUsuario=U.id AND t.utilizada = false) trampita, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
 
     public function getHistorial($idUsuario) {
@@ -23,17 +23,50 @@ class UserModel {
         return $this->database->query("SELECT * FROM `usuario` WHERE nickname like '".$nickname."' OR email like '".$email."'");
     }
 
+    public function getQuestionUser($nickname){
+        return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where idCategoria =c.id  and  p.idUsuario in (select id from usuario where nickName like '".$nickname."') ");
+    }
+    public function getQuestionId($id){
+        return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where p.idCategoria =c.id  and  p.id=".$id);
+    }
+    public function delQuestionId($id){
+        return $this->database->query("delete from pregunta_sugerida where id=".$id);
+    }
+    public function getIDUsuarioActual()
+    {
+        $nickname = $_SESSION['nickname'];
+        $user = $this->getUser($nickname);
+        return $user[0]['id'];
+    }
+    public function addQuestion($preguntaData, $nickname){
+        $query = "INSERT INTO pregunta_sugerida (pregunta,opcion1,opcion2,opcion3,opcion4,respuestaCorrecta,idCategoria,idUsuario) VALUES ('".
+            $preguntaData['pregunta']."','".$preguntaData['opcion1']."','".$preguntaData['opcion2']."','".$preguntaData['opcion3']."','".
+            $preguntaData['opcion4']."',".$preguntaData['respuestaCorrecta'].",".$preguntaData['idCategoria'].",".$preguntaData['idUsuario'].")";
+        return $this->database->query($query);
+    }
+    public function editQuestionId($preguntaData){
+        $query = "UPDATE pregunta_sugerida SET  pregunta='". $preguntaData['pregunta']."',opcion1='".$preguntaData['opcion1'].
+            "',opcion2='".$preguntaData['opcion2']."',opcion3='".$preguntaData['opcion3']."',opcion4='".$preguntaData['opcion4'].
+            "',respuestaCorrecta=".$preguntaData['respuestaCorrecta'].",idCategoria=".$preguntaData['idCategoria']."  where id=".$preguntaData['idPregunta'];
+        return $this->database->query($query);
+    }
     //validar que el usuario y la password existan
     public function validarLogin(String $nickname, String $password){
         return $this->database->query("SELECT  u.* , r.rol FROM usuario U, rol  R  where R.id=U.idRol and nickname like '".$nickname."' and password like '".$password."'");
     }
 
+    public function createJugada($idPregunta, $idPartida)
+    {
+        $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
+                  VALUES ($idPregunta, $idPartida, null, 0)";
+        return $this->database->query($query);
+    }
     public function addUser($userData){
-        //
-        //deberia cambiar imagen perfil por otra cosa
-        $query = "INSERT INTO usuario (nickname, password, nombre, email,  imagenPerfil,
-                     pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud,fechaNacimiento,nivelJugador) VALUES (?, ?, ?, ?, ? , ?, ?, ?, NOW(), ? , ? , ?,?,'PRINCIPIANTE')";
-        $this->database->insertUser($query, $userData);
+        $query = "INSERT INTO usuario (nickname, password, nombre, email,  imagenPerfil, pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud,fechaNacimiento,nivelJugador) VALUES ('".
+            $userData['nickName']."','" .$userData['password']."','".  $userData['nombre']."','".  $userData['email']."','".   $userData['imagenPerfil'] ."','".
+            $userData['pais']."',".$userData['idRol'].",".$userData['idGenero']." ,NOW(),'".$userData['ciudad']."',".   $userData['latitud'] .",".
+            $userData['longitud'].",'".$userData['fechaNacimiento']."','PRINCIPIANTE')";
+        return $this->database->query($query);
     }
     public function enviarMail($mail) {
         include_once("vendor/SendEmail.php");
@@ -50,9 +83,13 @@ class UserModel {
         return $this->database->query("SELECT * FROM genero ");
     }
 
+    public function getAllCategoria(){
+        return $this->database->query("SELECT * FROM categoria ");
+    }
     public function getAllRol(){
         return $this->database->query("SELECT * FROM rol ");
     }
+
 
    public function actualizarCuentaValidada($email){
         $esValido = true;

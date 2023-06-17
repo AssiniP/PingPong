@@ -36,6 +36,37 @@ class AdminModel
         return $user[0]['id'];
     }
 
+    public function getDiaUnoMesAnterior()
+    {
+        $currentDate = new DateTime();
+        $currentDate->modify('first day of previous month');
+        $firstDay = $currentDate->format('Y-m-d');
+        return $firstDay;
+    }
+
+    public function getNombreDelMes($fecha)
+    {
+        $dateTime = new DateTime($fecha);
+        $numeroMes = $dateTime->format('n'); // obtiene el número de mes del 1 a 12
+        $nombresMeses = [
+            1 => 'enero',
+            2 => 'febrero',
+            3 => 'marzo',
+            4 => 'abril',
+            5 => 'mayo',
+            6 => 'junio',
+            7 => 'julio',
+            8 => 'agosto',
+            9 => 'septiembre',
+            10 => 'octubre',
+            11 => 'noviembre',
+            12 => 'diciembre'
+        ];
+        $nombreMes = $nombresMeses[$numeroMes];
+        $nombreMes = ucfirst($nombreMes); // mayus primer letra del mes
+        return $nombreMes;
+    }
+
     public function getTotalUsuarios()
     {
         $query = "SELECT COUNT(*) AS TotalUsuarios
@@ -78,25 +109,34 @@ class AdminModel
     }
     public function getTotalPreguntasCreadas()
     {
-       /* Acá entra la API */
+        $query = "SELECT COUNT(*) AS total FROM Pregunta";
+        $result = $this->database->query($query);
+        return $result[0]['total'];
     }
 
     public function getCantidadUsuariosNuevosDesdeFecha($fecha)
     {
-        $query = "SELECT COUNT(*) AS total FROM Usuario WHERE fecharegistro >= '$fecha'";
+        $query = "SELECT COUNT(*) AS total FROM usuario WHERE fechaRegistro >= $fecha";
+        $result = $this->database->query($query);
+        return $result[0]['total'];
+    }
+
+    public function getPartidasNuevasDesdeFecha($fecha)
+    {
+        $query = "SELECT COUNT(*) AS total FROM partida WHERE fecha >= $fecha";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
     public function getPorcentajePreguntasAcertadas()
     {
-        $query = "SELECT (COUNT(*) / (SELECT COUNT(*) FROM Pregunta)) * 100 AS porcentaje_acertadas FROM Pregunta WHERE cantidadAciertos > 0";
+        $query = "SELECT ROUND((COUNT(*) / (SELECT COUNT(*) FROM Pregunta)) * 100, 1) AS porcentaje_acertadas FROM Pregunta WHERE cantidadAciertos > 0";
         $result = $this->database->query($query);
         return $result[0]['porcentaje_acertadas'];
     }
 
     public function getPorcentajePreguntasAcertadasPorUsuario($idUsuario)
     {
-        $query = "SELECT (COUNT(up.aciertos) / (SELECT COUNT(*) FROM usuario_pregunta WHERE idUsuario = $idUsuario)) * 100 AS porcentaje_acertadas
+        $query = "SELECT ROUND((COUNT(up.aciertos) / (SELECT COUNT(*) FROM usuario_pregunta WHERE idUsuario = $idUsuario)) * 100, 1) AS porcentaje_acertadas
                   FROM usuario_pregunta up
                   INNER JOIN pregunta p ON up.idPregunta = p.id
                   WHERE up.idUsuario = $idUsuario AND up.aciertos > 0";
@@ -106,18 +146,15 @@ class AdminModel
 
     public function getCantidadUsuariosPorPais()
     {
-        $query = "SELECT Pais, COUNT(*) AS CantidadUsuarios
-              FROM Usuario
-              GROUP BY Pais";
-        $result = $this->database->query($query);
-        return $result;
+        // se requiere la tabla país
     }
 
     public function getCantidadUsuariosPorSexo()
     {
-        $query = "SELECT Sexo, COUNT(*) AS CantidadUsuarios
-              FROM Usuario
-              GROUP BY Sexo";
+        $query = "SELECT g.nombre AS genero, COUNT(u.id) AS cantidadUsuarios
+                  FROM genero g
+                  INNER JOIN usuario u ON g.id = u.idGenero
+                  GROUP BY g.nombre";
         $result = $this->database->query($query);
         return $result;
     }
@@ -125,7 +162,8 @@ class AdminModel
     public function adminModelMethodsTest()
     {
         $arrayDatos = array();
-        $fecha = '1960-01-01';
+        $mesAnterior = $this->getDiaUnoMesAnterior();
+        $nombreMes = $this->getNombreDelMes($mesAnterior);
 
         $totalUsuarios = $this->getTotalUsuarios();
         $totalJugadores = $this->getTotalJugadores();
@@ -133,8 +171,12 @@ class AdminModel
         $totalAdministradores = $this->getTotalAdministradores();
         $totalJugadoresConAlMenosUnaPartida = $this->getTotalJugadoresConAlMenosUnaPartida();
         $cantidadPartidasJugadas = $this->getCantidadPartidasJugadas();
-        $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($fecha);
-
+        $cantidadPreguntas = $this->getTotalPreguntasCreadas();
+        $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($mesAnterior);
+        $porcentajePreguntasAcertadas = $this->getPorcentajePreguntasAcertadas();
+        $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual());
+        $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
+        $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
 
         $arrayDatos["totalUsuarios"] = $totalUsuarios;
         $arrayDatos["totalJugadores"] = $totalJugadores;
@@ -142,18 +184,20 @@ class AdminModel
         $arrayDatos["totalAdministradores"] = $totalAdministradores;
         $arrayDatos["totalJugadoresConAlMenosUnaPartida"] = $totalJugadoresConAlMenosUnaPartida;
         $arrayDatos["cantidadPartidasJugadas"] = $cantidadPartidasJugadas;
+        $arrayDatos["cantidadPreguntas"] = $cantidadPreguntas;
         $arrayDatos["cantidadUsuariosNuevosDesdeFecha"] = $cantidadUsuariosNuevosDesdeFecha;
+        $arrayDatos["porcentajePreguntasAcertadas"] = $porcentajePreguntasAcertadas;
+        $arrayDatos["porcentajePreguntasAcertadasPorUsuario"] = $porcentajePreguntasAcertadasPorUsuario;
+        $arrayDatos["cantidadUsuariosPorSexo"] = $cantidadUsuariosPorSexo;
+        $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
+        $arrayDatos["nombreMes"] = $nombreMes;
 
 
-
+        /* se necesita para las estadisticas de usuarios en particular poder seleccionar el ID de usuario.
+        para el caso de fechas particulares se necesita poder seleccionar el mes. con el mes y usuario seleccionado se
+        actualizan los datos de la vista. <select> */
 
 
         return array('arrayDatos' => $arrayDatos);
     }
-    
-
-
-
-
-
 }
