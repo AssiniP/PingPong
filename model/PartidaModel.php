@@ -235,5 +235,18 @@ class PartidaModel
         $query = "INSERT INTO preguntaReportada (motivo, idUsuario, idPregunta, fecha) VALUES (?, ?, ?, NOW())";
         $this->database->reportarPregunta($query, $reportData);
     }
+
+    public function verificarTrampitas($idUsuario){
+        $trampitasDisponibles = $this->database->query("SELECT COALESCE(COUNT(*), 0) as 'trampitas' FROM trampita t WHERE t.idUsuario = '". $idUsuario ."' and t.utilizada = false");
+        if($trampitasDisponibles[0]['trampitas']>0){
+            return true;
+        }
+        return false;
+    }
+
+    public function trampitaUsada($idUsuario){
+        $query = "UPDATE trampita SET utilizada = true WHERE idUsuario = '$idUsuario' AND utilizada = false LIMIT 1;";
+        $this->database->query($query);
+    }
 }
 
