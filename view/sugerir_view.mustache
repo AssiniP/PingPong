@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(function(response) {
             if (response.errorMsg) {
-                alert("paso 3");
                 var errorMsgs = response.errorMsg;
                 for (var i = 0; i < errorMsgs.length; i++) {
                     var errorMessage = document.createElement('p');
