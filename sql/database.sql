@@ -67,13 +67,6 @@ CREATE TABLE Pregunta (
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
 
-CREATE TABLE aparicion_pregunta (
-    idUsuario INT not null,
-    idPregunta INT not null,
-    PRIMARY KEY (idUsuario, idPregunta),
-    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
-);
 
 CREATE TABLE Jugada (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -108,7 +101,6 @@ CREATE TABLE usuario_pregunta (
 CREATE TABLE Pregunta_sugerida (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pregunta VARCHAR(255) NOT NULL,
-    idOpcion INT NOT NULL,
     idCategoria INT NOT NULL,
     idUsuario INT NOT NULL,
     opcion1 VARCHAR(255) NOT NULL,
@@ -126,4 +118,12 @@ CREATE TABLE aparicion_pregunta (
     PRIMARY KEY (idUsuario, idPregunta),
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+);
+
+CREATE TABLE Trampita (
+                          id INT AUTO_INCREMENT PRIMARY KEY,
+                          idUsuario INT NOT NULL,
+                          fechaCompra DATE NOT NULL,
+                          utilizada BOOLEAN DEFAULT FALSE,
+                          FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
