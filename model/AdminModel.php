@@ -44,11 +44,10 @@ class AdminModel
         return $firstDay;
     }
 
-    public function getNombreDelMes($date)
+    public function getNombreDelMes($fecha)
     {
-        $dateTime = new DateTime($date);
-        $numeroMes = $dateTime->format('n'); // Obtiene el número de mes (1 a 12)
-        
+        $dateTime = new DateTime($fecha);
+        $numeroMes = $dateTime->format('n'); // obtiene el número de mes del 1 a 12
         $nombresMeses = [
             1 => 'enero',
             2 => 'febrero',
@@ -175,7 +174,6 @@ class AdminModel
         $cantidadPreguntas = $this->getTotalPreguntasCreadas();
         $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($mesAnterior);
         $porcentajePreguntasAcertadas = $this->getPorcentajePreguntasAcertadas();
-        // puede ser cualquier Id. debería estar la posibilidad de seleccionar un ID desde la vista
         $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual());
         $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
         $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
@@ -195,14 +193,9 @@ class AdminModel
         $arrayDatos["nombreMes"] = $nombreMes;
 
 
-
-
-
-
-
-
-
-
+        /* se necesita para las estadisticas de usuarios en particular poder seleccionar el ID de usuario.
+        para el caso de fechas particulares se necesita poder seleccionar el mes. con el mes y usuario seleccionado se
+        actualizan los datos de la vista. <select> */
 
 
         return array('arrayDatos' => $arrayDatos);
