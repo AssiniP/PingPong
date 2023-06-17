@@ -35,35 +35,34 @@ class SugerirController {
             echo json_encode($response);
         } else {
             // Llamar a la función add() dentro de un bloque try-catch
-            $response = ['success' => true];
-            echo json_encode($response);
+
             try{
                 $this->addPregunta();
             } catch (Exception $e) {
             }
+            $response = ['success' => true];
+            echo json_encode($response);
         }
     }
-    private function addPregunta(){
-        $preguntaEdit = isset($_POST['idPregunta']) ? intval($_POST['idPregunta']): 0;
-
+    public function addPregunta(){
+        $preguntaEdit = isset($_POST['idPregunta']) ? intval($_POST['idPregunta']): intval('0');
         $preguntaData = [
             'idPregunta' => $preguntaEdit,
-            'idCategoria' => $_POST['idCategoria'],
-            'idUsuario' => $this->userModel->getIDUsuarioActual(),
+            'idCategoria' => intval($_POST['idCategoria']),
+            'idUsuario' => intval($this->userModel->getIDUsuarioActual()),
             'pregunta' => $_POST['pregunta'],
             'opcion1' => $_POST['opcion1'],
             'opcion2' => $_POST['opcion2'],
             'opcion3' => $_POST['opcion3'],
             'opcion4' => $_POST['opcion4'],
-            'respuestaCorrecta' => $_POST['respuestaCorrecta']];
-        var_dump($preguntaData);
+            'respuestaCorrecta' => intval($_POST['respuestaCorrecta'])];
 
-        if(isset($_POST['idPregunta'])) {
-            $this->userModel->editQuestionId($preguntaData);
+        if($preguntaEdit == 0) {
+            $this->userModel->addQuestion($preguntaData);
         } else {
-            $nickname = $_SESSION['nickname'];
-            $this->userModel->addQuestion($preguntaData,$nickname);
+            $this->userModel->editQuestionId($preguntaData);
         }
+        header('location: /sugerir/list');
     }
 
     private function checkThatUserFormIsNotEmpty(){

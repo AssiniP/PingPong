@@ -38,10 +38,11 @@ class UserModel {
         $user = $this->getUser($nickname);
         return $user[0]['id'];
     }
-    public function addQuestion($preguntaData, $nickname){
-        $query = "INSERT INTO pregunta_sugerida (pregunta,opcion1,opcion2,opcion3,opcion4,respuestaCorrecta,idCategoria,idUsuario) VALUES ('".
-            $preguntaData['pregunta']."','".$preguntaData['opcion1']."','".$preguntaData['opcion2']."','".$preguntaData['opcion3']."','".
-            $preguntaData['opcion4']."',".$preguntaData['respuestaCorrecta'].",".$preguntaData['idCategoria'].",".$preguntaData['idUsuario'].")";
+
+    public function addQuestion($preguntaData) {
+        $query = "INSERT INTO pregunta_sugerida (idCategoria,idUsuario,pregunta,opcion1,opcion2,opcion3,opcion4,respuestaCorrecta) VALUES (".
+            $preguntaData['idCategoria'].",".$preguntaData['idUsuario'].",'".$preguntaData['pregunta']."','".$preguntaData['opcion1']."','".
+            $preguntaData['opcion2']."','".$preguntaData['opcion3']."','".$preguntaData['opcion4']."',".$preguntaData['respuestaCorrecta'].")";
         return $this->database->query($query);
     }
     public function editQuestionId($preguntaData){

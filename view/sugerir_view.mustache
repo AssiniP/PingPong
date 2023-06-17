@@ -6,7 +6,7 @@
 
               <form id="preguntaForm" action="" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                   <input type="text" id="idPregunta" name="idPregunta">
+                   <input type="text" id="idPregunta" name="idPregunta" style="display: none;">
 
                      <label for="idCategoria" class="mr-2 ml-2">Categoria:</label>
                      <select id="idCategoria" name="idCategoria" required
@@ -16,15 +16,18 @@
                         <option value={{id}}>{{nombre}}</option>
                      {{/verCategoria}}
                      </select><br><br>
+                     </div>
+                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                     <label for="pregunta" class="mr-2">Pregunta:</label>
                                          <input type="text" id="pregunta" name="pregunta" required
                                         class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                   </div>
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-
                     <label for="opcion1" class="mr-2">Opcion 1:</label>
                                        <input type="text" id="opcion1" name="opcion1" required
                                       class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                      </div>
+                      <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                    <label for="opcion2" class="mr-2">Opcion 2:</label>
                                       <input type="text" id="opcion2" name="opcion2" required
                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
@@ -34,6 +37,8 @@
                     <label for="opcion3" class="mr-2">Opcion 3:</label>
                                        <input type="text" id="opcion3" name="opcion3" required
                                       class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                     </div>
+                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                    <label for="opcion4" class="mr-2">Opcion 4:</label>
                                       <input type="text" id="opcion4" name="opcion4" required
                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
@@ -100,7 +105,6 @@
 
  </script>
  {{/editarPregunta}}
-
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
