@@ -1,4 +1,4 @@
-{{> headerUser}}
+{{>header}}
 <div class="flex flex-col justify-center items-center justify-items-center">
  {{#usuario}}
  <div class="lobby-container mt-10">
@@ -9,14 +9,10 @@
     </div>
     <div class="linea"></div>
     <div class="lobby-buttons">
-        <a href="/partida/list" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Crear Partida</a>
-        <a href="/sugerir/list" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Crear Pregunta</a>
-        <a href="/lobby/ranking" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Ranking</a>
-        <a href="/lobby/historial" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Historial</a>
-        <a href="#" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Salir</a>
+        <a href="/partida/list" class="boton bg-yellow-400 hover:bg-yellow-200 text-black p-5 rounded">Jugar Partida</a>
     </div>
         <h2 class="text-white text-3xl mb-20">{{trampita}} Trampitas</h2>
-
 </div>
  {{/usuario}}
 </div>
+{{>footer}}
