@@ -26,11 +26,30 @@ class UserModel {
     public function getQuestionUser($nickname){
         return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where idCategoria =c.id  and  p.idUsuario in (select id from usuario where nickName like '".$nickname."') ");
     }
-
+    public function getQuestionId($id){
+        return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where p.idCategoria =c.id  and  p.id=".$id);
+    }
     public function delQuestionId($id){
         return $this->database->query("delete from pregunta_sugerida where id=".$id);
     }
-
+    public function getIDUsuarioActual()
+    {
+        $nickname = $_SESSION['nickname'];
+        $user = $this->getUser($nickname);
+        return $user[0]['id'];
+    }
+    public function addQuestion($preguntaData, $nickname){
+        $query = "INSERT INTO pregunta_sugerida (pregunta,opcion1,opcion2,opcion3,opcion4,respuestaCorrecta,idCategoria,idUsuario) VALUES ('".
+            $preguntaData['pregunta']."','".$preguntaData['opcion1']."','".$preguntaData['opcion2']."','".$preguntaData['opcion3']."','".
+            $preguntaData['opcion4']."',".$preguntaData['respuestaCorrecta'].",".$preguntaData['idCategoria'].",".$preguntaData['idUsuario'].")";
+        return $this->database->query($query);
+    }
+    public function editQuestionId($preguntaData){
+        $query = "UPDATE pregunta_sugerida SET  pregunta='". $preguntaData['pregunta']."',opcion1='".$preguntaData['opcion1'].
+            "',opcion2='".$preguntaData['opcion2']."',opcion3='".$preguntaData['opcion3']."',opcion4='".$preguntaData['opcion4'].
+            "',respuestaCorrecta=".$preguntaData['respuestaCorrecta'].",idCategoria=".$preguntaData['idCategoria']."  where id=".$preguntaData['idPregunta'];
+        return $this->database->query($query);
+    }
     //validar que el usuario y la password existan
     public function validarLogin(String $nickname, String $password){
         return $this->database->query("SELECT  u.* , r.rol FROM usuario U, rol  R  where R.id=U.idRol and nickname like '".$nickname."' and password like '".$password."'");
@@ -64,6 +83,9 @@ class UserModel {
         return $this->database->query("SELECT * FROM genero ");
     }
 
+    public function getAllCategoria(){
+        return $this->database->query("SELECT * FROM categoria ");
+    }
     public function getAllRol(){
         return $this->database->query("SELECT * FROM rol ");
     }
