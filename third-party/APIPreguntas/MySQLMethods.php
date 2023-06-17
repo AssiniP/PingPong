@@ -8,12 +8,15 @@ class MySQLMethods
     private $password;
     private $charset;
 
+    private $configFile = 'config/config.ini';
+
     public function __construct()
     {
-        $this->host     = "localhost";
-        $this->db       = "pingpong";
-        $this->user     = "root";
-        $this->password = "";
+        $config = $this->getArrayConfig();
+        $this->host     = $config['servername'];
+        $this->db       = $config['database'];
+        $this->user     = $config['username'];
+        $this->password =  $config['password'];
         $this->charset  = 'utf8mb4';
     }
 
@@ -35,5 +38,9 @@ class MySQLMethods
         } catch (PDOException $e) {
             print_r('Error connection: ' . $e->getMessage());
         }
+    }
+
+    private function getArrayConfig() {
+        return parse_ini_file($this->configFile);
     }
 }
