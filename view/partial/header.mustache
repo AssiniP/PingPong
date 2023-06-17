@@ -4,9 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Expires" content="0">
-  <meta http-equiv="Last-Modified" content="0">
-  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -14,7 +11,70 @@
   <link rel="stylesheet" href="/public/css/estilo.css">
 </head>
 <body>
-<header id="main-header" class="text-center">
+<header id="main-header" class="header-user">
+    <a class="header-logo" id="logo-header" href="/lobby/list">
+        <img src="/public/img/prueba-logo.png" alt="LOGO" class="h-24 w-30">
+    </a>
+    <div id="additional-links" class="header-nav"></div>
+    <script>
+        window.addEventListener('load', () => {
+            fetch('/user/getUserData')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.rol);
+                        console.log(data.logueado);
+                        if (data.rol === 'Administrador') { // Comparar con el string 'Editor'
+                            // Generar enlace para ABM de preguntas
+                            const abmPreguntasLink = document.createElement('a');
+                            abmPreguntasLink.href = '/admin/list/';
+                            abmPreguntasLink.textContent = 'Administrar';
 
+                            // Agregar enlace al contenedor de enlaces adicionales
+                            const additionalLinksContainer = document.getElementById('additional-links');
+                            additionalLinksContainer.appendChild(abmPreguntasLink);
+                            console.log('SOS el admin');
+                        }
 
+                        if (data.rol === 'Editor') { // Comparar con el string 'Editor'
+                            // Generar enlace para ABM de preguntas
+                            const abmPreguntasLink = document.createElement('a');
+                            abmPreguntasLink.href = '/editor/list/';
+                            abmPreguntasLink.textContent = 'Editar preguntas';
+
+                            // Agregar enlace al contenedor de enlaces adicionales
+                            const additionalLinksContainer = document.getElementById('additional-links');
+                            additionalLinksContainer.appendChild(abmPreguntasLink);
+                            console.log('SOS EDITOR HERMANO BIEN AHII');
+                        }
+
+                        if (data.logueado) {
+                            const logoutLink = document.createElement('a');
+                            logoutLink.href = '/login/logout';
+                            logoutLink.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i>';
+
+                            const sugerirLink = document.createElement('a');
+                            sugerirLink.href = '/sugerir/list';
+                            sugerirLink.innerHTML = 'Fabrica de preguntas';
+
+                            const rankingLink = document.createElement('a');
+                            rankingLink.href = '/lobby/ranking';
+                            rankingLink.innerHTML = 'Ranking';
+
+                            const historialLink = document.createElement('a');
+                            historialLink.href = '/lobby/historial';
+                            historialLink.innerHTML = 'Historial';
+
+                            console.log('Te logeaste lol');
+                            const additionalLinksContainer = document.getElementById('additional-links');
+                            additionalLinksContainer.appendChild(sugerirLink);
+                            additionalLinksContainer.appendChild(rankingLink);
+                            additionalLinksContainer.appendChild(historialLink);
+                            additionalLinksContainer.appendChild(logoutLink);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener datos del usuario:', error);
+                    });
+        });
+    </script>
 </header>
