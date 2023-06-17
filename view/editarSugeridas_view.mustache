@@ -2,7 +2,7 @@
 
       <div class="flex flex-col  text-green-700 bg-white p-5  m-auto mt-10 mb-10  rounded">
 
-        <h1 class="text-4xl text-center mb-10 font-bold">Sugerir Pregunta</h1>
+        <h1 class="text-4xl text-center mb-10 font-bold">Edicion Preguntas</h1>
 
               <form id="preguntaForm" action="" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
@@ -71,8 +71,8 @@
              <tr>
                  <td>{{categoria}}</td>
                  <td>{{pregunta}}</td>
-                 <td><a href='/sugerir/eliminar&id={{id}}'>del</a></td>
-                 <td><a href='/sugerir/list&id={{id}}'>edit</a></td>
+                 <td><a href='/editor/eliminar&id={{id}}'>del</a></td>
+                 <td><a href='/editor/list&id={{id}}'>edit</a></td>
              </tr>
              {{/preguntas}}
 
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
         var formData = new FormData(form);
 
-        fetch('/sugerir/validateFields', {
+        fetch('/editor/validateFields', {
             method: 'POST',
             body: formData
         })
@@ -135,11 +135,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorMessages.appendChild(errorMessage);
                 }
             } else {
-                 window.location.assign('/sugerir/list');
+                 window.location.assign('/editor/list');
             }
         })
         .catch(function(error) {
-            window.location.assign('/sugerir/list');
+            window.location.assign('/editor/list');
         });
     });
 });
