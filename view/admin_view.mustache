@@ -6,15 +6,17 @@
 <p>Cantidad de Administradores: {{totalAdministradores}} </p>
 <p>Cantidad de Jugadores con al menos una Partida: {{totalJugadoresConAlMenosUnaPartida}}</p>
 <p>Cantidad de Partidas jugadas: {{cantidadPartidasJugadas}}</p>
-<p>Cantidad de Preguntas creadas: <b>VER API</b></p>
+<p>Cantidad de Preguntas creadas: {{cantidadPreguntas}}</p>
 <p>Cantidad de Usuarios desde fecha por parametro: {{cantidadUsuariosNuevosDesdeFecha}}</p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<p>Porcentaje de Preguntas acertadas en general: {{porcentajePreguntasAcertadas}}%</p>
+<p>Porcentaje de Preguntas acertadas por Usuario en particular: {{porcentajePreguntasAcertadasPorUsuario}}%</p>
+<p><b>Cantidad de Usuarios por Género</b></p>
+<ul>
+    {{#cantidadUsuariosPorSexo}}
+    <li>{{genero}}: {{cantidadUsuarios}}</li>
+    {{/cantidadUsuariosPorSexo}}
+</ul>
+
 
 
 

@@ -22,13 +22,11 @@ class AdminController
         $data['totalAdministradores'] = $arrayDatos['arrayDatos']['totalAdministradores'];
         $data['totalJugadoresConAlMenosUnaPartida'] = $arrayDatos['arrayDatos']['totalJugadoresConAlMenosUnaPartida'];
         $data['cantidadPartidasJugadas'] = $arrayDatos['arrayDatos']['cantidadPartidasJugadas'];
+        $data['cantidadPreguntas'] = $arrayDatos['arrayDatos']['cantidadPreguntas'];
         $data['cantidadUsuariosNuevosDesdeFecha'] = $arrayDatos['arrayDatos']['cantidadUsuariosNuevosDesdeFecha'];
-
-
-        
-
-
-
+        $data['porcentajePreguntasAcertadas'] = $arrayDatos['arrayDatos']['porcentajePreguntasAcertadas'];
+        $data['porcentajePreguntasAcertadasPorUsuario'] = $arrayDatos['arrayDatos']['porcentajePreguntasAcertadasPorUsuario'];
+        $data['cantidadUsuariosPorSexo'] = $arrayDatos['arrayDatos']['cantidadUsuariosPorSexo'];
 
         $this->renderer->render('admin', $data);
     }
