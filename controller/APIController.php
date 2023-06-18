@@ -28,7 +28,7 @@ class APIController
             $jsonData = file_get_contents('php://input');
             if($jsonData!= null){
                 $body = json_decode($jsonData);
-                echo $api->altaPregunta($body->pregunta->valor,$body->pregunta->opcion1, $body->pregunta->opcion2,$body->pregunta->opcion3, $body->pregunta->opcion4, $body->pregunta->correcta,$body->pregunta->categoria,$body->usuario);
+                echo $api->altaPregunta($body->pregunta->valor,$body->pregunta->opcion1, $body->pregunta->opcion2,$body->pregunta->opcion3, $body->pregunta->correcta,$body->pregunta->categoria,$body->usuario);
             }
 
 

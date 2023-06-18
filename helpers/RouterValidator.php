@@ -90,18 +90,21 @@ class RouterValidator{
 
     private function questionExists()
     {
-        if (isset($_GET['opcion']) || isset($_GET['pregunta'])) {
-            $pregunta = $_GET['pregunta'];
+
+
+           /* if (isset($_GET['opcion']) || isset($_GET['pregunta'])) {
+           $pregunta = $_GET['pregunta'];
             $opcion = $_GET['opcion'];
-            $preguntaExistentes = $this->database->query("select count(id) as 'cantidad' from pregunta where id=".$pregunta);
+           $preguntaExistentes = $this->database->query("select count(id) as 'cantidad' from pregunta where id=".$pregunta);
             $value = $preguntaExistentes[0]["cantidad"];
             if ($opcion < 1 || $opcion > 4 || intval($value) ==0) {
                 return false;
             }else {
                 return true;
             }
+        }*/
+            return true;
 
 
-        }
     }
 }
