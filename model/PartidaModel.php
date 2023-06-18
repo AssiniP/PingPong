@@ -223,6 +223,8 @@ class PartidaModel
         $this->updatePuntajePartida($idPartida, $respuestasCorrectas);
         $puntaje = $this->obtenerPuntajeDeLaPartida($idPartida);
         $arrayDatos['puntaje'] = $puntaje;
+        $arrayDatos['preguntaId'] = $preguntaId;
+        $arrayDatos['usuarioId'] = $usuarioId;
         return array('arrayDatos' => $arrayDatos);
     }
 
