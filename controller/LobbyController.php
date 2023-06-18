@@ -8,7 +8,8 @@ class LobbyController{
         $this->userModel = $userModel;
     }
     public function list() {
-        $data["usuario"] = $this->userModel->getUser($_SESSION['nickname']);
+        $data["usuarioInfo"] = $this->userModel->getUserInfo($_SESSION['nickname']);
+        $data["usuarioJuego"] = $this->userModel->getUserGameInfo($_SESSION['nickname']);
         $this->renderer->render('lobby',$data);
     }
 
