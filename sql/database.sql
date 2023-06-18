@@ -126,3 +126,7 @@ CREATE TABLE Trampita (
     utilizada BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );
+
+CREATE TABLE paises (
+                        id int primary key auto_increment,
+                        nombre varchar(150) default '');

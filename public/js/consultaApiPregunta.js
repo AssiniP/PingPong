@@ -69,7 +69,7 @@ function consultarAPI() {
         }
         function runner() {
                 if (number > 0) {
-                        number = 10;
+                        number --;
                 }else {
                         window.location.href = "/lobby/list";
                 }

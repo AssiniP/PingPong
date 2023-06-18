@@ -12,7 +12,14 @@ class UserModel {
     }
 
     public function getUser($nickname) {
-        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje, (select COALESCE(COUNT(*), 0) from trampita  t where t.idUsuario=U.id AND t.utilizada = false) trampita, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
+        return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje from usuario U, (select COALESCE(COUNT(*), 0) from trampita  t where t.idUsuario=U.id AND t.utilizada = false) trampita, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
+    }
+
+    public function getUserInfo($nickname){
+        return $this->database->query("select u.*, G.nombre genero, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname = '".$nickname."'");
+    }
+    public function getUserGameInfo($nickname){
+        return $this->database->query("SELECT U.*, (SELECT IF(SUM(puntaje) IS NULL, 0, SUM(puntaje)) AS puntaje FROM Partida P WHERE P.idUsuario = U.id) AS puntaje, (SELECT COALESCE(COUNT(*), 0) FROM trampita t WHERE t.idUsuario = U.id AND t.utilizada = false) AS trampita FROM usuario U WHERE nickname like '".$nickname."';");
     }
 
     public function getHistorial($idUsuario) {
@@ -102,16 +109,10 @@ class UserModel {
 
         $tempDir = SITE_ROOT . '/public/qr-perfil/qr_code_' . $nickname . '.png';
 
-        // here our data
         $url = 'http://localhost/user/seeProfile&nick=' . $nickname;
 
-        // generating
-        //Nara si el tamaño del QR es feo cambialo acá!!
         $size = 3;
         $level = 'L';
         QRcode::png($url, $tempDir, $level, $size);
-
-        // displaying
-        //echo '<img src="'.EXAMPLE_TMP_URLRELPATH.'022.png" />';
     }
 }
