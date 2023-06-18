@@ -66,8 +66,7 @@ class EditorController{
             'opcion1' => $_POST['opcion1'],
             'opcion2' => $_POST['opcion2'],
             'opcion3' => $_POST['opcion3'],
-            'opcion4' => $_POST['opcion4'],
-            'respuestaCorrecta' => intval($_POST['respuestaCorrecta'])];
+            'respuestaCorrecta' => $_POST['respuestaCorrecta']];
 
         if($preguntaEdit == 0) {
             $this->editorModel->addQuestion($preguntaData);
@@ -78,7 +77,7 @@ class EditorController{
 
     private function checkThatUserFormIsNotEmpty(){
         if(empty($_POST['idCategoria']) || empty($_POST['pregunta']) || empty($_POST['opcion1']) || empty($_POST['opcion2']) ||
-            empty($_POST['opcion3']) || empty($_POST['opcion4']) || empty($_POST['respuestaCorrecta'])){
+            empty($_POST['opcion3']) ||  empty($_POST['respuestaCorrecta'])){
             return false;
         }
         return true;
