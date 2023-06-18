@@ -26,27 +26,48 @@ function consultarAPI() {
 
             let preguntaHTML = document.getElementById("pregunta");
             preguntaHTML.innerText = primeraPregunta.pregunta;
+            const numerosMezclados = mezcladorNumerico();
+            console.log(numerosMezclados);
+            const num1 = numerosMezclados[0];
+            const num2 = numerosMezclados[1];
+            const num3 = numerosMezclados[2];
+            const num4 = numerosMezclados[3];
+            let opcion1 = "opcion"+num1;
+            let opcion2 = "opcion"+num2;
+            let opcion3 = "opcion"+num3;
+            let opcion4 = "opcion"+num4;
 
-            let opcion1HTML = document.getElementById("opcion1");
+
+            console.log(num1);
+            console.log(num2);
+            console.log(num3);
+            console.log(num4);
+            let opcion1HTML = document.getElementById(opcion1);
+            console.log(opcion1HTML);
             opcion1HTML.innerText = primeraPregunta.opciones.opcion_1;
-            opcion1HTML.href = '/partida/respuesta?opcion=1&pregunta='+primeraPregunta.id;
+            opcion1HTML.href = 'http://localhost:80/partida/respuesta?opcion='+ opcion1HTML.innerText+'&pregunta='+primeraPregunta.id;
             opcion1HTML.classList.add('boton-opcion');
+            console.log( "esta es la url = "+ opcion1HTML.href);
             opcion1HTML.style.backgroundColor = primeraPregunta.categoria.color;
-            let opcion2HTML = document.getElementById("opcion2");
+            let opcion2HTML = document.getElementById(opcion2);
             opcion2HTML.innerText = primeraPregunta.opciones.opcion_2;
-            opcion2HTML.href = '/partida/respuesta?opcion=2&pregunta='+primeraPregunta.id;
+            opcion2HTML.href = 'http://localhost:80/partida/respuesta?opcion='+ opcion2HTML.innerText+'&pregunta='+primeraPregunta.id;
             opcion2HTML.classList.add('boton-opcion');
+            console.log( "esta es la url = "+ opcion2HTML.href);
             opcion2HTML.style.backgroundColor = primeraPregunta.categoria.color;
-            let opcion3HTML = document.getElementById("opcion3");
+            let opcion3HTML = document.getElementById(opcion3);
             opcion3HTML.innerText = primeraPregunta.opciones.opcion_3;
-            opcion3HTML.href = '/partida/respuesta?opcion=3&pregunta='+primeraPregunta.id;
+            opcion3HTML.href = 'http://localhost:80/partida/respuesta?opcion='+ opcion3HTML.innerText+'&pregunta='+primeraPregunta.id;
             opcion3HTML.classList.add('boton-opcion');
+
+            console.log( "esta es la url = "+ opcion3HTML.href);
             opcion3HTML.style.backgroundColor = primeraPregunta.categoria.color;
-            let opcion4HTML = document.getElementById("opcion4");
-            opcion4HTML.innerText = primeraPregunta.opciones.opcion_4;
-            opcion4HTML.href = '/partida/respuesta?opcion=4&pregunta='+primeraPregunta.id;
+            let opcion4HTML = document.getElementById(opcion4);
+            opcion4HTML.innerText = primeraPregunta.opciones.respuesta_correcta;
+            opcion4HTML.href = 'http://localhost:80/partida/respuesta?opcion='+ opcion4HTML.innerText+'&pregunta='+primeraPregunta.id;
             opcion4HTML.classList.add('boton-opcion');
             opcion4HTML.style.backgroundColor = primeraPregunta.categoria.color;
+            console.log( "esta es la url = "+ opcion4HTML.href);
             console.log(data);
             dataAPI = data.preguntas;
             let idPregunta = document.getElementById("idPregunta");
@@ -76,6 +97,20 @@ function consultarAPI() {
 
                 input.innerText = number;
         }
+
+    function mezcladorNumerico() {
+        const numbers = [1, 2, 3, 4];
+        for (let index = 0; index < numbers.length; index++) {
+            let j = Math.round(Math.floor(Math.random(1, 4) * (10)));
+
+            if (j >= 0 && j <= 3) {
+                [numbers[index], numbers[j]] = [numbers[j], numbers[index]];
+            }
+        }
+        return numbers;
+    }
+
+
 }
 
 
