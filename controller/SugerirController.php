@@ -62,7 +62,6 @@ class SugerirController {
         } else {
             $this->userModel->editQuestionId($preguntaData);
         }
-        header('location: /sugerir/list');
     }
 
     private function checkThatUserFormIsNotEmpty(){

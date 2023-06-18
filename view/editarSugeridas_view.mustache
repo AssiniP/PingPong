@@ -7,6 +7,7 @@
               <form id="preguntaForm" action="" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                    <input type="text" id="idPregunta" name="idPregunta" style="display: none;">
+                    <input type="text" id="idUsuario" name="idUsuario" style="display: none;">
 
                      <label for="idCategoria" class="mr-2 ml-2">Categoria:</label>
                      <select id="idCategoria" name="idCategoria" required
@@ -72,7 +73,7 @@
                  <td>{{categoria}}</td>
                  <td>{{pregunta}}</td>
                  <td><a href='/editor/eliminar&id={{id}}'>del</a></td>
-                 <td><a href='/editor/list&id={{id}}'>edit</a></td>
+                 <td><a href='/editor/sugeridas&id={{id}}'>edit</a></td>
              </tr>
              {{/preguntas}}
 
@@ -85,6 +86,7 @@
 {{#editarPregunta}}
  <script>
          var idPreguntaField = document.getElementById('idPregunta');
+         var idUsuarioPreguntaField = document.getElementById('idUsuario');
          var idCategoriaField = document.getElementById('idCategoria');
          var preguntaField = document.getElementById('pregunta');
          var opcion1Field = document.getElementById('opcion1');
@@ -95,6 +97,7 @@
 
          // Poblar los campos del formulario con los datos de la pregunta
          idPreguntaField.value = "{{id}}";
+         idUsuarioPreguntaField.value = "{{idUsuario}}";
          idCategoriaField.value = "{{idCategoria}}";
          preguntaField.value = "{{pregunta}}";
          opcion1Field.value = "{{opcion1}}";
@@ -135,11 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     errorMessages.appendChild(errorMessage);
                 }
             } else {
-                 window.location.assign('/editor/list');
+                 window.location.assign('/editor/sugeridas');
             }
         })
         .catch(function(error) {
-            window.location.assign('/editor/list');
+            window.location.assign('/editor/sugeridas');
         });
     });
 });
