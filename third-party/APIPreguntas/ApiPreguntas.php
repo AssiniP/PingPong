@@ -24,7 +24,6 @@ class ApiPreguntas
                         "opcion_1"=>$row['opcion1'],
                         "opcion_2"=>$row['opcion2'],
                         "opcion_3"=>$row['opcion3'],
-                        "opcion_4"=>$row['opcion4'],
                         "respuesta_correcta"=>$row['respuestaCorrecta']
                     ],
                     "categoria"=> $categoria
@@ -58,10 +57,10 @@ class ApiPreguntas
         }
     }
 
-    function altaPregunta($pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria,$usuario){
+    function altaPregunta($pregunta,$opcion1,$opcion2,$opcion3,$respuestaCorrecta,$categoria,$usuario){
         $preguntaClass = new Pregunta();
 
-      return  json_encode(array('mensaje'=> $preguntaClass->darDeAltaPregunta($pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria,$usuario)));
+      return  json_encode(array('mensaje'=> $preguntaClass->darDeAltaPregunta($pregunta,$opcion1,$opcion2,$opcion3,$respuestaCorrecta,$categoria,$usuario)));
     }
 
     function bajaPregunta($idPregunta){
@@ -69,8 +68,8 @@ class ApiPreguntas
         return  json_encode(array('mensaje'=> $preguntaClass->borrarPregunta($idPregunta)));
     }
 
-    function modificarPregunta($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria){
+    function modificarPregunta($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$respuestaCorrecta,$categoria){
         $preguntaClass = new Pregunta();
-        return  json_encode(array('mensaje'=> $preguntaClass->modificarPregunta($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$opcion4,$respuestaCorrecta,$categoria)));
+        return  json_encode(array('mensaje'=> $preguntaClass->modificarPregunta($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$respuestaCorrecta,$categoria)));
     }
 }

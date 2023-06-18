@@ -35,12 +35,12 @@ class Pregunta extends MySQLMethods
         return $query;
     }
 
-    function darDeAltaPregunta($pregunta, $opcion1, $opcion2, $opcion3, $opcion4, $correcta, $categoria, $usuario)
+    function darDeAltaPregunta($pregunta, $opcion1, $opcion2, $opcion3, $correcta, $categoria, $usuario)
     {
         $idUsuario = $this->obtenerIdUsuario($usuario);
         $idCategoria = $this->obtenerIdCategoria($categoria);
 
-        $query = "INSERT INTO pregunta (idCategoria, idUsuario, pregunta, opcion1, opcion2, opcion3, opcion4, respuestaCorrecta, cantidadAciertos, cantidadOcurrencias) VALUES (:idCategoria, :idUsuario, :pregunta, :opcion1, :opcion2, :opcion3, :opcion4, :correcta, 0, 0)";
+        $query = "INSERT INTO pregunta (idCategoria, idUsuario, pregunta, opcion1, opcion2, opcion3, respuestaCorrecta, cantidadAciertos, cantidadOcurrencias) VALUES (:idCategoria, :idUsuario, :pregunta, :opcion1, :opcion2, :opcion3,  :correcta, 0, 0)";
 
         $stmt = $this->connect()->prepare($query);
         $stmt->bindParam(':idCategoria', $idCategoria);
@@ -49,7 +49,6 @@ class Pregunta extends MySQLMethods
         $stmt->bindParam(':opcion1', $opcion1);
         $stmt->bindParam(':opcion2', $opcion2);
         $stmt->bindParam(':opcion3', $opcion3);
-        $stmt->bindParam(':opcion4', $opcion4);
         $stmt->bindParam(':correcta', $correcta);
 
         $stmt->execute();
@@ -86,16 +85,15 @@ class Pregunta extends MySQLMethods
         return $categoria;
     }
 
-    function modificarPregunta($id,$pregunta, $opcion1, $opcion2, $opcion3, $opcion4, $respuestaCorrecta, $categoria)
+    function modificarPregunta($id,$pregunta, $opcion1, $opcion2, $opcion3, $respuestaCorrecta, $categoria)
     {
         $idCategoria = $this->obtenerIdCategoria($categoria);
-        $query = "UPDATE pregunta SET pregunta = :pregunta, opcion1 = :opcion1, opcion2 = :opcion2, opcion3 = :opcion3, opcion4 = :opcion4, respuestaCorrecta = :respuestaCorrecta, idCategoria = :idCategoria where id = ". $id;
+        $query = "UPDATE pregunta SET pregunta = :pregunta, opcion1 = :opcion1, opcion2 = :opcion2, opcion3 = :opcion3, respuestaCorrecta = :respuestaCorrecta, idCategoria = :idCategoria where id = ". $id;
         $stmt = $this->connect()->prepare($query);
         $stmt->bindParam(':pregunta', $pregunta);
         $stmt->bindParam(':opcion1', $opcion1);
         $stmt->bindParam(':opcion2', $opcion2);
         $stmt->bindParam(':opcion3', $opcion3);
-        $stmt->bindParam(':opcion4', $opcion4);
         $stmt->bindParam(':respuestaCorrecta', $respuestaCorrecta);
         $stmt->bindParam(':idCategoria', $idCategoria);
         $stmt->execute();

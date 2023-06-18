@@ -48,7 +48,7 @@ class PartidaModel
     public function getRespuestaCorrecta($idPregunta)
     {
         // $query = "SELECT  o.respuestaCorrecta
-        $query = "SELECT  p.opcion1, p.opcion2, p.opcion3,p.opcion4 ,p.respuestaCorrecta   FROM Pregunta p
+        $query = "SELECT  p.opcion1, p.opcion2, p.opcion3,p.respuestaCorrecta   FROM Pregunta p
                   WHERE p.id =". $idPregunta;
         return $this->database->query($query);
     }
@@ -195,7 +195,7 @@ class PartidaModel
         $this->createJugada($preguntaId, $this->getIDPartidaActual());
         $opcionSeleccionada = $_GET['opcion'];
         $respuestaCorrecta = $this->getRespuestaCorrecta($preguntaId);
-        if (intval($opcionSeleccionada) == intval($respuestaCorrecta[0]['respuestaCorrecta'])) {
+        if ($opcionSeleccionada == $respuestaCorrecta[0]['respuestaCorrecta']) {
             $arrayDatos['mensaje'] = "CORRECTO";
             $arrayDatos['url'] = "/partida/jugada";
             $arrayDatos['texto'] = "Siguiente Pregunta";
@@ -205,7 +205,7 @@ class PartidaModel
             $this->incrementarAciertosPreguntaParaUsuario($usuarioId, $preguntaId);
             /* en la tabla usuario_pregunta se requiere eliminar el delete posterior para q las estadisticas funcionen*/
         } else {
-            $arrayDatos['mensaje'] = "FIN DEL JUEGO. LA RESPUESTA ERA: " . $respuestaCorrecta[0]['opcion' . $respuestaCorrecta[0]['respuestaCorrecta']];
+            $arrayDatos['mensaje'] = "FIN DEL JUEGO. LA RESPUESTA ERA: " .$respuestaCorrecta[0]['respuestaCorrecta'];
             $arrayDatos['url'] = "/lobby/list";
             $arrayDatos['texto'] = "Volver al Lobby";
             $_SESSION['jugando'] = false;
