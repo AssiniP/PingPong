@@ -100,4 +100,53 @@ class Pregunta extends MySQLMethods
 
         return "se modifico la pregunta " . $pregunta ;
     }
+
+    function alta($usuario,$pregunta,$opcion1,$opcion2,$opcion3,$correcta,$categoria){
+
+        $url = 'http://localhost:80/api/altapregunta';
+
+        $usuario = $usuario;
+        $pregunta = array(
+            "valor" => $pregunta,
+            "opcion1" => $opcion1,
+            "opcion2" => $opcion2,
+            "opcion3" => $opcion3,
+            "correcta" => $correcta,
+            "categoria" => $categoria
+        );
+
+        $data = array(
+            'usuario' => $usuario,
+            'pregunta' => $pregunta
+        );
+
+        $jsonData = json_encode($data);
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ));
+
+        $response = curl_exec($curl);
+
+        if ($response === false) {
+            $error = curl_error($curl);
+            echo "<h1>". $error . "</h1>";
+        } else {
+            curl_close($curl);
+
+            echo $response;
+        }
+
+    }
+
+    function obtenerUsuario($id){
+        $usuario = $this->connect()->query("select * from usuario where id = " . $id );
+        return $usuario;
+    }
 }

@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap');
 
-* {
-    font-family: 'Montserrat', sans-serif;
+* ,
+::before,
+::after{
+    box-sizing: border-box;
+
 }
 
 label {
@@ -13,8 +16,8 @@ h1 {
 }
 
 body {
-    background-image: url("../img/fondo_pingpong.png");
-    background-size: cover;
+    background-color: #4F7349;
+
 }
 
 header {
@@ -331,5 +334,17 @@ footer {
     margin-bottom: 10px;
 }
 
+ .material-symbols-outlined {
+     font-variation-settings:
+             'FILL' 0,
+             'wght' 500,
+             'GRAD' 0,
+             'opsz' 48
+ }
+
+ .login {
+     background-image: url("../img/fondo_pingpong.png");
+     background-size: cover;
+ }
 
 

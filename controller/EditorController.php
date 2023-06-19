@@ -1,5 +1,6 @@
 <?php
 require_once( SITE_ROOT . '/helpers/Session.php');
+include_once ('third-party/APIPreguntas/ApiPreguntas.php');
 class EditorController{
     private $renderer;
     private $editorModel;
@@ -45,7 +46,7 @@ class EditorController{
     }
 
     public function addPregunta(){
-        $errorMsg = [];
+       /* $errorMsg = [];
         if (!$this->checkThatUserFormIsNotEmpty()) {
             $errorMsg[] = "Llena todos los campos";
         }
@@ -60,12 +61,25 @@ class EditorController{
             $this->editorModel->delQuestionId($_POST["idPregunta"]);
             try{
                 // Esta es la funcion que llama a la api
-                this.addApiPregunta();
+                $this->addApiPregunta();
             } catch (Exception $e) {
             }
             $response = ['success' => true];
             echo json_encode($response);
+        }*/
+        header('Content-Type: application/json');
+        $api = new ApiPreguntas();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $jsonData = file_get_contents('php://input');
+            if($jsonData!= null){
+                $body = json_decode($jsonData);
+                $categoria = $api->getCategory($body->idCategoria);
+                $usuario = $api->getUsuarioByID($body->idUsuario);
+                $api->altaPregunta($body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$categoria['nombre'],$usuario['nick']);
+            }
         }
+
     }
     public function addApiPregunta(){
         $usuarioAprobado = intval($_POST['idUsuario']);
