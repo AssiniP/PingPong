@@ -68,12 +68,10 @@
                 .then(result => {
                     if (result.tieneTrampita) {
                         dataAPI.forEach(pregunta => {
-                            console.log(idPregunta);
-                            console.log(pregunta.id);
                             if (parseInt(idPregunta) === parseInt(pregunta.id)) {
                                 var respuestaCorrecta = pregunta.opciones.respuesta_correcta;
-                                var opcionCorrecta = document.getElementById("opcion" + respuestaCorrecta);
-                                opcionCorrecta.click();
+                                var opcionCorrecta = 'http://localhost:80/partida/respuesta?opcion='+ respuestaCorrecta +'&pregunta='+idPregunta;
+                                window.location.href = opcionCorrecta;
                             }
                         })
                     } else {
