@@ -72,4 +72,21 @@ class ApiPreguntas
         $preguntaClass = new Pregunta();
         return  json_encode(array('mensaje'=> $preguntaClass->modificarPregunta($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$respuestaCorrecta,$categoria)));
     }
+
+    function getUsuarioByID($id){
+        $pregunta = new Pregunta();
+
+        $res = $pregunta->obtenerUsuario($id);
+        if ($res->rowCount()) {
+            while ($row = $res->fetch(PDO::FETCH_ASSOC)) {
+                $item = array(
+                    "nick" => $row['nickName']
+                );
+            }
+
+            return $item;
+        } else {
+            return json_encode(array('mensaje' => 'No existen categorias con el id buscado.'));
+        }
+    }
 }

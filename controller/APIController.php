@@ -30,8 +30,6 @@ class APIController
                 $body = json_decode($jsonData);
                 echo $api->altaPregunta($body->pregunta->valor,$body->pregunta->opcion1, $body->pregunta->opcion2,$body->pregunta->opcion3, $body->pregunta->correcta,$body->pregunta->categoria,$body->usuario);
             }
-
-
         }
     }
 
