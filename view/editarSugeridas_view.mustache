@@ -6,8 +6,8 @@
 
               <form id="preguntaForm" action="" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                   <input type="text" id="idPregunta" name="idPregunta" style="display: none;">
-                    <input type="text" id="idUsuario" name="idUsuario" style="display: none;">
+                   <input type="text" id="idPregunta" name="idPregunta" value='0' style="display: none;">
+                    <input type="text" id="idUsuario" name="idUsuario" value='0' style="display: none;">
 
                      <label for="idCategoria" class="mr-2 ml-2">Categoria:</label>
                      <select id="idCategoria" name="idCategoria" required
@@ -44,8 +44,12 @@
                                       <input type="text" id="respuestaCorrecta" name="respuestaCorrecta" required
                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                    </div>
-                              <input type="submit" value="Enviar"
-                                                  class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5">
+                    <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                              <input type="submit" id="guardar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+                              <input type="submit" id="desaprobar" value="Desaprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+                              <input type="submit" id="aprobar" value="Aprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+
+                    </div>
               </form>
       </div>
        <p id="errorMsg"></p>
@@ -54,7 +58,6 @@
              <tr>
                 <th>categoria</th>
                  <th>Pregunta</th>
-                 <th>Eliminar</th>
                  <th>Editar</th>
              </tr>
 
@@ -62,7 +65,6 @@
              <tr>
                  <td>{{categoria}}</td>
                  <td>{{pregunta}}</td>
-                 <td><a href='/editor/eliminar&id={{id}}'>del</a></td>
                  <td><a href='/editor/sugeridas&id={{id}}'>edit</a></td>
              </tr>
              {{/preguntas}}
@@ -99,39 +101,55 @@
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('preguntaForm');
-    var errorMessages = document.getElementById('errorMsg');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
-        var formData = new FormData(form);
+  var guardarBtn = document.getElementById('guardar');
+  guardarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    enviarFormulario('/editor/validateFields');
+  });
 
-        fetch('/editor/validateFields', {
-            method: 'POST',
-            body: formData
-        })
-        .then(function(response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Error en la solicitud AJAX: ' + response.statusText);
-            }
-        })
-        .then(function(response) {
-            if (response.errorMsg) {
-                var errorMsgs = response.errorMsg;
-                for (var i = 0; i < errorMsgs.length; i++) {
-                    var errorMessage = document.createElement('p');
-                    errorMessage.textContent = errorMsgs[i];
-                    errorMessages.appendChild(errorMessage);
-                }
-            } else {
-                 window.location.assign('/editor/sugeridas');
-            }
-        })
-        .catch(function(error) {
-            window.location.assign('/editor/sugeridas');
-        });
-    });
+  var desaprobarBtn = document.getElementById('desaprobar');
+  desaprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    enviarFormulario('/editor/eliminar');
+  });
+
+  var aprobarBtn = document.getElementById('aprobar');
+  aprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    enviarFormulario('/editor/aprobar');
+  });
 });
-</script>
+
+function enviarFormulario(url) {
+  var form = document.getElementById('preguntaForm');
+  var errorMessages = document.getElementById('errorMsg');
+  errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
+  var formData = new FormData(form);
+
+  fetch(url, {
+    method: 'POST',
+    body: formData
+  })
+  .then(function(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Error en la solicitud AJAX: ' + response.statusText);
+    }
+  })
+  .then(function(response) {
+    if (response.errorMsg) {
+      var errorMsgs = response.errorMsg;
+      for (var i = 0; i < errorMsgs.length; i++) {
+        var errorMessage = document.createElement('p');
+        errorMessage.textContent = errorMsgs[i];
+        errorMessages.appendChild(errorMessage);
+      }
+    } else {
+      window.location.assign('/editor/sugeridas');
+    }
+  })
+  .catch(function(error) {
+    window.location.assign('/editor/sugeridas');
+  });
+}</script>
