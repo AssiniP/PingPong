@@ -36,7 +36,9 @@ class EditorModel
     public function delQuestionId($id){
         return $this->database->query("delete from pregunta_sugerida where id=".$id);
     }
-
+    public function delReporteId($id){
+        return $this->database->query("delete from preguntareportada where id=".$id);
+    }
     public function addQuestion($preguntaData) {
         $query = "INSERT INTO pregunta_sugerida (idCategoria,idUsuario,pregunta,opcion1,opcion2,opcion3,respuestaCorrecta) VALUES (".
             $preguntaData['idCategoria'].",".$preguntaData['idUsuario'].",'".$preguntaData['pregunta']."','".$preguntaData['opcion1']."','".

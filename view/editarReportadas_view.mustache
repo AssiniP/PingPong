@@ -8,7 +8,7 @@
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                    <input type="text" id="idPregunta" name="idPregunta" value='0' style="display: none;">
                     <input type="text" id="idUsuario" name="idUsuario" value='0' style="display: none;">
-                    <input type="text" id="idReportada" name="idReportada" value='0' >
+                    <input type="text" id="idReportada" name="idReportada" value='0'  style="display: none;" >
 
                      <label for="idCategoria" class="mr-2 ml-2">Categoria:</label>
                      <select id="idCategoria" name="idCategoria" required
@@ -51,9 +51,8 @@
                                       class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                     </div>
                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                              <input type="submit" id="guardar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
-                              <input type="submit" id="desaprobar" value="Desaprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
                               <input type="submit" id="aprobar" value="Aprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+                              <input type="submit" id="desaprobar" value="Desaprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
 
                     </div>
               </form>
@@ -111,22 +110,16 @@
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-  var guardarBtn = document.getElementById('guardar');
-  guardarBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    enviarFormulario('/editor/addApiPregunta');
-  });
-
-  var desaprobarBtn = document.getElementById('desaprobar');
+   var desaprobarBtn = document.getElementById('desaprobar');
   desaprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('/editor/eliminar');
+    enviarFormulario('/editor/delPregunta');
   });
 
   var aprobarBtn = document.getElementById('aprobar');
   aprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('/editor/aprobar');
+    enviarFormulario('/editor/delMotivo');
   });
 });
 
