@@ -46,6 +46,7 @@ class SugerirController {
     }
     public function addPregunta(){
         $preguntaEdit = isset($_POST['idPregunta']) ? intval($_POST['idPregunta']): intval('0');
+
         $preguntaData = [
             'idPregunta' => $preguntaEdit,
             'idCategoria' => intval($_POST['idCategoria']),
@@ -54,8 +55,7 @@ class SugerirController {
             'opcion1' => $_POST['opcion1'],
             'opcion2' => $_POST['opcion2'],
             'opcion3' => $_POST['opcion3'],
-            'opcion4' => $_POST['opcion4'],
-            'respuestaCorrecta' => intval($_POST['respuestaCorrecta'])];
+            'respuestaCorrecta' => $_POST['respuestaCorrecta']];
 
         if($preguntaEdit == 0) {
             $this->userModel->addQuestion($preguntaData);
@@ -66,7 +66,7 @@ class SugerirController {
 
     private function checkThatUserFormIsNotEmpty(){
         if(empty($_POST['idCategoria']) || empty($_POST['pregunta']) || empty($_POST['opcion1']) || empty($_POST['opcion2']) ||
-             empty($_POST['opcion3']) || empty($_POST['opcion4']) || empty($_POST['respuestaCorrecta'])){
+             empty($_POST['opcion3']) || empty($_POST['respuestaCorrecta'])){
             return false;
         }
         return true;

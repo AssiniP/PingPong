@@ -1,0 +1,158 @@
+{{> header}}
+
+      <div class="flex flex-col  text-green-700 bg-white p-5  m-auto mt-10 mb-10  rounded">
+
+        <h1 class="text-4xl text-center mb-10 font-bold">Preguntas Reportadas</h1>
+
+              <form id="preguntaForm" action="" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
+                  <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                   <input type="text" id="idPregunta" name="idPregunta" value='0' style="display: none;">
+                    <input type="text" id="idUsuario" name="idUsuario" value='0' style="display: none;">
+                    <input type="text" id="idReportada" name="idReportada" value='0'  style="display: none;" >
+
+                     <label for="idCategoria" class="mr-2 ml-2">Categoria:</label>
+                     <select id="idCategoria" name="idCategoria" required
+                     class="rounded border border-2 border-green-300 h-4/5 px-2">
+                     <option value="">Seleccionar</option>
+                     {{#verCategoria}}
+                        <option value={{id}}>{{nombre}}</option>
+                     {{/verCategoria}}
+                     </select><br><br>
+                     </div>
+                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                    <label for="pregunta" class="mr-2">Pregunta:</label>
+                                         <input type="text" id="pregunta" name="pregunta" required
+                                        class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                  </div>
+                  <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                    <label for="opcion1" class="mr-2">Opcion 1:</label>
+                                       <input type="text" id="opcion1" name="opcion1" required
+                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                      </div>
+                      <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                   <label for="opcion2" class="mr-2">Opcion 2:</label>
+                                      <input type="text" id="opcion2" name="opcion2" required
+                                     class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                   </div>
+                  <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+
+                    <label for="opcion3" class="mr-2">Opcion 3:</label>
+                                       <input type="text" id="opcion3" name="opcion3" required
+                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                     </div>
+                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                   <label for="respuestaCorrecta" class="mr-2">Respuesta Correcta:</label>
+                                      <input type="text" id="respuestaCorrecta" name="respuestaCorrecta" required
+                                     class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                   </div>
+                    <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                                      <label for="motivo" class="mr-2">Motivo:</label>
+                                      <input type="text" id="motivo" name="motivo" required
+                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                    </div>
+                    <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                              <input type="submit" id="aprobar" value="Aprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+                              <input type="submit" id="desaprobar" value="Desaprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+
+                    </div>
+              </form>
+      </div>
+       <p id="errorMsg"></p>
+      <div class="flex flex-col  text-green-700 bg-white p-5  m-auto mt-10 mb-10  rounded">
+       <table >
+             <tr>
+                <th>categoria</th>
+                 <th>Pregunta</th>
+                 <th>Editar</th>
+             </tr>
+
+             {{#preguntas}}
+             <tr>
+                 <td>{{categoria}}</td>
+                 <td>{{pregunta}}</td>
+                 <td><a href='/editor/reportadas&id={{id}}'>edit</a></td>
+             </tr>
+             {{/preguntas}}
+
+         </table>
+ </div>
+</body>
+
+</html>
+
+{{#editarPregunta}}
+ <script>
+         var idPreguntaField = document.getElementById('idPregunta');
+         var idUsuarioPreguntaField = document.getElementById('idUsuario');
+         var idReportadaPreguntaField = document.getElementById('idReportada');
+         var idCategoriaField = document.getElementById('idCategoria');
+         var preguntaField = document.getElementById('pregunta');
+         var opcion1Field = document.getElementById('opcion1');
+         var opcion2Field = document.getElementById('opcion2');
+         var opcion3Field = document.getElementById('opcion3');
+         var respuestaCorrectaField = document.getElementById('respuestaCorrecta');
+         var motivoField = document.getElementById('motivo');
+
+         // Poblar los campos del formulario con los datos de la pregunta
+         idPreguntaField.value = "{{id}}";
+         idUsuarioPreguntaField.value = "{{idUsuario}}";
+         idReportadaPreguntaField.value = "{{idReportada}}";
+         idCategoriaField.value = "{{idCategoria}}";
+         preguntaField.value = "{{pregunta}}";
+         opcion1Field.value = "{{opcion1}}";
+         opcion2Field.value = "{{opcion2}}";
+         opcion3Field.value = "{{opcion3}}";
+         respuestaCorrectaField.value = "{{respuestaCorrecta}}";
+         motivoField.value = "{{motivo}}";
+
+ </script>
+ {{/editarPregunta}}
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+   var desaprobarBtn = document.getElementById('desaprobar');
+  desaprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    enviarFormulario('/editor/delPregunta');
+  });
+
+  var aprobarBtn = document.getElementById('aprobar');
+  aprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    enviarFormulario('/editor/delMotivo');
+  });
+});
+
+function enviarFormulario(url) {
+  var form = document.getElementById('preguntaForm');
+  var errorMessages = document.getElementById('errorMsg');
+  errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
+  var formData = new FormData(form);
+
+  fetch(url, {
+    method: 'POST',
+    body: formData
+  })
+  .then(function(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Error en la solicitud AJAX: ' + response.statusText);
+    }
+  })
+  .then(function(response) {
+    if (response.errorMsg) {
+      var errorMsgs = response.errorMsg;
+      for (var i = 0; i < errorMsgs.length; i++) {
+        var errorMessage = document.createElement('p');
+        errorMessage.textContent = errorMsgs[i];
+        errorMessages.appendChild(errorMessage);
+      }
+    } else {
+      window.location.assign('/editor/reportadas');
+    }
+  })
+  .catch(function(error) {
+    window.location.assign('/editor/reportadas');
+  });
+}</script>

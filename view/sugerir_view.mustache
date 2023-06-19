@@ -39,22 +39,12 @@
                                       class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                      </div>
                      <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                   <label for="opcion4" class="mr-2">Opcion 4:</label>
-                                      <input type="text" id="opcion4" name="opcion4" required
+                   <label for="respuestaCorrecta" class="mr-2">Opcion Correcta:</label>
+                                      <input type="text" id="respuestaCorrecta" name="respuestaCorrecta" required
                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                    </div>
-                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                    <select id="respuestaCorrecta" name="respuestaCorrecta" required
-                                        class="rounded border border-2 border-green-300 h-4/5 px-2">
-                                        <option value="">Seleccionar</option>
-                                           <option value='1'>Opcion1</option>
-                                           <option value='2'>Opcion2</option>
-                                           <option value='3'>Opcion3</option>
-                                           <option value='4'>Opcion4</option>
-                                        </select><br><br>
-                      </div>
-                              <input type="submit" value="Enviar"
-                                                  class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5">
+                          <input type="submit" value="Guardar"
+                          class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5">
               </form>
       </div>
        <p id="errorMsg"></p>
@@ -90,7 +80,6 @@
          var opcion1Field = document.getElementById('opcion1');
          var opcion2Field = document.getElementById('opcion2');
          var opcion3Field = document.getElementById('opcion3');
-         var opcion4Field = document.getElementById('opcion4');
          var respuestaCorrectaField = document.getElementById('respuestaCorrecta');
 
          // Poblar los campos del formulario con los datos de la pregunta
@@ -100,7 +89,6 @@
          opcion1Field.value = "{{opcion1}}";
          opcion2Field.value = "{{opcion2}}";
          opcion3Field.value = "{{opcion3}}";
-         opcion4Field.value = "{{opcion4}}";
          respuestaCorrectaField.value = "{{respuestaCorrecta}}";
 
  </script>
