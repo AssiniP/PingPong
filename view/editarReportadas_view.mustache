@@ -8,6 +8,7 @@
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                    <input type="text" id="idPregunta" name="idPregunta" value='0' style="display: none;">
                     <input type="text" id="idUsuario" name="idUsuario" value='0' style="display: none;">
+                    <input type="text" id="idReportada" name="idReportada" value='0' >
 
                      <label for="idCategoria" class="mr-2 ml-2">Categoria:</label>
                      <select id="idCategoria" name="idCategoria" required
@@ -45,6 +46,11 @@
                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                    </div>
                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                                      <label for="motivo" class="mr-2">Motivo:</label>
+                                      <input type="text" id="motivo" name="motivo" required
+                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                    </div>
+                    <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                               <input type="submit" id="guardar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
                               <input type="submit" id="desaprobar" value="Desaprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
                               <input type="submit" id="aprobar" value="Aprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
@@ -65,7 +71,7 @@
              <tr>
                  <td>{{categoria}}</td>
                  <td>{{pregunta}}</td>
-                 <td><a href='/editor/sugeridas&id={{id}}'>edit</a></td>
+                 <td><a href='/editor/reportadas&id={{id}}'>edit</a></td>
              </tr>
              {{/preguntas}}
 
@@ -79,22 +85,26 @@
  <script>
          var idPreguntaField = document.getElementById('idPregunta');
          var idUsuarioPreguntaField = document.getElementById('idUsuario');
+         var idReportadaPreguntaField = document.getElementById('idReportada');
          var idCategoriaField = document.getElementById('idCategoria');
          var preguntaField = document.getElementById('pregunta');
          var opcion1Field = document.getElementById('opcion1');
          var opcion2Field = document.getElementById('opcion2');
          var opcion3Field = document.getElementById('opcion3');
          var respuestaCorrectaField = document.getElementById('respuestaCorrecta');
+         var motivoField = document.getElementById('motivo');
 
          // Poblar los campos del formulario con los datos de la pregunta
          idPreguntaField.value = "{{id}}";
          idUsuarioPreguntaField.value = "{{idUsuario}}";
+         idReportadaPreguntaField.value = "{{idReportada}}";
          idCategoriaField.value = "{{idCategoria}}";
          preguntaField.value = "{{pregunta}}";
          opcion1Field.value = "{{opcion1}}";
          opcion2Field.value = "{{opcion2}}";
          opcion3Field.value = "{{opcion3}}";
          respuestaCorrectaField.value = "{{respuestaCorrecta}}";
+         motivoField.value = "{{motivo}}";
 
  </script>
  {{/editarPregunta}}

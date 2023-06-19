@@ -23,8 +23,15 @@ class EditorModel
     public function getQuestions(){
         return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where idCategoria =c.id ");
     }
+    public function getQuestionsReportada(){
+        return $this->database->query("select p.*, c.nombre  categoria, r.id idReportada, r.fecha , r.motivo  from pregunta p,categoria c ,preguntareportada r where idCategoria =c.id and p.id = r.idPregunta ");
+    }
     public function getQuestionId($id){
         return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where p.idCategoria =c.id  and  p.id=".$id);
+    }
+
+    public function getQuestionIdReportadas($id){
+        return $this->database->query("select p.*, c.nombre  categoria, r.id idReportada, r.fecha , r.motivo from pregunta p,categoria c ,preguntareportada r where p.idCategoria =c.id and p.id = r.idPregunta   and  p.id=".$id);
     }
     public function delQuestionId($id){
         return $this->database->query("delete from pregunta_sugerida where id=".$id);

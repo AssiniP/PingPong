@@ -25,7 +25,11 @@ class EditorController{
     }
     public function reportadas()
     {
-        $data="";
+        $data['preguntas'] = $this->editorModel->getQuestionsReportada();
+        $data["verCategoria"] = $this->editorModel->getAllCategoria();
+        if(isset($_GET["id"])) {
+            $data['editarPregunta'] = $this->editorModel->getQuestionIdReportadas(intval($_GET["id"]));
+        }
         $this->renderer->render('editarReportadas',$data);
     }
 
