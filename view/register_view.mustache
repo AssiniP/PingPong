@@ -10,7 +10,7 @@
     <!--<script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSdEa0g-d4X4ERQMcDB0XznsBAERG_XwQ&callback=initMap">
     </script>-->
-    <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyBSdEa0g-d4X4ERQMcDB0XznsBAERG_XwQ"&libraries=places></script>
+    <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyAiq3xISXSZYgkd9GDAOdajy4NK2d3L7dY"&libraries=places></script>
     </head>
     <body onload="loadMap()" class="m-auto font-sans bg-green-800 w-full h-full mt-20 p-0">
     <div class="cuadro flex flex-col justify-center items-center text-center text-green-700 bg-white p-5 w-full md:w-3/5 rounded m-auto mb-12">
@@ -18,7 +18,7 @@
             <img src="../../public/img/prueba-logo.png" alt="LOGO" class="md:h-32 md:w-40 m-auto h-24 w-32">
         </a>
         <h1 class="md:text-4xl text-2xl text-center mb-10 font-bold">Registro</h1>
-        <form id="registerForm" action="" method="POST" enctype="multipart/form-data" onsubmit="return checkFileSize()" class="flex flex-col justify-center items-center text-center m-2 p-4">
+        <form id="registerForm" action="" method="POST" enctype="multipart/form-data" class="flex flex-col justify-center items-center text-center m-2 p-4">
             <div class="grid md:grid-cols-1 md:gap-1 gap-2 justify-center items-center">
                 <div class="grid md:grid-cols-3 gap-2 justify-center items-center">
                     <input type="text" placeholder="Usuario" id="nickName" name="nickName" required class="rounded border border-2 border-green-300 h-10 w-80  md:w-full p-2">
@@ -51,22 +51,23 @@
             <div class="mt-5">
                 <div id="mapa" style="width: 21rem; height: 15rem;"></div>
             </div>
-            <input type="submit" value="Enviar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 m-2 rounded text-white ml-5">
+
+             <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                  <input type="submit" id="guardar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+             </div>
         </form>
     </div>
     <p id="errorMsg"></p>
 </body>
 
 </html>
-<!--Perdon me daba cosa dejar la foto de perfil sin chequear-->
- <script src="/public/js/scripts.js"></script>
+<script src="/public/js/scripts.js"></script>
 <script type="text/javascript">
     function checkFileSize() {
         const maxSize = 358400;
         let input = document.getElementById("imagenPerfil");
         if (input.files && input.files.length == 1) {
             if (input.files[0].size > maxSize) {
-                alert("Tu foto de perfil debe pesar menos de " + (maxSize / 1024) + "KB");
                 return false;
             }
         }
@@ -75,41 +76,89 @@
     }
 
 document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('registerForm');
-    var errorMessages = document.getElementById('errorMsg');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
-        var formData = new FormData(form);
-
-        fetch('/register/validateFields', {
-            method: 'POST',
-            body: formData
-        })
-        .then(function(response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Error en la solicitud AJAX: ' + response.statusText);
-            }
-        })
-        .then(function(response) {
-            if (response.errorMsg) {
-                var errorMsgs = response.errorMsg;
-                for (var i = 0; i < errorMsgs.length; i++) {
-                    var errorMessage = document.createElement('p');
-                    errorMessage.textContent = errorMsgs[i];
-                    errorMessages.appendChild(errorMessage);
-                }
-            } else {
-                window.location.assign('/login/list');
-            }
-        })
-        .catch(function(error) {
-            window.location.assign('/login/list');
-        });
-    });
+  var aprobarBtn = document.getElementById('guardar');
+  aprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    var errorMessages = document.getElementById('errorMsg')
+    errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
+    enviarFormulario('http://localhost:80/register/validateFields');
+  });
 });
+
+function enviarFormulario(url) {
+  var form = document.forms.namedItem('registerForm');
+  var errorMessages = document.getElementById('errorMsg');
+    const data = {
+                    nickName: form.elements.namedItem('nickName').value,
+                    password: form.elements.namedItem('password').value,
+                    repassword: form.elements.namedItem('repassword').value,
+                    email: form.elements.namedItem('email').value,
+                    nombre: form.elements.namedItem('nombre').value,
+                    pais: form.elements.namedItem('pais').value,
+                    latitud: form.elements.namedItem('latitud').value,
+                    longitud: form.elements.namedItem('longitud').value,
+                    fechaNacimiento: form.elements.namedItem('fechaNacimiento').value,
+                    idGenero: form.elements.namedItem('idGenero').value,
+                    ciudad: form.elements.namedItem('ciudad').value,
+                };
+
+    console.log(data);
+    validoCampos=true;
+
+    if (data.nickName === "" || data.password === "" ||  data.repassword === "" || data.email === "" || data.nombre === "" || data.pais === "" ||
+        data.fechaNacimiento === "" || data.idGenero === "" || data.ciudad === "" )  {
+                       var errorMessage = document.createElement('p');
+                       errorMessage.textContent = "Llena todos los campos" ;
+                       errorMessages.appendChild(errorMessage);
+                       validoCampos=false;
+    }
+    if (data.latitud === "" || data.longitud === "" ) {
+                       var errorMessage = document.createElement('p');
+                       errorMessage.textContent = "Marcar la Ubicacion del Mapa con click Derecho" ;
+                       errorMessages.appendChild(errorMessage);
+                       validoCampos=false;
+    }
+    if (data.password  !==  data.repassword ) {
+                       var errorMessage = document.createElement('p');
+                       errorMessage.textContent = "Las contraseñas no coinciden" ;
+                       errorMessages.appendChild(errorMessage);
+                       validoCampos=false;
+    }
+    const maxSize = 358400;
+    let input = document.getElementById("imagenPerfil");
+    if (input.files && input.files.length == 1) {
+        if (input.files[0].size > maxSize) {
+            var errorMessage = document.createElement('p');
+            errorMessage.textContent = "Las contraseñas no coinciden" ;
+            errorMessages.appendChild(errorMessage);
+            validoCampos=false;
+        }
+    }
+    if (validoCampos) {
+    fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+         .then(function(response) {
+                    if (response.errorMsg) {
+                        var errorMsgs = response.errorMsg;
+                        for (var i = 0; i < errorMsgs.length; i++) {
+                            var errorMessage = document.createElement('p');
+                            errorMessage.textContent = errorMsgs[i];
+                            errorMessages.appendChild(errorMessage);
+                        }
+                    } else {
+                        window.location.assign('/login/list');
+                    }
+                })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+}
 
     const create = str => document.createElement(str);
     const files = document.querySelectorAll('.input-file');

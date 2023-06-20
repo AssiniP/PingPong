@@ -70,11 +70,11 @@ class UserModel {
                   VALUES ($idPregunta, $idPartida, null, 0)";
         return $this->database->query($query);
     }
-    public function addUser($userData){
+    public function addUser($body,$imgPath){
         $query = "INSERT INTO usuario (nickname, password, nombre, email,  imagenPerfil, pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud,fechaNacimiento,nivelJugador) VALUES ('".
-            $userData['nickName']."','" .$userData['password']."','".  $userData['nombre']."','".  $userData['email']."','".   $userData['imagenPerfil'] ."','".
-            $userData['pais']."',".$userData['idRol'].",".$userData['idGenero']." ,NOW(),'".$userData['ciudad']."',".   $userData['latitud'] .",".
-            $userData['longitud'].",'".$userData['fechaNacimiento']."','PRINCIPIANTE')";
+            $body->nickName."','".md5($body->password)."','".$body->nombre."','".$body->email."','".$imgPath."','".
+            $body->pais."',3,".$body->idGenero." ,NOW(),'".$body->ciudad."',".$body->latitud.",".
+            $body->longitud.",'".$body->fechaNacimiento."','PRINCIPIANTE')";
         return $this->database->query($query);
     }
     public function enviarMail($mail) {
