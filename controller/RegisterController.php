@@ -9,6 +9,7 @@ class RegisterController
     }
 
     public function list(){
+        $data["paises"] = $this->userModel->getPaises();
         $data["verGenero"] = $this->userModel->getAllGenero();
         $this->renderer->render('register',$data);
     }
