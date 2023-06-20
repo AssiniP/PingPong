@@ -48,7 +48,7 @@
 
             <div class="flex md:flex-row flex-col justify-center items-center text-center">
                 <div>
-                    <span>Imagen de Prerfil</span>
+                    <span>Imagen de Perfil</span>
                     <input type="file" class='input-file green' id="imagenPerfil" name="imagenPerfil" accept="image/*" data-button="Examinar" data-empty="No tiene archivos" required/>
                 </div>
                 <input type="text" id="latitud" name="latitud">
@@ -130,12 +130,13 @@ function enviarFormulario(url) {
         }
     }
     if (validoCampos) {
+        const jsonData = JSON.stringify(data);
+        const formData = new FormData();
+        formData.append('file', form.elements.namedItem('imagenPerfil').files[0]);
+        formData.append('data', jsonData);
     fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+            body: formData
         })
             .then(function(response) {
                 return response.json(); // Extraer los datos JSON de la respuesta
@@ -146,7 +147,7 @@ function enviarFormulario(url) {
                         var errorMessage = document.createElement('p');
                         errorMessage.textContent = errorMsgs;
                         errorMessages.appendChild(errorMessage);
-                    } else if (response.success){
+                    } else {
                         window.location.assign('/login/list');
                     }
                 })
