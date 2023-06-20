@@ -140,7 +140,7 @@ header {
     width: 100%;
     height: 100%;
     position: absolute;
-    top:-5%;
+    top: -5%;
 }
 
 /* Header for User */
@@ -343,18 +343,25 @@ footer {
 }
 
 .opcion-col a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 3rem;
     font-weight: 700;
     font-size: 1.3rem;
     color: white;
+    min-width: 20rem !important;
+    max-width: 30rem !important;
+    height: 3rem;
+    border-radius: 28% 72% 15% 85% / 88% 10% 90% 12%;
 }
 
-.categoria-container{
+.categoria-container {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: white;
-    border-radius: 30% 70% 81% 19% / 30% 30% 70% 70%;
+    border-radius: 379% 21% 28% 72% / 53% 77% 23% 47%;
     width: 30rem;
     height: 4rem;
     margin-bottom: 25px;
@@ -382,8 +389,7 @@ footer {
     justify-content: center;
     margin-bottom: 10px;
 }
-
- .material-symbols-outlined {
+.material-symbols-outlined {
      font-variation-settings:
              'FILL' 0,
              'wght' 500,
@@ -442,4 +448,3 @@ footer {
     background-color: #5CB85C;
     border-color:#4FB04F;
 }
-

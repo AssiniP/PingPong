@@ -126,5 +126,12 @@ CREATE TABLE Trampita (
 );
 
 CREATE TABLE paises (
-                        id int primary key auto_increment,
-                        nombre varchar(150) default '');
+    id int primary key auto_increment,
+    nombre varchar(150) default ''
+);
+
+CREATE TABLE Meses(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT,
+    nombre VARCHAR(45) default ''
+)
