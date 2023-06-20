@@ -51,8 +51,8 @@
                                       class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                     </div>
                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                              <input type="submit" id="aprobar" value="Aprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
-                              <input type="submit" id="desaprobar" value="Desaprobar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+                              <input type="submit" id="aprobar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+                              <input type="submit" id="desaprobar" value="Eliminar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
 
                     </div>
               </form>
@@ -155,7 +155,7 @@ function enviarFormulario(url) {
         respuestaCorrecta: form.elements.namedItem('respuestaCorrecta').value,
     };
     console.log(data);
-    if (data.pregunta === "" || data.opcion1 === "" ||  data.opcion2 === "" || data.opcion3 === "" || data.respuestaCorrecta === "" || idCategoria === "")  {
+    if (data.pregunta === "" || data.opcion1 === "" ||  data.opcion2 === "" || data.opcion3 === "" || data.respuestaCorrecta === "" || data.idCategoria === "")  {
      errorMessages.innerHTML = "Llena todos los campos" ;
     }else {
     fetch(url, {

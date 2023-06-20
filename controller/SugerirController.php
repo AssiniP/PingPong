@@ -19,58 +19,30 @@ class SugerirController {
     }
 
     public function eliminar() {
-        $this->userModel->delQuestionId($_GET["id"]);
-        header('location: /sugerir/list');
-    }
-
-    public function validateFields() {
-        $errorMsg = [];
-        if (!$this->checkThatUserFormIsNotEmpty()) {
-            $errorMsg[] = "Llena todos los campos";
-        }
-        $response = ['errorMsg' => $errorMsg];
-
-        if (!empty($errorMsg)) {
-            // Enviar respuesta con errores en formato JSON
-            echo json_encode($response);
-        } else {
-            // Llamar a la función add() dentro de un bloque try-catch
-
-            try{
-                $this->addPregunta();
-            } catch (Exception $e) {
+        header('Content-Type: application/json');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $jsonData = file_get_contents('php://input');
+            if($jsonData!= null){
+                $body = json_decode($jsonData);
+                $this->userModel->delQuestionId($body->idPregunta);
             }
-            $response = ['success' => true];
-            echo json_encode($response);
         }
     }
+
     public function addPregunta(){
-        $preguntaEdit = isset($_POST['idPregunta']) ? intval($_POST['idPregunta']): intval('0');
+        header('Content-Type: application/json');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $jsonData = file_get_contents('php://input');
+            if($jsonData!= null){
+                $body = json_decode($jsonData);
+                var_dump($body);
+                if(intval($body->idPregunta) == 0) {
+                    $this->userModel->addQuestion($body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$body->idCategoria);
 
-        $preguntaData = [
-            'idPregunta' => $preguntaEdit,
-            'idCategoria' => intval($_POST['idCategoria']),
-            'idUsuario' => intval($this->userModel->getIDUsuarioActual()),
-            'pregunta' => $_POST['pregunta'],
-            'opcion1' => $_POST['opcion1'],
-            'opcion2' => $_POST['opcion2'],
-            'opcion3' => $_POST['opcion3'],
-            'respuestaCorrecta' => $_POST['respuestaCorrecta']];
-
-        if($preguntaEdit == 0) {
-            $this->userModel->addQuestion($preguntaData);
-        } else {
-            $this->userModel->editQuestionId($preguntaData);
+                } else {
+                    $this->userModel->editQuestionId($body->idPregunta,$body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$body->idCategoria);
+                }
+            }
         }
     }
-
-    private function checkThatUserFormIsNotEmpty(){
-        if(empty($_POST['idCategoria']) || empty($_POST['pregunta']) || empty($_POST['opcion1']) || empty($_POST['opcion2']) ||
-             empty($_POST['opcion3']) || empty($_POST['respuestaCorrecta'])){
-            return false;
-        }
-        return true;
-    }
-
-
 }
