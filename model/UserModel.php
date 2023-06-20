@@ -14,7 +14,9 @@ class UserModel {
     public function getUser($nickname) {
         return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje, (select COALESCE(COUNT(*), 0) from trampita  t where t.idUsuario=U.id AND t.utilizada = false) trampita, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
-
+    public function getPaises(){
+        return $this->database->query("select * from paises ");
+    }
     public function getUserInfo($nickname){
         return $this->database->query("select u.*, G.nombre genero, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname = '".$nickname."'");
     }
