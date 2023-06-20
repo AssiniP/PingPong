@@ -10,23 +10,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="/public/css/estilo.css">
 
 </head>
 <body>
 <header id="main-header" class="header-user">
+    <div id="additional-links" class="header-nav w-11/12 flex flex-row md:gap-28 gap-5">
     <a class="header-logo" id="logo-header" href="/lobby/list">
-        <img src="/public/img/prueba-logo.png" alt="LOGO" class="h-24 w-30">
+        <img src="/public/img/prueba-logo.png" alt="LOGO" class="h-22 w-30 md:h-18 md:w-28">
     </a>
-    <div id="additional-links" class="header-nav"></div>
+    </div>
     <script>
+
+
         window.addEventListener('load', () => {
             fetch('/user/getUserData')
                     .then(response => response.json())
                     .then(data => {
                         console.log(data.rol);
                         console.log(data.logueado);
-                        if (data.rol === 'Administrador') { // Comparar con el string 'Editor'
+                        var anchoNavegador = window.innerWidth;
+                        if (data.rol === 'Administrador' && anchoNavegador>700) { // Comparar con el string 'Editor'
                             // Generar enlace para ABM de preguntas
                             const abmPreguntasLink = document.createElement('a');
                             abmPreguntasLink.href = '/admin/list/';
@@ -35,10 +40,19 @@
                             // Agregar enlace al contenedor de enlaces adicionales
                             const additionalLinksContainer = document.getElementById('additional-links');
                             additionalLinksContainer.appendChild(abmPreguntasLink);
-                            console.log('SOS el admin');
+                        }else {
+                            if(data.rol === 'Administrador'){
+                                const abmPreguntasLink = document.createElement('a');
+                                abmPreguntasLink.href = '/admin/list/';
+                                abmPreguntasLink.innerHTML = '<span class="material-symbols-outlined">analytics</span>';
+
+                                // Agregar enlace al contenedor de enlaces adicionales
+                                const additionalLinksContainer = document.getElementById('additional-links');
+                                additionalLinksContainer.appendChild(abmPreguntasLink);
+                            }
                         }
 
-                        if (data.rol === 'Editor') { // Comparar con el string 'Editor'
+                        if (data.rol === 'Editor' && anchoNavegador>700) { // Comparar con el string 'Editor'
                             // Generar enlace para ABM de preguntas
                             const abmPreguntasLink = document.createElement('a');
                             abmPreguntasLink.href = '/editor/list/';
@@ -48,16 +62,26 @@
                             const additionalLinksContainer = document.getElementById('additional-links');
                             additionalLinksContainer.appendChild(abmPreguntasLink);
                             console.log('SOS EDITOR HERMANO BIEN AHII');
+                        }else {
+                            if(data.rol === 'Editor'){
+                                const abmPreguntasLink = document.createElement('a');
+                                abmPreguntasLink.href = '/editor/list/';
+                                abmPreguntasLink.innerHTML = '<span class="material-symbols-sharp">edit</span>';
+
+                                const additionalLinksContainer = document.getElementById('additional-links');
+                                additionalLinksContainer.appendChild(abmPreguntasLink);
+                            }
+
+
                         }
 
-                        if (data.logueado) {
+                        if (data.logueado && anchoNavegador>700) {
                             const logoutLink = document.createElement('a');
                             logoutLink.href = '/login/logout';
-                            logoutLink.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i>';
-
+                            logoutLink.innerHTML = '<div class="text-4xl"><i class="fa-solid fa-right-from-bracket"></i></div>';
                             const sugerirLink = document.createElement('a');
                             sugerirLink.href = '/sugerir/list';
-                            sugerirLink.innerHTML = 'Fabrica de preguntas';
+                            sugerirLink.innerHTML = 'Fabrica de Preguntas';
 
                             const rankingLink = document.createElement('a');
                             rankingLink.href = '/lobby/ranking';
@@ -67,13 +91,34 @@
                             historialLink.href = '/lobby/historial';
                             historialLink.innerHTML = 'Historial';
 
-                            console.log('Te logeaste lol');
                             const additionalLinksContainer = document.getElementById('additional-links');
                             additionalLinksContainer.appendChild(sugerirLink);
                             additionalLinksContainer.appendChild(rankingLink);
                             additionalLinksContainer.appendChild(historialLink);
                             additionalLinksContainer.appendChild(logoutLink);
-                        }
+                        }else {
+                            const logoutLink = document.createElement('a');
+                            logoutLink.href = '/login/logout';
+                            logoutLink.innerHTML = '<div class="text-2xl"><i class="fa-solid fa-right-from-bracket"></i></div>';
+                                const sugerirLink = document.createElement('a');
+                                sugerirLink.href = '/sugerir/list';
+                                sugerirLink.innerHTML = '<span class="material-symbols-outlined">factory</span>';
+
+                                const rankingLink = document.createElement('a');
+                                rankingLink.href = '/lobby/ranking';
+                                rankingLink.innerHTML = '<span class="material-symbols-sharp">rewarded_ads</span>';
+
+                                const historialLink = document.createElement('a');
+                                historialLink.href = '/lobby/historial';
+                                historialLink.innerHTML = '<span class="material-symbols-sharp">calendar_month</span>';
+
+                                const additionalLinksContainer = document.getElementById('additional-links');
+                                additionalLinksContainer.appendChild(sugerirLink);
+                                additionalLinksContainer.appendChild(rankingLink);
+                                additionalLinksContainer.appendChild(historialLink);
+                                additionalLinksContainer.appendChild(logoutLink);
+                            }
+
                     })
                     .catch(error => {
                         console.error('Error al obtener datos del usuario:', error);
