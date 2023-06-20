@@ -17,6 +17,8 @@ h1 {
 
 body {
     background-color: #4F7349;
+    background-image: url("/public/img/fondo_form.png");
+    background-size: cover;
 
 }
 
@@ -46,6 +48,7 @@ header {
     box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
     -webkit-box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
     -moz-box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
+
 }
 
 .boton {
@@ -345,6 +348,52 @@ footer {
  .login {
      background-image: url("../img/fondo_pingpong.png");
      background-size: cover;
+     background-size: cover;
  }
+ .input-file {
+     display: none;
+ }
+.input-file + label{
+    display: flex;
+    flex: 1;
+}
 
+.input-file__input-file-name,
+.input-file__input-file-button{
+    padding: 5px 10px;
+}
+
+.input-file__input-file-name{
+    background: #EEE;
+    border: 1px solid #CACACA;
+    flex: 1;
+    border-radius: 4px 0 0 4px;
+}
+
+.input-file__input-file-name span{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 0px;
+    display: block;
+}
+
+.input-file__input-file-button{
+    background: #5BC0DE url('/public/img/folder.png') 4px center/25px no-repeat;
+    border: 1px solid #5BC0DE;
+    color: white;
+    white-space: nowrap;
+    border-radius: 0 4px 4px 0;
+    padding-left: 33px;
+    cursor: pointer;
+}
+
+.input-file.red + label > .input-file__input-file-button{
+    background-color: #D9534F;
+    border-color:#D64641;
+}
+.input-file.green + label > .input-file__input-file-button{
+    background-color: #5CB85C;
+    border-color:#4FB04F;
+}
 
