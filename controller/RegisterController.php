@@ -17,7 +17,7 @@ class RegisterController
     public function validateFields()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $jsonData = file_get_contents('php://input');
+            $jsonData = $_POST['data'];
             if ($jsonData != null) {
                 $body = json_decode($jsonData);
                 if (count($this->checkEmailAndNick($body->nickName ,$body->email )) > 0) {
@@ -26,7 +26,13 @@ class RegisterController
                     header('Content-Type: application/json');
                     echo json_encode($response);
                 }else {
-                    $this->add($body);
+                    $imagenPerfil = $_FILES['file'];
+                    $imgType = strtolower(pathinfo($imagenPerfil['name'], PATHINFO_EXTENSION));
+                    $imgPath = $body->nickName . "." . $imgType;
+                    $fullPath = SITE_ROOT . "/public/foto-perfil/" . $imgPath;
+                    move_uploaded_file($imagenPerfil['tmp_name'], $fullPath);
+
+                    $this->add($body, $imgPath);
                     header('Content-Type: application/json');
                     $response = ['success' => true];
                     echo json_encode($response);
@@ -35,12 +41,7 @@ class RegisterController
         }
     }
 
-    private function add($body){
-        $imgType = strtolower(pathinfo($_FILES["imagenPerfil"]["name"], PATHINFO_EXTENSION));
-        $imgPath = $body->nickName . "." . $imgType;
-        $fullPath = SITE_ROOT . "/public/foto-perfil/" . $imgPath;
-        move_uploaded_file($_FILES['imagenPerfil']['tmp_name'], $fullPath);
-
+    private function add($body, $imgPath){
         $this->userModel->addUser($body,$imgPath);
         $this->userModel->enviarMail($body->email);
         $this->userModel->generateQR($body->nickName);
