@@ -236,3 +236,16 @@ INSERT INTO paises (nombre) VALUES
                                 ('Yibuti'),
                                 ('Zambia'),
                                 ('Zimbabue');
+
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('1', '1', 'Enero');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('2', '2', 'Febrero');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('3', '3', 'Marzo');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('4', '4', 'Abril');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('5', '5', 'Mayo');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('6', '6', 'Junio');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('7', '7', 'Julio');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('8', '8', 'Agosto');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('9', '9', 'Septiembre');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('10', '10', 'Octubre');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('11', '11', 'Noviembre');
+INSERT INTO `pingpong`.`meses` (`id`, `numero`, `nombre`) VALUES ('12', '12', 'Diciembre');
