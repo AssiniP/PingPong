@@ -45,8 +45,8 @@
                     <span>Imagen de Prerfil</span>
                     <input type="file" class='input-file green' id="imagenPerfil" name="imagenPerfil" accept="image/*" data-button="Examinar" data-empty="No tiene archivos" required/>
                 </div>
-                <input type="text" id="latitud" name="latitud" hidden>
-                <input type="text" id="longitud" name="longitud" hidden>
+                <input type="text" id="latitud" name="latitud">
+                <input type="text" id="longitud" name="longitud">
             </div>
             <div class="mt-5">
                 <div id="mapa" style="width: 21rem; height: 15rem;"></div>
@@ -63,17 +63,6 @@
 </html>
 <script src="/public/js/scripts.js"></script>
 <script type="text/javascript">
-    function checkFileSize() {
-        const maxSize = 358400;
-        let input = document.getElementById("imagenPerfil");
-        if (input.files && input.files.length == 1) {
-            if (input.files[0].size > maxSize) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
 document.addEventListener('DOMContentLoaded', function() {
   var aprobarBtn = document.getElementById('guardar');
@@ -129,7 +118,7 @@ function enviarFormulario(url) {
     if (input.files && input.files.length == 1) {
         if (input.files[0].size > maxSize) {
             var errorMessage = document.createElement('p');
-            errorMessage.textContent = "Las contraseñas no coinciden" ;
+            errorMessage.textContent = "La imagen de perfil debe pesar menos de 300KB" ;
             errorMessages.appendChild(errorMessage);
             validoCampos=false;
         }
@@ -142,16 +131,17 @@ function enviarFormulario(url) {
             },
             body: JSON.stringify(data)
         })
+            .then(function(response) {
+                return response.json(); // Extraer los datos JSON de la respuesta
+            })
          .then(function(response) {
-                var error=JSON.stringify(response);
-                alert(error);
-                    if (error.errorMsg) {
-                        var errorMsgs = error.errorMsg;
+                    if (response.errorMsg) {
+                        var errorMsgs = response.errorMsg;
                         var errorMessage = document.createElement('p');
                         errorMessage.textContent = errorMsgs;
                         errorMessages.appendChild(errorMessage);
-                    } else {
-                      //  window.location.assign('/login/list');
+                    } else if (response.success){
+                        window.location.assign('/login/list');
                     }
                 })
         .catch(error => {
