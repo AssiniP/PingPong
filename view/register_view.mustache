@@ -7,135 +7,189 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/public/css/estilo.css">
-     <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyAiq3xISXSZYgkd9GDAOdajy4NK2d3L7dY"&libraries=places></script>
+    <!--<script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSdEa0g-d4X4ERQMcDB0XznsBAERG_XwQ&callback=initMap">
+    </script>-->
+    <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyAiq3xISXSZYgkd9GDAOdajy4NK2d3L7dY"&libraries=places></script>
     </head>
-    <body onload="loadMap()" class="m-auto font-sans bg-cyan-100 h-4/5 w-8/12 opacity-90 mt-32 p-0">
-    <div
-        class="cuadro flex flex-col justify-center items-center justify-items-center text-center text-green-700 bg-white p-5 w-full rounded">
-        <a class="header-logo" id="logo-header" href="/"><img src="../../public/img/prueba-logo.png" alt="LOGO" class="h-32 w-40 m-auto"></a>
-         <h1 class="text-4xl text-center mb-10 font-bold">Registro</h1>
-        <form id="registerForm" action="" method="POST" enctype="multipart/form-data"
-            onsubmit="return checkFileSize(358400)"
-            class="flex flex-col justify-center items-center justify-items-center text-center">
-            <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                <label for="nickName" class="mr-2">Nickname:</label>
-                <input type="text" id="nickName" name="nickName" required
-                    class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+    <body onload="loadMap()" class="m-auto font-sans bg-green-800 w-full h-full mt-20 p-0">
+    <div class="cuadro flex flex-col justify-center items-center text-center text-green-700 bg-white p-5 w-full md:w-3/5 rounded m-auto mb-12">
+        <a class="header-logo" id="logo-header" href="/">
+            <img src="../../public/img/prueba-logo.png" alt="LOGO" class="md:h-32 md:w-40 m-auto h-24 w-32">
+        </a>
+        <h1 class="md:text-4xl text-2xl text-center mb-10 font-bold">Registro</h1>
+        <form id="registerForm" action="" method="POST" enctype="multipart/form-data" class="flex flex-col justify-center items-center text-center m-2 p-4">
+            <div class="grid md:grid-cols-1 md:gap-1 gap-2 justify-center items-center">
+                <div class="grid md:grid-cols-3 gap-2 justify-center items-center">
+                    <input type="text" placeholder="Usuario" id="nickName" name="nickName" required class="rounded border border-2 border-green-300 h-10 w-80  md:w-full p-2">
+                    <input type="password" placeholder="Constraseña" id="password" name="password" required class="rounded border border-2 border-green-300 h-10 w-full px-2">
 
-                <label for="password" class="mr-2">Contraseña:</label>
-                <input type="password" id="password" name="password" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+                <input type="password" placeholder="Repetir Contraseña" id="repassword" name="repassword" required class="rounded border border-2 border-green-300 h-10 w-full px-2">
+                <input type="text" placeholder="Nombre" id="nombre" name="nombre" required class="rounded border border-2 border-green-300 h-10 px-2">
+                <input type="email" placeholder="E-mail" id="email" name="email" required class="rounded border border-2 border-green-300 h-10 px-2">
+                    <input type="text" placeholder="Ciudad" id="ciudad" name="ciudad" required class="rounded border border-2 border-green-300 h-10 px-2">
 
-                <label for="repassword" class="mr-2 ml-2">Re Contraseña:</label>
-                <input type="password" id="repassword" name="repassword" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-            </div>
-            <div class="flex flex-row md:grid-cols-1  justify-center items-center">
-                <label for="nombre" class="mr-2 ml-2">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br>
-
-                <label for="email" class="mr-2 ml-2">Email:</label>
-                <input type="email" id="email" name="email" required
-                    class=" rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-            <label for="ciudad" class="mr-2 ml-2">Ciudad:</label>
-                <input type="text" id="ciudad" name="ciudad" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-
-            </div>
-            <div class="flex flex-row md:grid-cols-1  justify-center items-center">
-                <label for="imagenPerfil" class="mr-2 ml-2">Imagen de Perfil:</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="358400">
-                <input type="file" id="imagenPerfil" name="imagenPerfil" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
-
-                <label for="pais" class="mr-2 ml-2">País:</label>
-                <input type="text" id="pais" name="pais" required
-                    class="rounded border border-2 border-green-300 h-4/5 px-2"><br><br>
+                                        <select id="pais"  name="pais" required class="rounded border border-2 border-green-300 h-10 px-2">
+                                            <option value="">Seleccionar Pais</option>
+                                            {{#paises}}
+                                                <option value={{nombre}}>{{nombre}}</option>
+                                            {{/paises}}
+                                        </select>
+                    <input type="date" placeholder="Fecha de nacimiento" id="fechaNacimiento" name="fechaNacimiento" required class="rounded border border-2 border-green-300 h-10 px-2">
+                    <select id="idGenero"  name="idGenero" required class="rounded border border-2 border-green-300 h-10 px-2">
+                        <option value="">Seleccionar Genero</option>
+                        {{#verGenero}}
+                            <option value={{id}}>{{nombre}}</option>
+                        {{/verGenero}}
+                    </select>
+                </div>
 
             </div>
-             <div class="flex flex-row md:grid-cols-1  justify-center items-center">
-              <label for="fechaNacimiento" class="mr-2 ml-2">Fecha Nac.:</label>
-                             <input type="date" id="fechaNacimiento" name="fechaNacimiento" required
-                                 class="rounded border border-2 border-green-300 h-4/5 px-2">
 
-            <label for="idGenero" class="mr-2 ml-2">Género:</label>
-                              <select id="idGenero" name="idGenero" required
-                                class="rounded border border-2 border-green-300 h-4/5 px-2">
-                                <option value="">Seleccionar</option>
-                              {{#verGenero}}
-                                    <option value={{id}}>{{nombre}}</option>
-                               {{/verGenero}}
-                            </select><br><br>
-
-
-
+            <div class="flex md:flex-row flex-col justify-center items-center text-center">
+                <div>
+                    <span>Imagen de Perfil</span>
+                    <input type="file" class='input-file green' id="imagenPerfil" name="imagenPerfil" accept="image/*" data-button="Examinar" data-empty="No tiene archivos" required/>
+                </div>
+                <input type="text" id="latitud" name="latitud">
+                <input type="text" id="longitud" name="longitud">
             </div>
-              <input type="text" id="latitud" name="latitud" hidden >
-              <input type="text" id="longitud" name="longitud" hidden >
-        <div class="flex flex-row md:grid-cols-1  justify-center items-center">
-            <div id="mapa" style="width:500px; height:200px;">
+            <div class="mt-5">
+                <div id="mapa" style="width: 21rem; height: 15rem;"></div>
             </div>
-                <input type="submit" value="Enviar"
-                    class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5">
-       </div>
 
+             <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                  <input type="submit" id="guardar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+             </div>
         </form>
-
     </div>
     <p id="errorMsg"></p>
 </body>
 
 </html>
-<!--Perdon me daba cosa dejar la foto de perfil sin chequear-->
- <script src="/public/js/scripts.js"></script>
+<script src="/public/js/scripts.js"></script>
 <script type="text/javascript">
-    function checkFileSize(maxSize) {
-        let input = document.getElementById("imagenPerfil");
-        if (input.files && input.files.length == 1) {
-            if (input.files[0].size > maxSize) {
-                alert("Tu foto de perfil debe pesar menos de " + (maxSize / 1024) + "KB");
-                return false;
-            }
-        }
-
-        return true;
-    }
 
 document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('registerForm');
-    var errorMessages = document.getElementById('errorMsg');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
-        var formData = new FormData(form);
+  var aprobarBtn = document.getElementById('guardar');
+  aprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    var errorMessages = document.getElementById('errorMsg')
+    errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
+    enviarFormulario('http://localhost:80/register/validateFields');
+  });
+});
 
-        fetch('/register/validateFields', {
+function enviarFormulario(url) {
+  var form = document.forms.namedItem('registerForm');
+  var errorMessages = document.getElementById('errorMsg');
+    const data = {
+                    nickName: form.elements.namedItem('nickName').value,
+                    password: form.elements.namedItem('password').value,
+                    repassword: form.elements.namedItem('repassword').value,
+                    email: form.elements.namedItem('email').value,
+                    nombre: form.elements.namedItem('nombre').value,
+                    pais: form.elements.namedItem('pais').value,
+                    latitud: form.elements.namedItem('latitud').value,
+                    longitud: form.elements.namedItem('longitud').value,
+                    fechaNacimiento: form.elements.namedItem('fechaNacimiento').value,
+                    idGenero: form.elements.namedItem('idGenero').value,
+                    ciudad: form.elements.namedItem('ciudad').value,
+                };
+
+    console.log(data);
+    validoCampos=true;
+
+    if (data.nickName === "" || data.password === "" ||  data.repassword === "" || data.email === "" || data.nombre === "" || data.pais === "" ||
+        data.fechaNacimiento === "" || data.idGenero === "" || data.ciudad === "" )  {
+                       var errorMessage = document.createElement('p');
+                       errorMessage.textContent = "Llena todos los campos" ;
+                       errorMessages.appendChild(errorMessage);
+                       validoCampos=false;
+    }
+    if (data.latitud === "" || data.longitud === "" ) {
+                       var errorMessage = document.createElement('p');
+                       errorMessage.textContent = "Marcar la Ubicacion del Mapa con click Derecho" ;
+                       errorMessages.appendChild(errorMessage);
+                       validoCampos=false;
+    }
+    if (data.password  !==  data.repassword ) {
+                       var errorMessage = document.createElement('p');
+                       errorMessage.textContent = "Las contraseñas no coinciden" ;
+                       errorMessages.appendChild(errorMessage);
+                       validoCampos=false;
+    }
+    const maxSize = 358400;
+    let input = document.getElementById("imagenPerfil");
+    if (input.files && input.files.length == 1) {
+        if (input.files[0].size > maxSize) {
+            var errorMessage = document.createElement('p');
+            errorMessage.textContent = "La imagen de perfil debe pesar menos de 300KB" ;
+            errorMessages.appendChild(errorMessage);
+            validoCampos=false;
+        }
+    }
+    if (validoCampos) {
+        const jsonData = JSON.stringify(data);
+        const formData = new FormData();
+        formData.append('file', form.elements.namedItem('imagenPerfil').files[0]);
+        formData.append('data', jsonData);
+    fetch(url, {
             method: 'POST',
             body: formData
         })
-        .then(function(response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Error en la solicitud AJAX: ' + response.statusText);
-            }
-        })
-        .then(function(response) {
-            if (response.errorMsg) {
-                var errorMsgs = response.errorMsg;
-                for (var i = 0; i < errorMsgs.length; i++) {
-                    var errorMessage = document.createElement('p');
-                    errorMessage.textContent = errorMsgs[i];
-                    errorMessages.appendChild(errorMessage);
-                }
-            } else {
-                window.location.assign('/login/list');
-            }
-        })
-        .catch(function(error) {
-            window.location.assign('/login/list');
+            .then(function(response) {
+                return response.json(); // Extraer los datos JSON de la respuesta
+            })
+         .then(function(response) {
+                    if (response.errorMsg) {
+                        var errorMsgs = response.errorMsg;
+                        var errorMessage = document.createElement('p');
+                        errorMessage.textContent = errorMsgs;
+                        errorMessages.appendChild(errorMessage);
+                    } else {
+                        window.location.assign('/login/list');
+                    }
+                })
+        .catch(error => {
+            console.error(error);
         });
-    });
-});
+    }
+}
+
+    const create = str => document.createElement(str);
+    const files = document.querySelectorAll('.input-file');
+    Array.from(files).forEach(
+            f => {
+                const label = create('label');
+                const span_text = create('span');
+                const span_name =create('span');
+                const span_button = create('span');
+
+                label.htmlFor = f.id;
+
+                span_text.className = 'input-file__input-file-name';
+                span_button.className = 'input-file__input-file-button';
+
+                span_name.innerHTML = f.dataset.empty || 'No hay archivos';
+                span_button.innerHTML = f.dataset.button || 'Buscar';
+
+                label.appendChild(span_text);
+                label.appendChild(span_button);
+                span_text.appendChild(span_name);
+                f.parentNode.appendChild(label);
+
+                span_name.style.width = (span_text.clientWidth - 20)+'px';
+
+                f.addEventListener('change', e => {
+                    if( f.files.length == 0 ){
+                        span_name.innerHTML = f.dataset.empty ||'Ningún archivo seleccionado';
+                    }else if( f.files.length > 1 ){
+                        span_name.innerHTML = f.files.length + ' archivos seleccionados';
+                    }else{
+                        span_name.innerHTML = f.files[0].name;
+                    }
+                } );
+            }
+    );
 </script>

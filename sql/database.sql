@@ -101,11 +101,10 @@ CREATE TABLE Pregunta_sugerida (
     pregunta VARCHAR(255) NOT NULL,
     idCategoria INT NOT NULL,
     idUsuario INT NOT NULL,
-    opcion1 VARCHAR(255) NOT NULL,
-    opcion2 VARCHAR(255) NOT NULL,
-    opcion3 VARCHAR(255) NOT NULL,
-    opcion4 VARCHAR(255) NOT NULL,
-    respuestaCorrecta INT NOT NULL,
+    opcion1 VARCHAR(200) NOT NULL,
+    opcion2 VARCHAR(200) NOT NULL,
+    opcion3 VARCHAR(200) not null,
+    respuestaCorrecta varchar(200) not null,
     FOREIGN KEY (idCategoria) REFERENCES Categoria (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
 );

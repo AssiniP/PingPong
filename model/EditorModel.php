@@ -23,23 +23,32 @@ class EditorModel
     public function getQuestions(){
         return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where idCategoria =c.id ");
     }
+    public function getQuestionsReportada(){
+        return $this->database->query("select p.*, c.nombre  categoria, r.id idReportada, r.fecha , r.motivo  from pregunta p,categoria c ,preguntareportada r where idCategoria =c.id and p.id = r.idPregunta ");
+    }
     public function getQuestionId($id){
         return $this->database->query("select p.*, c.nombre  categoria from pregunta_sugerida p,categoria c  where p.idCategoria =c.id  and  p.id=".$id);
+    }
+
+    public function getQuestionIdReportadas($id){
+        return $this->database->query("select p.*, c.nombre  categoria, r.id idReportada, r.fecha , r.motivo from pregunta p,categoria c ,preguntareportada r where p.idCategoria =c.id and p.id = r.idPregunta   and  p.id=".$id);
     }
     public function delQuestionId($id){
         return $this->database->query("delete from pregunta_sugerida where id=".$id);
     }
-
+    public function delReporteId($id){
+        return $this->database->query("delete from preguntareportada where id=".$id);
+    }
     public function addQuestion($preguntaData) {
-        $query = "INSERT INTO pregunta_sugerida (idCategoria,idUsuario,pregunta,opcion1,opcion2,opcion3,opcion4,respuestaCorrecta) VALUES (".
+        $query = "INSERT INTO pregunta_sugerida (idCategoria,idUsuario,pregunta,opcion1,opcion2,opcion3,respuestaCorrecta) VALUES (".
             $preguntaData['idCategoria'].",".$preguntaData['idUsuario'].",'".$preguntaData['pregunta']."','".$preguntaData['opcion1']."','".
-            $preguntaData['opcion2']."','".$preguntaData['opcion3']."','".$preguntaData['opcion4']."',".$preguntaData['respuestaCorrecta'].")";
+            $preguntaData['opcion2']."','".$preguntaData['opcion3']."','".$preguntaData['respuestaCorrecta']."')";
         return $this->database->query($query);
     }
     public function editQuestionId($preguntaData){
         $query = "UPDATE pregunta_sugerida SET  pregunta='". $preguntaData['pregunta']."',opcion1='".$preguntaData['opcion1'].
-            "',opcion2='".$preguntaData['opcion2']."',opcion3='".$preguntaData['opcion3']."',opcion4='".$preguntaData['opcion4'].
-            "',respuestaCorrecta=".$preguntaData['respuestaCorrecta'].",idCategoria=".$preguntaData['idCategoria']."  where id=".$preguntaData['idPregunta'];
+            "',opcion2='".$preguntaData['opcion2']."',opcion3='".$preguntaData['opcion3']."',respuestaCorrecta='".$preguntaData['respuestaCorrecta'].
+            "',idCategoria=".$preguntaData['idCategoria']."  where id=".$preguntaData['idPregunta'];
         return $this->database->query($query);
     }
 

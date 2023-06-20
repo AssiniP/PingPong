@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap');
 
-* {
-    font-family: 'Montserrat', sans-serif;
+* ,
+::before,
+::after{
+    box-sizing: border-box;
+
 }
 
 label {
@@ -13,8 +16,9 @@ h1 {
 }
 
 body {
-    background-image: url("../img/fondo_pingpong.png");
-    background-size: cover;
+    background-color: #4F7349;
+
+
 }
 
 header {
@@ -27,6 +31,7 @@ header {
     -webkit-box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
     border-radius: 0px 0px 50px 50px / 0px 0px 25px 25px;
+    width: 100%;
 }
 
 /* Utils */
@@ -43,6 +48,7 @@ header {
     box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
     -webkit-box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
     -moz-box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
+
 }
 
 .boton {
@@ -58,6 +64,40 @@ header {
     height: 50px !important;
     margin-top: 25px;
     font-size: 1.7rem;
+}
+
+.boton-jugar {
+    display: block;
+    box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.75);
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    height: 50px !important;
+    width: 280px;
+    font-size: 1.7rem;
+    background-image: url("/public/img/boton-jugar.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: transparent!important;
+    border-radius: 10px;
+}
+
+.boton-jugar:hover {
+    background-image: url("/public/img/boton-jugar-hover.png");
+    background-size: cover;
+}
+
+.trampita{
+    display: block;
+    width: 105px;
+    height: 100px;
+    background-image: url("/public/img/trampita-fondo.png");
+    background-size: cover;
+}
+
+.trampita:hover{
+    background-image: url("/public/img/trampita-fondo-hover.png");
+    background-size: cover;
+
 }
 
 /* Home */
@@ -110,11 +150,12 @@ header {
     background-color: #cb3860;
     display: flex;
     justify-content: space-between;
-    padding: 0 50px;
+    padding: 0 25px;
     box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 14px 20px -7px rgba(0, 0, 0, 0.75);
     border-radius: 0px 0px 50px 50px / 0px 0px 25px 25px;
+    font-size: medium!important;
 }
 
 .header-nav {
@@ -124,10 +165,12 @@ header {
 }
 
 .header-nav a {
-    margin-right: 25px;
-    font-size: 1.5em;
     color: #ffffff;
     text-shadow: 0 0 10px rgb(255, 255, 255);
+}
+
+.header-nav a:hover {
+color: #ffaa24;
 }
 
 @media (max-width: 768px) {
@@ -137,10 +180,8 @@ header {
         align-items: center;
         margin: 10px;
     }
-
-    #main-header .header-logo,
-    #main-header .header-nav {
-        margin: 5px 5px 0 5px;
+    .header-nav a {
+    font-size: smaller;
     }
 }
 
@@ -173,6 +214,13 @@ footer {
 }
 
 /* lobby */
+
+.body-lobby{
+    background-image: url("/public/img/fondo_pingpong.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 .lobby-container {
     display: flex;
@@ -228,6 +276,10 @@ footer {
     .lobby-buttons a:last-of-type {
         margin-bottom: 50px;
     }
+
+    .body-lobby {
+        background-size: cover;
+    }
 }
 
 .lobby-buttons {
@@ -238,11 +290,11 @@ footer {
 }
 
 .lobby-buttons a:first-of-type {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .lobby-buttons a:last-of-type {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 /* Partida */
@@ -336,4 +388,63 @@ footer {
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+}
+.material-symbols-outlined {
+     font-variation-settings:
+             'FILL' 0,
+             'wght' 500,
+             'GRAD' 0,
+             'opsz' 48
+ }
+
+ .login {
+     background-image: url("../img/fondo_pingpong.png");
+     background-size: cover;
+     background-size: cover;
+ }
+ .input-file {
+     display: none;
+ }
+.input-file + label{
+    display: flex;
+    flex: 1;
+}
+
+.input-file__input-file-name,
+.input-file__input-file-button{
+    padding: 5px 10px;
+}
+
+.input-file__input-file-name{
+    background: #EEE;
+    border: 1px solid #CACACA;
+    flex: 1;
+    border-radius: 4px 0 0 4px;
+}
+
+.input-file__input-file-name span{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 0px;
+    display: block;
+}
+
+.input-file__input-file-button{
+    background: #5BC0DE url('/public/img/folder.png') 4px center/25px no-repeat;
+    border: 1px solid #5BC0DE;
+    color: white;
+    white-space: nowrap;
+    border-radius: 0 4px 4px 0;
+    padding-left: 33px;
+    cursor: pointer;
+}
+
+.input-file.red + label > .input-file__input-file-button{
+    background-color: #D9534F;
+    border-color:#D64641;
+}
+.input-file.green + label > .input-file__input-file-button{
+    background-color: #5CB85C;
+    border-color:#4FB04F;
 }

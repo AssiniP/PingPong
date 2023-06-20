@@ -14,7 +14,9 @@ class UserModel {
     public function getUser($nickname) {
         return $this->database->query("select u.*, G.nombre genero, (select  if(sum(puntaje) is null,0,sum(puntaje)) as puntaje  from Partida P  where idUsuario=U.id) puntaje, (select COALESCE(COUNT(*), 0) from trampita  t where t.idUsuario=U.id AND t.utilizada = false) trampita, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname like '".$nickname."'");
     }
-
+    public function getPaises(){
+        return $this->database->query("select * from paises ");
+    }
     public function getUserInfo($nickname){
         return $this->database->query("select u.*, G.nombre genero, YEAR(CURDATE())-YEAR(fechaNacimiento)  AS `EDAD_ACTUAL` from usuario U, genero G  where U.idGenero =G.id  and nickname = '".$nickname."'");
     }
@@ -46,18 +48,19 @@ class UserModel {
         return $user[0]['id'];
     }
 
-    public function addQuestion($preguntaData) {
-        $query = "INSERT INTO pregunta_sugerida (idCategoria,idUsuario,pregunta,opcion1,opcion2,opcion3,opcion4,respuestaCorrecta) VALUES (".
-            $preguntaData['idCategoria'].",".$preguntaData['idUsuario'].",'".$preguntaData['pregunta']."','".$preguntaData['opcion1']."','".
-            $preguntaData['opcion2']."','".$preguntaData['opcion3']."','".$preguntaData['opcion4']."',".$preguntaData['respuestaCorrecta'].")";
+    public function addQuestion($pregunta, $opcion1, $opcion2, $opcion3, $respuestaCorrecta, $idCategoria) {
+        $query = "INSERT INTO pregunta_sugerida (idCategoria,idUsuario,pregunta,opcion1,opcion2,opcion3,respuestaCorrecta) VALUES (".
+            $idCategoria.",".$this->getIDUsuarioActual().",'".$pregunta."','".$opcion1."','".
+            $opcion2."','".$opcion3."','".$respuestaCorrecta."')";
         return $this->database->query($query);
     }
-    public function editQuestionId($preguntaData){
-        $query = "UPDATE pregunta_sugerida SET  pregunta='". $preguntaData['pregunta']."',opcion1='".$preguntaData['opcion1'].
-            "',opcion2='".$preguntaData['opcion2']."',opcion3='".$preguntaData['opcion3']."',opcion4='".$preguntaData['opcion4'].
-            "',respuestaCorrecta=".$preguntaData['respuestaCorrecta'].",idCategoria=".$preguntaData['idCategoria']."  where id=".$preguntaData['idPregunta'];
+
+    function editQuestionId($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$respuestaCorrecta,$idCategoria)
+    {
+        $query = "UPDATE pregunta_sugerida SET pregunta ='".$pregunta."', opcion1 ='". $opcion1."', opcion2 ='". $opcion2."', opcion3 = '".$opcion3 ."', respuestaCorrecta = '".$respuestaCorrecta."', idCategoria = ".$idCategoria ." where id = ". $idPregunta;
         return $this->database->query($query);
     }
+
     //validar que el usuario y la password existan
     public function validarLogin(String $nickname, String $password){
         return $this->database->query("SELECT  u.* , r.rol FROM usuario U, rol  R  where R.id=U.idRol and nickname like '".$nickname."' and password like '".$password."'");
@@ -69,11 +72,11 @@ class UserModel {
                   VALUES ($idPregunta, $idPartida, null, 0)";
         return $this->database->query($query);
     }
-    public function addUser($userData){
+    public function addUser($body,$imgPath){
         $query = "INSERT INTO usuario (nickname, password, nombre, email,  imagenPerfil, pais, idRol, idGenero, fechaRegistro, ciudad, latitud, longitud,fechaNacimiento,nivelJugador) VALUES ('".
-            $userData['nickName']."','" .$userData['password']."','".  $userData['nombre']."','".  $userData['email']."','".   $userData['imagenPerfil'] ."','".
-            $userData['pais']."',".$userData['idRol'].",".$userData['idGenero']." ,NOW(),'".$userData['ciudad']."',".   $userData['latitud'] .",".
-            $userData['longitud'].",'".$userData['fechaNacimiento']."','PRINCIPIANTE')";
+            $body->nickName."','".md5($body->password)."','".$body->nombre."','".$body->email."','".$imgPath."','".
+            $body->pais."',3,".$body->idGenero." ,NOW(),'".$body->ciudad."',".$body->latitud.",".
+            $body->longitud.",'".$body->fechaNacimiento."','PRINCIPIANTE')";
         return $this->database->query($query);
     }
     public function enviarMail($mail) {
