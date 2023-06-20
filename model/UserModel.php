@@ -46,18 +46,19 @@ class UserModel {
         return $user[0]['id'];
     }
 
-    public function addQuestion($preguntaData) {
+    public function addQuestion($pregunta, $opcion1, $opcion2, $opcion3, $respuestaCorrecta, $idCategoria) {
         $query = "INSERT INTO pregunta_sugerida (idCategoria,idUsuario,pregunta,opcion1,opcion2,opcion3,respuestaCorrecta) VALUES (".
-            $preguntaData['idCategoria'].",".$preguntaData['idUsuario'].",'".$preguntaData['pregunta']."','".$preguntaData['opcion1']."','".
-            $preguntaData['opcion2']."','".$preguntaData['opcion3']."','".$preguntaData['respuestaCorrecta']."')";
+            $idCategoria.",".$this->getIDUsuarioActual().",'".$pregunta."','".$opcion1."','".
+            $opcion2."','".$opcion3."','".$respuestaCorrecta."')";
         return $this->database->query($query);
     }
-    public function editQuestionId($preguntaData){
-        $query = "UPDATE pregunta_sugerida SET  pregunta='". $preguntaData['pregunta']."',opcion1='".$preguntaData['opcion1'].
-            "',opcion2='".$preguntaData['opcion2']."',opcion3='".$preguntaData['opcion3']."',respuestaCorrecta='".$preguntaData['respuestaCorrecta'].
-            "',idCategoria=".$preguntaData['idCategoria']."  where id=".$preguntaData['idPregunta'];
+
+    function editQuestionId($idPregunta,$pregunta,$opcion1,$opcion2,$opcion3,$respuestaCorrecta,$idCategoria)
+    {
+        $query = "UPDATE pregunta_sugerida SET pregunta ='".$pregunta."', opcion1 ='". $opcion1."', opcion2 ='". $opcion2."', opcion3 = '".$opcion3 ."', respuestaCorrecta = '".$respuestaCorrecta."', idCategoria = ".$idCategoria ." where id = ". $idPregunta;
         return $this->database->query($query);
     }
+
     //validar que el usuario y la password existan
     public function validarLogin(String $nickname, String $password){
         return $this->database->query("SELECT  u.* , r.rol FROM usuario U, rol  R  where R.id=U.idRol and nickname like '".$nickname."' and password like '".$password."'");

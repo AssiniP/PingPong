@@ -46,7 +46,7 @@
                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
                    </div>
                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
-                              <input type="submit" id="aprobar" value="Alta" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
+                              <input type="submit" id="aprobar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
                               <input type="submit" id="desaprobar" value="Eliminar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white ml-5"> <br>
                     </div>
               </form>
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var desaprobarBtn = document.getElementById('desaprobar');
   desaprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('/editor/eliminar');
+    enviarFormulario('http://localhost:80/editor/eliminar');
   });
 
   var aprobarBtn = document.getElementById('aprobar');
@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     enviarFormulario('http://localhost:80/editor/addPregunta');
   });
 });
+
 
 function enviarFormulario(url) {
   var form = document.forms.namedItem('preguntaForm');
@@ -129,17 +130,23 @@ function enviarFormulario(url) {
         respuestaCorrecta: form.elements.namedItem('respuestaCorrecta').value,
     };
     console.log(data);
-
+    if (data.pregunta === "" || data.opcion1 === "" ||  data.opcion2 === "" || data.opcion3 === "" || data.respuestaCorrecta === "" || data.idCategoria === "")  {
+     errorMessages.innerHTML = "Llena todos los campos" ;
+    }else {
     fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).catch(error => {
-        console.error(error);
-    });
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).catch(error => {
+            console.error(error);
+        });
 
-    window.location.assign('/editor/sugeridas');
+        window.location.assign('/editor/sugeridas');
+
+    }
+
 }
+
 </script>
