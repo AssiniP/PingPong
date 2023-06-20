@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var desaprobarBtn = document.getElementById('desaprobar');
   desaprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('/editor/eliminar');
+    enviarFormulario('http://localhost:80/editor/eliminar');
   });
 
   var aprobarBtn = document.getElementById('aprobar');
@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     enviarFormulario('http://localhost:80/editor/addPregunta');
   });
 });
+
 
 function enviarFormulario(url) {
   var form = document.forms.namedItem('preguntaForm');
@@ -129,17 +130,23 @@ function enviarFormulario(url) {
         respuestaCorrecta: form.elements.namedItem('respuestaCorrecta').value,
     };
     console.log(data);
-
+    if (data.pregunta === "" || data.opcion1 === "" ||  data.opcion2 === "" || data.opcion3 === "" || data.respuestaCorrecta === "" || idCategoria === "")  {
+     errorMessages.innerHTML = "Llena todos los campos" ;
+    }else {
     fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).catch(error => {
-        console.error(error);
-    });
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).catch(error => {
+            console.error(error);
+        });
 
-    window.location.assign('/editor/sugeridas');
+        window.location.assign('/editor/sugeridas');
+
+    }
+
 }
+
 </script>

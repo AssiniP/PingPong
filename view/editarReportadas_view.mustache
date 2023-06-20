@@ -113,46 +113,64 @@ document.addEventListener('DOMContentLoaded', function() {
    var desaprobarBtn = document.getElementById('desaprobar');
   desaprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('/editor/delPregunta');
+    enviarFormulario('http://localhost:80/editor/delPregunta');
   });
 
   var aprobarBtn = document.getElementById('aprobar');
   aprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('/editor/delMotivo');
+    enviarFormulario('http://localhost:80/editor/delMotivo');
   });
 });
 
-function enviarFormulario(url) {
-  var form = document.getElementById('preguntaForm');
-  var errorMessages = document.getElementById('errorMsg');
-  errorMessages.innerHTML = ''; // Limpiar mensajes anteriores
-  var formData = new FormData(form);
+document.addEventListener('DOMContentLoaded', function() {
 
-  fetch(url, {
-    method: 'POST',
-    body: formData
-  })
-  .then(function(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error('Error en la solicitud AJAX: ' + response.statusText);
-    }
-  })
-  .then(function(response) {
-    if (response.errorMsg) {
-      var errorMsgs = response.errorMsg;
-      for (var i = 0; i < errorMsgs.length; i++) {
-        var errorMessage = document.createElement('p');
-        errorMessage.textContent = errorMsgs[i];
-        errorMessages.appendChild(errorMessage);
-      }
-    } else {
-      window.location.assign('/editor/reportadas');
-    }
-  })
-  .catch(function(error) {
-    window.location.assign('/editor/reportadas');
+  var desaprobarBtn = document.getElementById('desaprobar');
+  desaprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    enviarFormulario('http://localhost:80/editor/delPregunta');
   });
-}</script>
+
+  var aprobarBtn = document.getElementById('aprobar');
+  aprobarBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    enviarFormulario('http://localhost:80/editor/delMotivo');
+  });
+});
+
+
+function enviarFormulario(url) {
+  var form = document.forms.namedItem('preguntaForm');
+  var errorMessages = document.getElementById('errorMsg');
+  errorMessages.innerHTML = '';
+    const data = {
+        idPregunta: form.elements.namedItem('idPregunta').value,
+        idUsuario: form.elements.namedItem('idUsuario').value,
+        idReportada: form.elements.namedItem('idReportada').value,
+        idCategoria: form.elements.namedItem('idCategoria').value,
+        pregunta: form.elements.namedItem('pregunta').value,
+        opcion1: form.elements.namedItem('opcion1').value,
+        opcion2: form.elements.namedItem('opcion2').value,
+        opcion3: form.elements.namedItem('opcion3').value,
+        respuestaCorrecta: form.elements.namedItem('respuestaCorrecta').value,
+    };
+    console.log(data);
+    if (data.pregunta === "" || data.opcion1 === "" ||  data.opcion2 === "" || data.opcion3 === "" || data.respuestaCorrecta === "" || idCategoria === "")  {
+     errorMessages.innerHTML = "Llena todos los campos" ;
+    }else {
+    fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).catch(error => {
+            console.error(error);
+        });
+
+         window.location.assign('/editor/reportadas');
+
+    }
+
+}
+</script>
