@@ -15,19 +15,18 @@ class RegisterController
 
     public function validateFields()
     {
-        header('Content-Type: application/json');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $jsonData = file_get_contents('php://input');
             if ($jsonData != null) {
                 $body = json_decode($jsonData);
-                $errorMsg ="";
                 if (count($this->checkEmailAndNick($body->nickName ,$body->email )) > 0) {
                     $errorMsg = 'Ya existe el mail y/o el usuario';
-                    var_dump("Ya existe el mail y/o el usuario");
                     $response = ['errorMsg' => $errorMsg];
+                    header('Content-Type: application/json');
                     echo json_encode($response);
                 }else {
                     $this->add($body);
+                    header('Content-Type: application/json');
                     $response = ['success' => true];
                     echo json_encode($response);
                 }
