@@ -143,15 +143,15 @@ function enviarFormulario(url) {
             body: JSON.stringify(data)
         })
          .then(function(response) {
-                    if (response.errorMsg) {
-                        var errorMsgs = response.errorMsg;
-                        for (var i = 0; i < errorMsgs.length; i++) {
-                            var errorMessage = document.createElement('p');
-                            errorMessage.textContent = errorMsgs[i];
-                            errorMessages.appendChild(errorMessage);
-                        }
+                var error=JSON.stringify(response);
+                alert(error);
+                    if (error.errorMsg) {
+                        var errorMsgs = error.errorMsg;
+                        var errorMessage = document.createElement('p');
+                        errorMessage.textContent = errorMsgs;
+                        errorMessages.appendChild(errorMessage);
                     } else {
-                        window.location.assign('/login/list');
+                      //  window.location.assign('/login/list');
                     }
                 })
         .catch(error => {

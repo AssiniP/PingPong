@@ -20,16 +20,13 @@ class RegisterController
             $jsonData = file_get_contents('php://input');
             if ($jsonData != null) {
                 $body = json_decode($jsonData);
-                $errorMsg = [];
+                $errorMsg ="";
                 if (count($this->checkEmailAndNick($body->nickName ,$body->email )) > 0) {
-                    $errorMsg[] = 'Ya existe el mail y/o el usuario';
-                }
-                $response = ['errorMsg' => $errorMsg];
-
-                if (!empty($errorMsg)) {
-                    // Enviar respuesta con errores en formato JSON
+                    $errorMsg = 'Ya existe el mail y/o el usuario';
+                    var_dump("Ya existe el mail y/o el usuario");
+                    $response = ['errorMsg' => $errorMsg];
                     echo json_encode($response);
-                } else {
+                }else {
                     $this->add($body);
                     $response = ['success' => true];
                     echo json_encode($response);
