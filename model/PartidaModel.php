@@ -32,8 +32,10 @@ class PartidaModel
 
     public function createJugada($idPregunta, $idPartida)
     {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $tiempoActual = date("H:i:s");
         $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
-                  VALUES ($idPregunta, $idPartida, CURRENT_TIME, 0)";
+                  VALUES ($idPregunta, $idPartida, '$tiempoActual', 0)";
         return $this->database->query($query);
     }
 
