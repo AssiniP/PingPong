@@ -193,6 +193,13 @@ class PartidaModel
         $this->createJugada($preguntaID, $this->getIDPartidaActual());
     }
 
+    public function createUsuarioPregunta($idUsuario, $idPregunta){
+        if(!$this->incrementarAparicionesPreguntaParaUsuario($idUsuario, $idPregunta)){
+            $query = "INSERT INTO usuario_pregunta (idUsuario, idPregunta) VALUES ('".$idUsuario."', '".$idPregunta."');";
+            $this->database->query($query);
+        }
+    }
+
 
     public function juego()
     {
@@ -202,6 +209,7 @@ class PartidaModel
         $arrayDatos = array();
         $opcionSeleccionada = $_GET['opcion'];
         $respuestaCorrecta = $this->getRespuestaCorrecta($preguntaId);
+        $this->createUsuarioPregunta($usuarioId, $preguntaId);
         if ($opcionSeleccionada == $respuestaCorrecta[0]['respuestaCorrecta'] && $this->respondioATiempo($preguntaId, $idPartida)) {
             $arrayDatos['mensaje'] = "CORRECTO";
             $arrayDatos['url'] = "/partida/jugada";
@@ -219,7 +227,6 @@ class PartidaModel
             $this->updateJugada($preguntaId, $idPartida, 0);
         }
         $this->incrementarOcurrenciasDePregunta($preguntaId);
-        $this->incrementarAparicionesPreguntaParaUsuario($usuarioId, $preguntaId);
         $lastPreguntaID = $this->getLastInsertedPreguntaId();
         $this->setPreguntaUsuario($usuarioId, $preguntaId);
         if (intval($lastPreguntaID) == intval($preguntaId)) {
@@ -272,7 +279,9 @@ class PartidaModel
 
     private function getTiempoDeJugada($idPregunta, $idPartida){
         $query = "SELECT tiempo as 'inicio' from Jugada
-                  WHERE idPregunta = '" .$idPregunta. "' AND idPartida = '". $idPartida ."';";
+                  WHERE idPregunta = '" .$idPregunta. "' AND idPartida = '". $idPartida ."'
+                  ORDER BY id DESC
+                  LIMIT 1;";
         $result =$this->database->query($query);
         return $result;
     }
