@@ -36,7 +36,16 @@ class EditorController{
         }
         $this->renderer->render('editarReportadas',$data);
     }
-
+   /// ABM Preguntas
+    public function preguntas()
+    {
+        $data['preguntas'] = $this->editorModel->getQuestions();
+        $data["verCategoria"] = $this->editorModel->getAllCategoria();
+        if(isset($_GET["id"])) {
+            $data['editarPregunta'] = $this->editorModel->getQuestionId(intval($_GET["id"]));
+        }
+        $this->renderer->render('preguntas',$data);
+    }
     public function eliminar() {
         header('Content-Type: application/json');
         $api = new ApiPreguntas();

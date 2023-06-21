@@ -120,6 +120,6 @@ class UserModel {
     }
 
     public function getRanking(){
-       return $this->database->query( "select ROW_NUMBER() OVER(ORDER BY SUM(puntaje) DESC) AS 'Puesto', u.nickName,u.imagenPerfil ,sum(puntaje) as 'Puntaje' from partida p join usuario u on u.id = p.idUsuario group by idUsuario LIMIT 5");
+       return $this->database->query( "select ROW_NUMBER() OVER(ORDER BY SUM(puntaje) DESC) AS 'Puesto', u.nickName,u.imagenPerfil ,sum(puntaje) as 'Puntaje'  from partida p join usuario u on u.id = p.idUsuario group by u.nickName,u.imagenPerfil  ORDER BY SUM(puntaje) DESC LIMIT 5");
     }
 }
