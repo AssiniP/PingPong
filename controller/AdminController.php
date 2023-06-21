@@ -27,6 +27,7 @@ class AdminController
         $data['cantidadUsuariosPorSexo'] = $arrayDatos['arrayDatos']['cantidadUsuariosPorSexo'];
         $data['partidasNuevasDesdeFecha'] = $arrayDatos['arrayDatos']['partidasNuevasDesdeFecha'];
         $data['nombreMes'] = $arrayDatos['arrayDatos']['nombreMes'];
+        $data['imagePath'] = $arrayDatos['arrayDatos']['imagePath'];
 
         
 
