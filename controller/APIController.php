@@ -12,10 +12,8 @@ class APIController
 
             if(isset($_GET['usuario'])){
                 $idUsuario = $_GET['usuario'];
-                $api->getAll($idUsuario);
+                echo $api->getAll($idUsuario);
             }
-
-
 
     }
 
