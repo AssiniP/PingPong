@@ -113,7 +113,6 @@ function consultarAPI() {
     }
 
     function empezarJugada(idPregunta){
-            console.log("ESTOY EN EMPEXAR JUGADAAA" + idPregunta);
         const data = {
             idPregunta: idPregunta
         };
