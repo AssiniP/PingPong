@@ -20,7 +20,7 @@ class LobbyController{
     }
 
     public function ranking(){
-        $data["usuario"] = $this->userModel->getAllUsers();
+        $data["usuario"] = $this->userModel->getRanking();
         $this->renderer->render('ranking',$data);
     }
 

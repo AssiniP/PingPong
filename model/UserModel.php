@@ -118,4 +118,8 @@ class UserModel {
         $level = 'L';
         QRcode::png($url, $tempDir, $level, $size);
     }
+
+    public function getRanking(){
+       return $this->database->query( "select ROW_NUMBER() OVER(ORDER BY SUM(puntaje) DESC) AS 'Puesto', u.nickName,u.imagenPerfil ,sum(puntaje) as 'Puntaje' from partida p join usuario u on u.id = p.idUsuario group by idUsuario LIMIT 5");
+    }
 }
