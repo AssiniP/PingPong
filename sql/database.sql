@@ -70,7 +70,7 @@ CREATE TABLE Jugada (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idPregunta INT NOT NULL,
     idPartida INT NOT NULL,
-    tiempo TIME,
+    tiempo TIME NOT NULL,
     FOREIGN KEY (idPartida) REFERENCES Partida (id),
     FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
     respondidoCorrectamente BOOLEAN DEFAULT FALSE
