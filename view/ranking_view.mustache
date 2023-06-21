@@ -3,23 +3,36 @@
 
 
 
- <div class="lobby-container mt-10">
+ <div class="lobby-container mt-10 w-full">
     <div class="lobby-user">
-        <h1 class="text-white text-3xl mb-20 uppercase">Ranking</h1>
+        <h1 class="text-orange-700 text-3xl mb-10 uppercase">Ranking</h1>
 
     </div>
-    <div>
+    <div class="grid grid-cols-1 mb-5 w-full md:w-3/5">
      {{#usuario}}
-        <div class="flex flex-col md:flex-row text-gray-200 items-center">
-                <img src="/public/foto-perfil/{{imagenPerfil}}" class="w-28 h-28 rounded-full border border-yellow-400 m-5">
-               <div class="w-32 m-5 text-center"> <p class="text-white font-sans text-3xl uppercase">{{nickName}} </p></div>
-                <a href="/user/seeProfile&nick={{nickName}}" class="m-5"><img src="/public/qr-perfil/qr_code_{{nickName}}.png" class="w-28 h-28 rounded border border-yellow-400"></a>
-                <p class="text-white font-sans text-6xl m-5">{{puntaje}} </p>
-        </div>
 
+         <div class=" flex flex-row  bg-orange-200 gap-2 text-center rounded-2xl m-2">
+             <h1 class="text-center text-white  text-2xl bg-orange-700 h-full p-2 rounded-l-2xl">{{Puesto}}</h1>
+             <div class="flex flex-row items-center justify-center w-full">
+                 <div class="flex flex-col items-center">
+                 <img src="/public/foto-perfil/{{imagenPerfil}}" alt="perfil" class="rounded-full w-8 h-8 md:w-16 md:h-16">
+                 <h2 class="text-xl font-bold mt-2">{{nickName}}</h2>
+                 <p class="text-sm mt-2">{{Puntaje}}</p>
+                 </div>
+             <div class="flex flex-col items-center mx-4">
+                 <a href="/user/seeProfile&nick={{nickName}}" class="m-5"><img src="/public/qr-perfil/qr_code_{{nickName}}.png" class="w-18 h-18 md:w-28 md:h-28  rounded border border-yellow-400"></a>
+             </div>
+             </div>
+         </div>
      {{/usuario}}
     </div>
 
 </div>
 
 </div>
+<script>
+    window.addEventListener("load", function() {
+        var body = document.body;
+        body.classList.add('body-lobby');
+    });
+</script>
