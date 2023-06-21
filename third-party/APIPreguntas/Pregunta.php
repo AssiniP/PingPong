@@ -7,9 +7,27 @@ class Pregunta extends MySQLMethods
 
     function obtenerPreguntas($id)
     {
+        $nivelUsuario = $this->obtenerNivelDelUsuario($id);
 
-        $query = $this->connect()->query("SELECT * FROM pregunta p where p.id NOT IN (select idPregunta from aparicion_pregunta where idUsuario =" .$id ." )");
+        switch ($nivelUsuario) {
+            case "EXPERTO":
+                $dificultad = "DIFICIL";
+                break;
+            case "HABIL":
+                $dificultad = "MEDIO";
+                break;
+            case "PRINCIPIANTE":
+                $dificultad = "FACIL";
+                break;
+        }
+
+        $query = $this->connect()->query("SELECT * FROM pregunta p WHERE p.id NOT IN (SELECT idPregunta FROM aparicion_pregunta WHERE idUsuario = " . $id . ") AND p.dificultad = '" . $dificultad . "'");
         return $query;
+    }
+
+    function obtenerNivelDelUsuario($id){
+        $query = $this->connect()->query("SELECT nivelJugador FROM usuario where id = '".$id."';");
+        return $query->fetchColumn();
     }
 
 

@@ -31,9 +31,9 @@ class ApiPreguntas
                 array_push($preguntas["preguntas"], $item);
             }
 
-            echo json_encode($preguntas);
+            return json_encode($preguntas);
         } else {
-            echo json_encode(array('mensaje' => 'No hay elementos'));
+            return json_encode(array('mensaje' => 'No hay elementos'));
         }
     }
 
