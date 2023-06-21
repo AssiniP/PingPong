@@ -25,6 +25,14 @@ class PartidaController
         $data = array('partidas' => $partidas);
         $this->renderer->render('jugada', $data);
     }
+
+    public function empezarJugada(){
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+
+        $idPregunta = $data['idPregunta'];
+        $this->partidaModel->empezarJugada($idPregunta);
+    }
     public function respuesta()
     {
         $arrayDatos = $this->partidaModel->juego();

@@ -33,7 +33,7 @@ class PartidaModel
     public function createJugada($idPregunta, $idPartida)
     {
         $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
-                  VALUES ($idPregunta, $idPartida, null, 0)";
+                  VALUES ($idPregunta, $idPartida, CURRENT_TIME, 0)";
         return $this->database->query($query);
     }
 
@@ -185,17 +185,22 @@ class PartidaModel
         $data['puntaje'] = $puntaje;
     }
 
+    public function empezarJugada($preguntaID){
+        $usuarioId = $this->getIDUsuarioActual();
+        $idPartida = $this->getIDPartidaActual();
+        $this->createJugada($preguntaID, $this->getIDPartidaActual());
+    }
+
 
     public function juego()
     {
-        $usuarioId = $this->getIDUsuarioActual();
-        $arrayDatos = array();
-        $idPartida = $this->getIDPartidaActual();
         $preguntaId = $_GET['pregunta'];
-        $this->createJugada($preguntaId, $this->getIDPartidaActual());
+        $usuarioId = $this->getIDUsuarioActual();
+        $idPartida = $this->getIDPartidaActual();
+        $arrayDatos = array();
         $opcionSeleccionada = $_GET['opcion'];
         $respuestaCorrecta = $this->getRespuestaCorrecta($preguntaId);
-        if ($opcionSeleccionada == $respuestaCorrecta[0]['respuestaCorrecta']) {
+        if ($opcionSeleccionada == $respuestaCorrecta[0]['respuestaCorrecta'] && $this->respondioATiempo($preguntaId, $idPartida)) {
             $arrayDatos['mensaje'] = "CORRECTO";
             $arrayDatos['url'] = "/partida/jugada";
             $arrayDatos['texto'] = "Siguiente Pregunta";
@@ -249,6 +254,25 @@ class PartidaModel
     public function trampitaUsada($idUsuario){
         $query = "UPDATE trampita SET utilizada = true WHERE idUsuario = '$idUsuario' AND utilizada = false LIMIT 1;";
         $this->database->query($query);
+    }
+
+    private function respondioATiempo($idPregunta, $idPartida){
+        $inicio = $this->getTiempoDeJugada($idPregunta, $idPartida);
+        $tiempoDeInicio = strtotime($inicio[0]["inicio"]);
+        $tiempoActual = time();
+
+        if (($tiempoActual - $tiempoDeInicio) > 10) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    private function getTiempoDeJugada($idPregunta, $idPartida){
+        $query = "SELECT tiempo as 'inicio' from Jugada
+                  WHERE idPregunta = '" .$idPregunta. "' AND idPartida = '". $idPartida ."';";
+        return $this->database->query($query);
     }
 }
 
