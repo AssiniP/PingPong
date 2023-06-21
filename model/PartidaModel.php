@@ -75,7 +75,6 @@ class PartidaModel
                   FROM Jugada
                   WHERE idPartida = $partidaId AND respondidoCorrectamente = 1";
         $result = $this->database->query($query);
-        var_dump($result[0]['count']);
         return $result[0]['count'];
     }
 
@@ -195,12 +194,14 @@ class PartidaModel
     }
 
     public function createUsuarioPregunta($idUsuario, $idPregunta){
-        if(!$this->incrementarAparicionesPreguntaParaUsuario($idUsuario, $idPregunta)){
+        $query = "SELECT COUNT(*) as 'existe' FROM usuario_pregunta WHERE idUsuario = '".$idUsuario."' AND idPregunta = '".$idPregunta."';";
+        $result = $this->database->query($query);
+
+        if ($result[0]['existe'] == 0) {
             $query = "INSERT INTO usuario_pregunta (idUsuario, idPregunta) VALUES ('".$idUsuario."', '".$idPregunta."');";
             $this->database->query($query);
         }
     }
-
 
     public function juego()
     {
@@ -212,6 +213,7 @@ class PartidaModel
         $respuestaCorrecta = $this->getRespuestaCorrecta($preguntaId);
         $this->createUsuarioPregunta($usuarioId, $preguntaId);
         $this->incrementarOcurrenciasDePregunta($preguntaId);
+        $this->incrementarAparicionesPreguntaParaUsuario($usuarioId, $preguntaId);
         if ($opcionSeleccionada == $respuestaCorrecta[0]['respuestaCorrecta'] && $this->respondioATiempo($preguntaId, $idPartida)) {
             $arrayDatos['mensaje'] = "CORRECTO";
             $arrayDatos['url'] = "/partida/jugada";

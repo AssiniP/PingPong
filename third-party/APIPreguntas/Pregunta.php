@@ -22,7 +22,12 @@ class Pregunta extends MySQLMethods
         }
 
         $query = $this->connect()->query("SELECT * FROM pregunta p WHERE p.id NOT IN (SELECT idPregunta FROM aparicion_pregunta WHERE idUsuario = " . $id . ") AND p.dificultad = '" . $dificultad . "'");
-        return $query;
+        if ($query->rowCount() > 2) {
+            return $query;
+        } else {
+            $query = $this->connect()->query("SELECT * FROM pregunta p WHERE p.id NOT IN (SELECT idPregunta FROM aparicion_pregunta WHERE idUsuario = " . $id . ")");
+            return $query;
+        }
     }
 
     function obtenerNivelDelUsuario($id){
