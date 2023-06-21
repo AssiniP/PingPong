@@ -1,5 +1,13 @@
 {{> header}}
 <div class="flex flex-col justify-center items-center justify-items-center">
+    <button id="btn-reportar-pregunta" onclick="mostrarPopup()" class="bg-green-400 p-2 rounded mt-10">Reportar Pregunta</button>
+    <div id="popup-reporte" class="pop-up">
+        <div class="modal">
+            <h2>¿Por qué quieres reportar la pregunta?</h2>
+            <textarea id="motivo-reportar" rows="4" cols="50"></textarea>
+            <button onclick="enviarReporte()">Enviar Reporte</button>
+        </div>
+    </div>
     <div class="partida">
 
         <div class="pregunta-container cuadro text-center">
@@ -37,22 +45,22 @@
 
     </div>
 </div>
-<button id="btn-reportar-pregunta" onclick="mostrarPopup()">Reportar Pregunta</button>
-<div id="popup-reporte" style="display: none;">
-    <h2>¿Por qué quieres reportar la pregunta?</h2>
-    <textarea id="motivo-reportar" rows="4" cols="50"></textarea>
-    <button onclick="enviarReporte()">Enviar Reporte</button>
-</div>
+
 <script>
     function mostrarPopup() {
         var popup = document.getElementById("popup-reporte");
-        popup.style.display = "block";
+        popup.classList.remove('pop-up')
+        popup.classList.add('show');
     }
 
     function enviarReporte() {
+        var popup = document.getElementById("popup-reporte");
         var motivo = document.getElementById("motivo-reportar").value;
         var idUsuario = document.getElementById("idUsuario").innerHTML;
         var idPregunta = document.getElementById("idPregunta").innerHTML;
+
+        popup.classList.remove('show')
+        popup.classList.add('pop-up');
 
         if (motivo.trim() === '') {
             alert('Por favor, ingresa un motivo para reportar la pregunta.');
@@ -80,18 +88,21 @@
                         console.log(motivo);
                         console.log(idUsuario);
                         console.log(idPregunta);
-                        window.location.href = '/lobby/list';
+                        setTimeout(function() {
+                            window.location.href = "/lobby/list";
+                        }, 5000);
                     } else {
                         console.log('Hubo un error al enviar el reporte.');
+                        setTimeout(function() {
+                            window.location.href = '{{url}}';
+                        }, 5000);
                     }
                 })
                 .catch(error => {
                     console.log('Hubo un error en la solicitud AJAX:', error);
                 });
     }
-    setTimeout(function() {
-        window.location.href = "{{url}}";
-    }, 5000);
+
 </script>
 </body>
 {{>footer}}
