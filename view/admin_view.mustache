@@ -1,9 +1,76 @@
 {{> header}}
+<div class="cuadro admin-container">
+    <div class="flex justify-center py-10 p-14">
+        <div class="admin-card container pr-4">
+            <div
+                class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-red-400 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">USUARIOS</p>
+                </div>
+                <div class="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{totalUsuarios}}</p>
+                <!-- <hr > -->
+            </div>
+        </div>
+        <!---== Second Stats Container ====--->
+        <div class="admin-card container pr-4">
+            <div
+                class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-blue-500 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">JUGADORES</p>
+                </div>
+                <div class="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{totalJugadores}}</p>
+                <!-- <hr > -->
+            </div>
+        </div>
+        <!---== Second Stats Container ====--->
 
+        <!---== Third Stats Container ====--->
+        <div class="admin-card container pr-4">
+            <div
+                class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-purple-400 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">EDITORES</p>
+                </div>
+                <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{totalEditores}}</p>
+                <!-- <hr > -->
+            </div>
+        </div>
+        <!---== Third Stats Container ====--->
+
+        <!---== Fourth Stats Container ====--->
+        <div class="admin-card container ">
+            <div
+                class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-purple-900 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">ADMINISTRADORES</p>
+                </div>
+                <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{totalAdministradores}}</p>
+                <!-- <hr > -->
+            </div>
+        </div>
+        <!---== Fourth Stats Container ====--->
+    </div>
+</div> 
+
+<img src="{{imagePath}}" alt="Gráfico" />
+<!--
 <p>Cantidad de Usuarios: {{totalUsuarios}} </p>
 <p>Cantidad de Jugadores: {{totalJugadores}} </p>
 <p>Cantidad de Editores: {{totalEditores}} </p>
 <p>Cantidad de Administradores: {{totalAdministradores}} </p>
+-->
 <p>Cantidad de Jugadores con al menos una Partida: {{totalJugadoresConAlMenosUnaPartida}}</p>
 <p>Cantidad de Partidas jugadas: {{cantidadPartidasJugadas}}</p>
 <p>Cantidad de Preguntas creadas: {{cantidadPreguntas}}</p>
@@ -17,9 +84,3 @@
     {{/cantidadUsuariosPorSexo}}
 </ul>
 <p>Cantidad de Partidas nuevas desde el mes de <b>{{nombreMes}}</b>: {{partidasNuevasDesdeFecha}}</p>
-
-
-
-
-
-

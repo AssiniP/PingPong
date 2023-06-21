@@ -1,4 +1,8 @@
 <?php
+
+require_once('jpgraph/src/jpgraph.php');
+require_once('jpgraph/src/jpgraph_bar.php');
+
 class AdminModel
 {
     private $database;
@@ -6,21 +10,6 @@ class AdminModel
     {
         $this->database = $database;
     }
-
-    /* 
-    ver cantidad de jugadores que tiene la aplicación.
-    ver cantidad de jugadores que jugaron al menos una partida.
-    ver cantidad de partidas jugadas.
-    ver cantidad de preguntas en el juego.
-    ver cantidad de preguntas creadas. 
-    ver cantidad de usuarios nuevos.
-    ver porcentaje de preguntas respondidas.
-    ver porcentaje de preguntas respondidas por usuario.
-    ver cantidad de usuarios por pais
-    ver cantidad de usuarios por sexo 
-    ver cantidad de usuarios por grupo de edad
-    */
-
     public function getUserByNickname($nickname)
     {
         $query = "SELECT u.id
@@ -116,14 +105,14 @@ class AdminModel
 
     public function getCantidadUsuariosNuevosDesdeFecha($fecha)
     {
-        $query = "SELECT COUNT(*) AS total FROM usuario WHERE fechaRegistro >= $fecha";
+        $query = "SELECT COUNT(*) AS total FROM usuario WHERE fechaRegistro >= '$fecha'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
     public function getPartidasNuevasDesdeFecha($fecha)
     {
-        $query = "SELECT COUNT(*) AS total FROM partida WHERE fecha >= $fecha";
+        $query = "SELECT COUNT(*) AS total FROM partida WHERE fecha >= '$fecha'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -159,6 +148,39 @@ class AdminModel
         return $result;
     }
 
+    public function crearGraficoBarras()
+    {
+        $datay = array(62, 105, 85, 50);
+        $graph = new Graph(350, 220, 'auto');
+        $graph->SetScale("textlin");
+        $graph->yaxis->SetTickPositions(array(0, 30, 60, 90, 120, 150), array(15, 45, 75, 105, 135));
+        $graph->SetBox(false);
+        $graph->ygrid->SetFill(false);
+        $graph->xaxis->SetTickLabels(array('A', 'B', 'C', 'D'));
+        $graph->yaxis->HideLine(false);
+        $graph->yaxis->HideTicks(false, false);
+        $b1plot = new BarPlot($datay);
+        $graph->Add($b1plot);
+        $b1plot->SetColor("white");
+        $b1plot->SetFillGradient("#4B0082", "white", GRAD_LEFT_REFLECTION);
+        $b1plot->SetWidth(45);
+        $graph->title->Set("Bar Gradient(Left reflection)");
+        $imagePath = 'graficos/imagenes/grafico.png';
+        $directory = 'graficos/imagenes/';
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        if (!is_dir($directory)) {
+            if (!mkdir($directory, 0777, true)) {
+                die('Error al crear el directorio');
+            }
+        }
+        $graph->Stroke($imagePath);
+        var_dump($imagePath);
+        return $imagePath;
+    }
+
+
     public function adminModelMethodsTest()
     {
         $arrayDatos = array();
@@ -191,12 +213,7 @@ class AdminModel
         $arrayDatos["cantidadUsuariosPorSexo"] = $cantidadUsuariosPorSexo;
         $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
         $arrayDatos["nombreMes"] = $nombreMes;
-
-
-        /* se necesita para las estadisticas de usuarios en particular poder seleccionar el ID de usuario.
-        para el caso de fechas particulares se necesita poder seleccionar el mes. con el mes y usuario seleccionado se
-        actualizan los datos de la vista. <select> */
-
+        $arrayDatos['imagePath'] = $this->crearGraficoBarras();
 
         return array('arrayDatos' => $arrayDatos);
     }
