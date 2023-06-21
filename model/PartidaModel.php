@@ -75,6 +75,7 @@ class PartidaModel
                   FROM Jugada
                   WHERE idPartida = $partidaId AND respondidoCorrectamente = 1";
         $result = $this->database->query($query);
+        var_dump($result[0]['count']);
         return $result[0]['count'];
     }
 
