@@ -70,9 +70,11 @@ function consultarAPI() {
             console.log( "esta es la url = "+ opcion4HTML.href);
             console.log(data);
             dataAPI = data.preguntas;
+            console.log("Estoy en colsutla api" + primeraPregunta.id);
             let idPregunta = document.getElementById("idPregunta");
             idPregunta.innerText = primeraPregunta.id;
-
+            let idPreguntaJugada = primeraPregunta.id;
+            empezarJugada(idPreguntaJugada);
         })
         .catch(error => {
             // Manejo de errores
@@ -108,6 +110,31 @@ function consultarAPI() {
             }
         }
         return numbers;
+    }
+
+    function empezarJugada(idPregunta){
+            console.log("ESTOY EN EMPEXAR JUGADAAA" + idPregunta);
+        const data = {
+            idPregunta: idPregunta
+        };
+
+        fetch('/partida/empezarJugada', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('La tabla "jugada" se ha creado exitosamente.');
+                } else {
+                    console.error('Hubo un error al crear la tabla "jugada".');
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud AJAX:', error);
+            });
     }
 
 
