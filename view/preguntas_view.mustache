@@ -8,6 +8,7 @@
                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                    <input type="text" id="idPregunta" name="idPregunta" value='0' style="display: none;">
                     <input type="text" id="idUsuario" name="idUsuario" value='0' style="display: none;">
+                     <input type="text" id="idReportada" name="idReportada" value='0'  style="display: none;" >
                      <label for="idCategoria" class="mr-2 ml-2">Categoria:</label>
                      <select id="idCategoria" name="idCategoria" required
                      class="rounded border border-2 border-green-300 h-4/5 px-2">
@@ -102,13 +103,13 @@ document.addEventListener('DOMContentLoaded', function() {
   var desaprobarBtn = document.getElementById('desaprobar');
   desaprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/eliminar');
+    enviarFormulario('http://localhost:80/editor/eliminarAPI');
   });
 
   var aprobarBtn = document.getElementById('aprobar');
   aprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/addPregunta');
+    enviarFormulario('http://localhost:80/editor/guardarAPI');
   });
 });
 
@@ -120,6 +121,7 @@ function enviarFormulario(url) {
     const data = {
         idPregunta: form.elements.namedItem('idPregunta').value,
         idUsuario: form.elements.namedItem('idUsuario').value,
+        idReportada: form.elements.namedItem('idReportada').value,
         idCategoria: form.elements.namedItem('idCategoria').value,
         pregunta: form.elements.namedItem('pregunta').value,
         opcion1: form.elements.namedItem('opcion1').value,
