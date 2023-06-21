@@ -8,9 +8,11 @@ function consultarAPI() {
                 var primeraPregunta = data.preguntas[0];
                 let contenedorCategoria = document.getElementById('contenedor-categoria')
             let botonJugar = document.getElementById("btn-jugar");
+                let trampita = document.getElementById("btn-trampita");
             if(botonJugar!=null){
                     botonJugar.classList.add('hidden');
             }
+            trampita.classList.remove('hidden');
             let contenedor = document.getElementById("contenedor-pregunta");
                 contenedorCategoria.classList.add('pregunta-container');
                 contenedorCategoria.classList.add('cuadro');
