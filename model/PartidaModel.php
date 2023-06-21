@@ -257,22 +257,22 @@ class PartidaModel
     }
 
     private function respondioATiempo($idPregunta, $idPartida){
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $inicio = $this->getTiempoDeJugada($idPregunta, $idPartida);
         $tiempoDeInicio = strtotime($inicio[0]["inicio"]);
-        $tiempoActual = time();
-
+        $tiempoActual = strtotime(date("H:i:s"));
         if (($tiempoActual - $tiempoDeInicio) > 10) {
             return false;
         } else {
             return true;
         }
-
     }
 
     private function getTiempoDeJugada($idPregunta, $idPartida){
         $query = "SELECT tiempo as 'inicio' from Jugada
                   WHERE idPregunta = '" .$idPregunta. "' AND idPartida = '". $idPartida ."';";
-        return $this->database->query($query);
+        $result =$this->database->query($query);
+        return $result;
     }
 }
 
