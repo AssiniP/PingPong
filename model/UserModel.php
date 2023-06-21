@@ -81,8 +81,8 @@ class UserModel {
     }
     public function enviarMail($mail) {
         include_once("vendor/SendEmail.php");
-
-        enviarMail($mail);
+        $json = ['mensaje' => enviarMail($mail)];
+        return json_encode($json);
     }
 
     public function validarMail($email){
