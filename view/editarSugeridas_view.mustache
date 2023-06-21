@@ -104,13 +104,13 @@ document.addEventListener('DOMContentLoaded', function() {
   var desaprobarBtn = document.getElementById('desaprobar');
   desaprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/eliminar');
+    enviarFormulario('http://localhost:80/editor/eliminarSugerida');
   });
 
   var aprobarBtn = document.getElementById('aprobar');
   aprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/addPregunta');
+    enviarFormulario('http://localhost:80/editor/guardarSugerida');
   });
 });
 

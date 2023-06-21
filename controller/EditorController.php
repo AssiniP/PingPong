@@ -36,10 +36,20 @@ class EditorController{
         }
         $this->renderer->render('editarReportadas',$data);
     }
+   /// ABM Preguntas
+    public function preguntas()
+    {
+        $data['preguntas'] = $this->editorModel->getQuestionsAPI();
+        $data["verCategoria"] = $this->editorModel->getAllCategoria();
+        if(isset($_GET["id"])) {
+            $data['editarPregunta'] = $this->editorModel->getQuestionIdAPI(intval($_GET["id"]));
+        }
+        $this->renderer->render('preguntas',$data);
+    }
 
-    public function eliminar() {
+    //Eliminar de pregunta_sugerida
+    public function eliminarSugerida() {
         header('Content-Type: application/json');
-        $api = new ApiPreguntas();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $jsonData = file_get_contents('php://input');
             if($jsonData!= null){
@@ -49,25 +59,26 @@ class EditorController{
         }
     }
 
-    public function addPregunta(){
+    //Guardar de pregunta_sugerida
+    public function guardarSugerida(){
         header('Content-Type: application/json');
-        $api = new ApiPreguntas();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $jsonData = file_get_contents('php://input');
             if($jsonData!= null){
                 $body = json_decode($jsonData);
-                $categoria = $api->getCategory($body->idCategoria);
-                $usuario = $api->getUsuarioByID($body->idUsuario);
-                if ($body->idUsuario == 0) {
-                    $usuario =$api->getUsuarioByID($this->editorModel->getIDUsuarioActual());
+                if ($body->idPregunta == 0) {
+                    $this->editorModel->addQuestion($body);
+                } else {
+                    $this->editorModel->editQuestionId($body);
                 }
-                $this->editorModel->delQuestionId($body->idPregunta);
-                $api->altaPregunta($body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$categoria['nombre'],$usuario['nick']);
+
+
             }
         }
     }
 
-    public function delPregunta(){
+    //Elimina de pregunta API
+    public function eliminarAPI(){
         header('Content-Type: application/json');
         $api = new ApiPreguntas();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -83,7 +94,9 @@ class EditorController{
         }
     }
 
-    public function delMotivo(){
+
+    //Guardar de pregunta API
+    public function guardarAPI(){
         header('Content-Type: application/json');
         $api = new ApiPreguntas();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -91,10 +104,20 @@ class EditorController{
             if($jsonData!= null){
                 $body = json_decode($jsonData);
                 $categoria = $api->getCategory($body->idCategoria);
+                if ($body->idUsuario == 0) {
+                    $usuario =$api->getUsuarioByID($this->editorModel->getIDUsuarioActual());
+                } else {
+                    $usuario = $api->getUsuarioByID($body->idUsuario);
+                }
                 //Elimina el reporte  de la pregunta
                 $this->editorModel->delReporteId($body->idReportada);
-                // Updatea la pregunta por si tuvo alguna correccion del reporte.
-                $api->modificarPregunta($body->idPregunta,$body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$categoria['nombre']);
+                if ($body->idPregunta == 0){
+                    // Da de alta
+                    $api->altaPregunta($body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$categoria['nombre'],$usuario['nick']);
+                } else {
+                    // Updatea la pregunta por si tuvo alguna correccion.
+                    $api->modificarPregunta($body->idPregunta,$body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$categoria['nombre']);
+                }
             }
         }
     }
