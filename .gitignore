@@ -1,4 +1,4 @@
 # configuraciones locales #
 *.ini
-config/
-/config
+/config/**
+
