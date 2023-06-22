@@ -456,24 +456,6 @@ footer {
     border-color: #4FB04F;
 }
 
-/* Admin Panel */
-.admin-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 2rem auto;
-    background-color: rgb(236, 234, 234);
-    width: 80%;
-    height: 100vh;
-    border-radius: 5px;
-}
-
-.admin-container p {
-    font-weight: 700;
-}
-
-.admin-card{
-    margin: 0 1rem;
-}
 
 /** Pop Up **/
 .show {
@@ -523,5 +505,56 @@ footer {
     color: #fff;
     font-size: 14px;
     padding: 10px 25px;
+}
+
+/* Admin Panel */
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;
+    background-color: rgb(236, 234, 234);
+    width: 80%;
+    height: auto;
+    border-radius: 5px;
+    padding-bottom: 2rem;
+}
+
+.admin-container p {
+    font-weight: 700;
+}
+
+.admin-card {
+    display: flex;
+    justify-content: center;
+}
+
+.admin-row {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+    gap: 2rem;
+}
+.admin-row:nth-child(2) {
+    justify-content: left;
+    margin-left: 12rem;
+}
+
+.select-container select {
+    background-color: #ffffff;
+    color: black;
+    padding: 12px;
+    width: 30rem;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+}
+
+.grafico-container {
+    background-color: rgb(214, 179, 179);
+    width: 25rem;
+    height: 100%;
 }
 

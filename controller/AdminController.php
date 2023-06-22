@@ -28,7 +28,7 @@ class AdminController
         $data['partidasNuevasDesdeFecha'] = $arrayDatos['arrayDatos']['partidasNuevasDesdeFecha'];
         $data['nombreMes'] = $arrayDatos['arrayDatos']['nombreMes'];
         $data['imagePath'] = $arrayDatos['arrayDatos']['imagePath'];
-
+        $data['mesesList'] = $arrayDatos['arrayDatos']['mesesList'];
         
 
         $this->renderer->render('admin', $data);
