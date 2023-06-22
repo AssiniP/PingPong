@@ -113,31 +113,15 @@ document.addEventListener('DOMContentLoaded', function() {
    var desaprobarBtn = document.getElementById('desaprobar');
   desaprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/delPregunta');
+    enviarFormulario('http://localhost:80/editor/eliminarAPI');
   });
 
   var aprobarBtn = document.getElementById('aprobar');
   aprobarBtn.addEventListener('click', function(event) {
     event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/delMotivo');
+    enviarFormulario('http://localhost:80/editor/guardarAPI');
   });
 });
-
-document.addEventListener('DOMContentLoaded', function() {
-
-  var desaprobarBtn = document.getElementById('desaprobar');
-  desaprobarBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/delPregunta');
-  });
-
-  var aprobarBtn = document.getElementById('aprobar');
-  aprobarBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    enviarFormulario('http://localhost:80/editor/delMotivo');
-  });
-});
-
 
 function enviarFormulario(url) {
   var form = document.forms.namedItem('preguntaForm');

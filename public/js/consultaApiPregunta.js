@@ -4,7 +4,6 @@ function consultarAPI() {
     fetch('http://localhost:80/api/list?usuario=' + usuario.innerText)
         .then(response => response.json())
         .then(data => {
-                console.log(data)
                 var primeraPregunta = data.preguntas[0];
                 let contenedorCategoria = document.getElementById('contenedor-categoria')
             let botonJugar = document.getElementById("btn-jugar");
