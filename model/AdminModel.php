@@ -56,6 +56,24 @@ class AdminModel
         return $nombreMes;
     }
 
+    public function getMesesList()
+    {
+        $query = "SELECT nombre FROM Meses";
+        $result = $this->database->query($query);
+
+        if ($result && $result instanceof mysqli_result && $result->num_rows > 0) {
+            $mesesArray = array();
+            while ($row = $result->fetch_assoc()) {
+                $mesesArray[] = $row['nombre'];
+            }
+
+            return $mesesArray;
+        } else {
+            // Manejar el caso en que la consulta no devuelva resultados
+            return array(); // O devuelve un valor predeterminado, según tu lógica
+        }
+    }
+
     public function getTotalUsuarios()
     {
         $query = "SELECT COUNT(*) AS TotalUsuarios
@@ -176,7 +194,6 @@ class AdminModel
             }
         }
         $graph->Stroke($imagePath);
-        var_dump($imagePath);
         return $imagePath;
     }
 
@@ -199,6 +216,7 @@ class AdminModel
         $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual());
         $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
         $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
+        $mesesList = $this->getMesesList();
 
         $arrayDatos["totalUsuarios"] = $totalUsuarios;
         $arrayDatos["totalJugadores"] = $totalJugadores;
@@ -214,6 +232,7 @@ class AdminModel
         $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
         $arrayDatos["nombreMes"] = $nombreMes;
         $arrayDatos['imagePath'] = $this->crearGraficoBarras();
+        $arrayDatos["mesesList"] = $mesesList;
 
         return array('arrayDatos' => $arrayDatos);
     }
