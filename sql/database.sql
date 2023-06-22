@@ -62,8 +62,12 @@ CREATE TABLE Pregunta (
     respuestaCorrecta varchar(200) not null,
     dificultad varchar(150) default 'FACIL',
     estadoReportada boolean default false,
-    FOREIGN KEY (idCategoria) REFERENCES Categoria (id),
+    CONSTRAINT fk_idCategoria
+    FOREIGN KEY (idCategoria) REFERENCES Categoria (id)
+    ON DELETE CASCADE,
+    CONSTRAINT fk_idUsuario
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Jugada (
@@ -71,8 +75,12 @@ CREATE TABLE Jugada (
     idPregunta INT NOT NULL,
     idPartida INT NOT NULL,
     tiempo TIME NOT NULL,
-    FOREIGN KEY (idPartida) REFERENCES Partida (id),
-    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
+    CONSTRAINT fk_idPregunta
+        FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
+            ON DELETE CASCADE,
+    CONSTRAINT fk_idPartida
+        FOREIGN KEY (idPartida) REFERENCES pregunta (id)
+            ON DELETE CASCADE,
     respondidoCorrectamente BOOLEAN DEFAULT FALSE
 );
 
@@ -82,8 +90,12 @@ CREATE TABLE PreguntaReportada (
     idUsuario INT NOT NULL,
     fecha DATE NOT NULL,
     motivo VARCHAR(255) NOT NULL,
-    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    CONSTRAINT fk_idPregunta
+        FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
+            ON DELETE CASCADE,
+    CONSTRAINT fk_idUsuario
+        FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE usuario_pregunta (
@@ -92,8 +104,12 @@ CREATE TABLE usuario_pregunta (
     ocurrencias int default 0,
     aciertos int default 0,
     PRIMARY KEY (idUsuario, idPregunta),
-    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    CONSTRAINT fk_idPregunta
+        FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
+            ON DELETE CASCADE,
+    CONSTRAINT fk_idUsuario
+        FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+            ON DELETE CASCADE
 );
 
 CREATE TABLE Pregunta_sugerida (
@@ -105,16 +121,24 @@ CREATE TABLE Pregunta_sugerida (
     opcion2 VARCHAR(200) NOT NULL,
     opcion3 VARCHAR(200) not null,
     respuestaCorrecta varchar(200) not null,
-    FOREIGN KEY (idCategoria) REFERENCES Categoria (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    CONSTRAINT fk_idCategoria
+        FOREIGN KEY (idCategoria) REFERENCES Categoria (id)
+            ON DELETE CASCADE,
+    CONSTRAINT fk_idUsuario
+        FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+            ON DELETE CASCADE
 );
 
 CREATE TABLE aparicion_pregunta (
     idUsuario INT not null,
     idPregunta INT not null,
     PRIMARY KEY (idUsuario, idPregunta),
-    FOREIGN KEY (idPregunta) REFERENCES Pregunta (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    CONSTRAINT fk_idPregunta
+        FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
+            ON DELETE CASCADE,
+    CONSTRAINT fk_idUsuario
+        FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+            ON DELETE CASCADE
 );
 
 CREATE TABLE Trampita (
@@ -122,7 +146,9 @@ CREATE TABLE Trampita (
     idUsuario INT NOT NULL,
     fechaCompra DATE NOT NULL,
     utilizada BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    CONSTRAINT fk_idUsuario
+        FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+            ON DELETE CASCADE
 );
 
 CREATE TABLE paises (
