@@ -1,19 +1,26 @@
 {{> header}}
 <div class="flex flex-col justify-center items-center justify-items-center">
- {{#usuario}}
- <div class="lobby-container mt-10">
-    <div class="lobby-user ">
-        <h1 class="text-white text-3xl mb-20 uppercase">Historial <span class="ml-5 text-yellow-400">{{nickName}}</span></h1>
-        <h2 class="text-white text-3xl mb-20">{{puntaje}} Puntos</h2>
-        <a href="/user/mostrar" ><img src="/public/foto-perfil/{{imagenPerfil}}" class="w-16 h-16 rounded-full border border-yellow-400"></a>
-    </div>
-    <div class="linea"></div>
-    <div class="lobby-buttons text-center">
-        {{#historial}}
-             <p class="text-gray-200 text-3xl">{{fecha}} {{puntaje}} </p> <br>
-        {{/historial}}
+    {{#usuario}}
+        <div class="lobby-container md:mt-10 mt-5">
+            <div class="lobby-user">
+                <h1 class="text-gray-500 text-3xl md:mb-20 mb-10 uppercase">Historial <span class="ml-5 text-orange-800">{{nickName}}</span></h1>
+                <h2 class="text-gray-500 text-3xl md:mb-20 mb-10">{{puntaje}} Puntos</h2>
+                <a href="/user/mostrar" ><img src="/public/foto-perfil/{{imagenPerfil}}" class="w-16 h-16 rounded-full border border-yellow-400"></a>
+            </div>
+            <div class="linea"></div>
 
-    </div>
+            {{#historial}}
+                <div class="flex flex-row p-5 bg-orange-500 rounded-[200px] m-2 justify-center items-center justify-content-center">
+                   <p class="text-lg font-bold text-white pl-[25px]"> {{fecha}} </p>
+                    <p class="text-2xl md:ml-[200px] ml-[50px] text-black p-2 bg-orange-200 rounded-full w-[50px] h-[50px] text-center">{{puntaje}}</p>
+            </div>
+            {{/historial}}
+        </div>
+    {{/usuario}}
 </div>
- {{/usuario}}
-</div>
+<script>
+    window.addEventListener("load", function() {
+        var body = document.body;
+        body.classList.add('body-lobby');
+    });
+</script>

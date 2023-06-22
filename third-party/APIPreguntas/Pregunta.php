@@ -39,7 +39,7 @@ class Pregunta extends MySQLMethods
 
     function borrarPregunta($id)
     {
-        $query = "DELETE FROM pregunta WHERE id = :id";
+        $query = "DELETE from pregunta WHERE pregunta.id = :id";
         $stmt = $this->connect()->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
