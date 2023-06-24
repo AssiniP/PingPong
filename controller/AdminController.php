@@ -29,6 +29,10 @@ class AdminController
         $data['nombreMes'] = $arrayDatos['arrayDatos']['nombreMes'];
         $data['imagePath'] = $arrayDatos['arrayDatos']['imagePath'];
         $data['mesesList'] = $arrayDatos['arrayDatos']['mesesList'];
+
+        $data['balanceTrampitas'] = $arrayDatos['arrayDatos']['balanceTrampitas'];
+        $data['cantidadTrampitas'] = $arrayDatos['arrayDatos']['cantidadTrampitas'];
+        $data['cantidadPorPais'] = $arrayDatos['arrayDatos']['cantidadPorPais'];
         
 
         $this->renderer->render('admin', $data);

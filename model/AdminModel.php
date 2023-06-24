@@ -153,7 +153,12 @@ class AdminModel
 
     public function getCantidadUsuariosPorPais()
     {
-        // se requiere la tabla país
+        $query = "SELECT p.nombre AS pais, COUNT(u.id) AS cantidadUsuarios
+              FROM usuario u
+              INNER JOIN paises p ON u.pais = p.nombre
+              GROUP BY p.nombre";
+        $result = $this->database->query($query);
+        return $result;
     }
 
     public function getCantidadUsuariosPorSexo()
@@ -164,6 +169,23 @@ class AdminModel
                   GROUP BY g.nombre";
         $result = $this->database->query($query);
         return $result;
+    }
+    public function getBalanceTrampitasPorUsuario()
+    {
+        $query = "SELECT u.id, u.nickname, COUNT(t.id) AS balanceTrampitas
+              FROM Usuario u
+              LEFT JOIN Trampita t ON u.id = t.idUsuario
+              GROUP BY u.id, u.nickname";
+        $result = $this->database->query($query);
+        return $result[0]['balanceTrampitas'];
+    }
+
+    public function getCantidadTrampitas()
+    {
+        $query = "SELECT COUNT(*) AS cantidadTrampitas
+              FROM Trampita";
+        $result = $this->database->query($query);
+        return $result[0]['cantidadTrampitas'];
     }
 
     public function crearGraficoBarras()
@@ -217,6 +239,9 @@ class AdminModel
         $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
         $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
         $mesesList = $this->getMesesList();
+        $balanceTrampitas = $this->getBalanceTrampitasPorUsuario();
+        $cantidadTrampitas = $this->getCantidadTrampitas();
+        $cantidadUsuarioPais = $this->getCantidadUsuariosPorPais();
 
         $arrayDatos["totalUsuarios"] = $totalUsuarios;
         $arrayDatos["totalJugadores"] = $totalJugadores;
@@ -233,6 +258,10 @@ class AdminModel
         $arrayDatos["nombreMes"] = $nombreMes;
         $arrayDatos['imagePath'] = $this->crearGraficoBarras();
         $arrayDatos["mesesList"] = $mesesList;
+        $arrayDatos["balanceTrampitas"] = $balanceTrampitas;
+        $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
+        $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
+        var_dump($arrayDatos["cantidadTrampitas"]);
 
         return array('arrayDatos' => $arrayDatos);
     }
