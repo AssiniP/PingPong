@@ -1,31 +1,28 @@
 {{> header}}
-<div class="flex flex-row items-center justify-center">
-    <div class="clock text-gray-200 text-5xl text-center">
-        <p id="numero" class="hidden">10</p>
+<p id="numero" class="p-2 h-auto w-auto bg-black rounded-full fixed text-white md:text-xl text-sm hidden md:left-[50%] left-[45%] mt-2">10</p>
+<div class="grid grid-cols-1 items-center justify-center md:w-[80%] w-full h-full justify-items-center content-center m-auto md:mt-20 mt-10">
+    {{#partidas}}
+        <p class="m-5 hidden">Fecha: {{fecha}}</p>
+        <p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
+        <p id="jugando">{{jugando}}</p>
+    {{/partidas}}
+    <a class="boton-comenzar lg:ml-[40%] sm:ml-[40%] md:ml-[10%] rounded-[15px] m-auto" id="btn-jugar"   onclick="consultarAPI()"><p></p></a>
+    <div class="w-full md:w-[75%] grid grid-cols-1 justify-center content-center m-2">
+        <div class="w-full h-auto rounded-2xl text-center" id="contenedor-categoria" >
+
+        <p id="categoria" class="md:text-6xl text-sm"></p>
     </div>
-    <div class="flex flex-col items-center justify-center m-12 text-white">
-{{#partidas}}
-<p class="m-5 hidden">Fecha: {{fecha}}</p>
-<p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
-{{/partidas}}
-    <a class="bg-yellow-500 border border-back text-black text-5xl rounded p-5 m-5" id="btn-jugar" onclick="consultarAPI()">JUGAR</a>
-    <div id="contenedor-categoria">
-        <p id="categoria" class="text-6xl"></p>
+    <div class="w-full h-auto grid grid-cols-1 justify-center content-center p-3 mt-2 rounded-2xl" id="contenedor-pregunta">
+        <p id="pregunta" class="md:text-4xl text-sm font-bold text-white text-center"></p>
+        <p id="idPregunta" class="hidden"></p>
     </div>
-        <div id="contenedor-pregunta">
-            <p id="pregunta" class="text-6xl"></p>
-            <p id="idPregunta" class="hidden"></p>
+        <div class="grid grid-cols-2 md:gap-5 gap-3 justify-center items-center justify-items-center content-center text-white">
+            <a id="opcion1" class="w-auto h-auto rounded-[50px] text-center md:text-2xl text-sm md:p-5 m-2"></a>
+            <a id="opcion2" class="w-auto h-auto rounded-[50px] text-center md:text-2xl text-sm md:p-5 m-2"></a>
+            <a id="opcion3" class="w-auto h-auto rounded-[50px] text-center md:text-2xl text-sm md:p-5 m-2"></a>
+            <a id="opcion4" class="w-auto h-auto rounded-[50px] text-center md:text-2xl text-sm md:p-5 m-2"></a>
         </div>
-    <div class="opciones-container">
-        <div class="opcion-col">
-            <a id="opcion1" ></a>
-            <a id="opcion2" ></a>
-        </div>
-        <div class="opcion-col">
-            <a id="opcion3" ></a>
-            <a id="opcion4" ></a>
-        </div>
-    </div>
+
     </div>
 </div>
 <button id="btn-trampita" onClick="usarTrampita()" class="hidden">Trampitas</button>
@@ -36,3 +33,9 @@
 <script src="/public/js/consultaApiPregunta.js"></script>
 <script src="/public/js/trampita.js"></script>
 <script src="/public/js/agregarTerminarPartida.js"></script>
+<script>
+    window.addEventListener("load", function() {
+        var body = document.body;
+        body.classList.add('body-lobby');
+    });
+</script>

@@ -23,7 +23,7 @@ class PartidaController
     {
         $partidas = $this->partidaModel->getLastPartida($this->partidaModel->getIDUsuarioActual());
         $data = array('partidas' => $partidas);
-        $this->renderer->render('jugada', $data);
+        $this->renderer->render('nuevaPartida', $data);
     }
 
     public function empezarJugada(){
