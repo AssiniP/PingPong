@@ -46,6 +46,12 @@ class PartidaController
         $this->renderer->render('respuesta', $data);
     }
 
+    public function terminarPartida(){
+        $url = $_GET['url'];
+        $_SESSION['jugando'] = false;
+        header('location:' . $url);
+    }
+
     public function reportarPregunta(){
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
