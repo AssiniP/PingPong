@@ -180,7 +180,6 @@ header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 10px;
     }
 
     .header-nav a {
@@ -220,9 +219,10 @@ footer {
 
 .body-lobby {
     background-image: url("/public/img/fondo_pingpong.png");
-    background-size: 100%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed;
 }
 
 .lobby-container {
@@ -307,8 +307,6 @@ footer {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: auto;
-    height: 75vh;
 }
 
 .pregunta-container {
@@ -377,21 +375,6 @@ footer {
     padding: 5px;
 }
 
-.number {
-    background-color: black;
-    border: solid yellow 2px;
-    border-radius: 100%;
-    color: gray;
-    width: 150px;
-    height: 150px;
-    padding: 10px;
-    text-align: center;
-    display: flex;
-    justify-items: center;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-}
 
 .material-symbols-outlined {
     font-variation-settings:
@@ -548,7 +531,7 @@ footer {
     font-size: 20px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
     -webkit-appearance: button;
-    appearance: button;
+    appearance: inherit;
     outline: none;
 }
 
@@ -556,5 +539,20 @@ footer {
     background-color: rgb(214, 179, 179);
     width: 25rem;
     height: 100%;
+}
+
+.boton-comenzar{
+background-image: url("/public/img/boton-comenza.png");
+    display: block;
+    height: 100px;
+    width: 50%;
+    font-size: 1.7rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+}
+
+.boton-comenzar:hover{
+    background-image: url("/public/img/boton-comenza-hover.png");
 }
 

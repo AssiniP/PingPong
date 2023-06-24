@@ -10,7 +10,6 @@ window.addEventListener('load', () => {
                 const abmPreguntasLink = document.createElement('a');
                 abmPreguntasLink.href = '/admin/list/';
                 abmPreguntasLink.textContent = 'Administrar';
-                abmPreguntasLink.classList.add('header-link');
 
                 const rolUsuarioLink = document.createElement('a');
                 rolUsuarioLink.href = '/admin/users/';
@@ -26,7 +25,6 @@ window.addEventListener('load', () => {
                     const abmPreguntasLink = document.createElement('a');
                     abmPreguntasLink.href = '/admin/list/';
                     abmPreguntasLink.innerHTML = '<span class="material-symbols-outlined">analytics</span>';
-                    abmPreguntasLink.classList.add('header-link');
 
                     const rolUsuarioLink = document.createElement('a');
                     rolUsuarioLink.href = '/admin/users/';
@@ -45,7 +43,6 @@ window.addEventListener('load', () => {
                 const abmPreguntasLink = document.createElement('a');
                 abmPreguntasLink.href = '/editor/list/';
                 abmPreguntasLink.textContent = 'Editar preguntas';
-                abmPreguntasLink.classList.add('header-link');
 
                 // Agregar enlace al contenedor de enlaces adicionales
                 const additionalLinksContainer = document.getElementById('additional-links');
@@ -55,7 +52,6 @@ window.addEventListener('load', () => {
                     const abmPreguntasLink = document.createElement('a');
                     abmPreguntasLink.href = '/editor/list/';
                     abmPreguntasLink.innerHTML = '<span class="material-symbols-sharp">edit</span>';
-                    abmPreguntasLink.classList.add('header-link');
 
                     const additionalLinksContainer = document.getElementById('additional-links');
                     additionalLinksContainer.appendChild(abmPreguntasLink);
@@ -67,23 +63,21 @@ window.addEventListener('load', () => {
             if (data.logueado && anchoNavegador>700) {
                 const logoutLink = document.createElement('a');
                 logoutLink.href = '/login/logout';
-                logoutLink.innerHTML = '<div class="text-4xl"><i class="fa-solid fa-right-from-bracket"></i></div>';
-                logoutLink.classList.add('header-link');
+                logoutLink.innerHTML = '<div class="text-xl"><i class="fa-solid fa-right-from-bracket"></i></div>';
 
                 const sugerirLink = document.createElement('a');
                 sugerirLink.href = '/sugerir/list';
                 sugerirLink.innerHTML = 'Fabrica de Preguntas';
-                sugerirLink.classList.add('header-link');
+
 
                 const rankingLink = document.createElement('a');
                 rankingLink.href = '/lobby/ranking';
                 rankingLink.innerHTML = 'Ranking';
-                rankingLink.classList.add('header-link');
+
 
                 const historialLink = document.createElement('a');
                 historialLink.href = '/lobby/historial';
                 historialLink.innerHTML = 'Historial';
-                historialLink.classList.add('header-link');
 
                 const additionalLinksContainer = document.getElementById('additional-links');
                 additionalLinksContainer.appendChild(sugerirLink);
@@ -94,21 +88,21 @@ window.addEventListener('load', () => {
                 const logoutLink = document.createElement('a');
                 logoutLink.href = '/login/logout';
                 logoutLink.innerHTML = '<div class="text-2xl"><i class="fa-solid fa-right-from-bracket"></i></div>';
-                logoutLink.classList.add('header-link');
+
                 const sugerirLink = document.createElement('a');
                 sugerirLink.href = '/sugerir/list';
                 sugerirLink.innerHTML = '<span class="material-symbols-outlined">factory</span>';
-                sugerirLink.classList.add('header-link');
+
 
                 const rankingLink = document.createElement('a');
                 rankingLink.href = '/lobby/ranking';
                 rankingLink.innerHTML = '<span class="material-symbols-sharp">rewarded_ads</span>';
-                rankingLink.classList.add('header-link');
+
 
                 const historialLink = document.createElement('a');
                 historialLink.href = '/lobby/historial';
                 historialLink.innerHTML = '<span class="material-symbols-sharp">calendar_month</span>';
-                historialLink.classList.add('header-link');
+
 
                 const additionalLinksContainer = document.getElementById('additional-links');
                 additionalLinksContainer.appendChild(sugerirLink);
