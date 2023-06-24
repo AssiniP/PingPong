@@ -1,5 +1,5 @@
 {{> header}}
-<div class="flex flex-col justify-center items-center justify-items-center">
+<div class="flex flex-col justify-center items-center justify-items-center w-full ">
     <button id="btn-reportar-pregunta" onclick="mostrarPopup()" class="bg-green-400 p-2 rounded mt-10">Reportar Pregunta</button>
     <div id="popup-reporte" class="pop-up">
         <div class="modal">
@@ -8,9 +8,9 @@
             <button onclick="enviarReporte()">Enviar Reporte</button>
         </div>
     </div>
-    <div class="partida">
+    <div class="partida w-full mt-5">
 
-        <div class="pregunta-container cuadro text-center">
+        <div class="pregunta-container cuadro text-center md:text-xl text-sm">
             {{#pregunta}}
                 <p>{{pregunta}}</p>
             {{/pregunta}}
@@ -27,13 +27,13 @@
             {{/correcto}}
         </div>
 
-        <div class="pregunta-container cuadro text-center">
+        <div class="pregunta-container cuadro text-center md:text-xl text-sm h-auto w-auto p-[25px]">
             {{#mensaje}}
                 <p>{{mensaje}}</p>
             {{/mensaje}}
         </div>
 
-        <div class="pregunta-container cuadro text-center">
+        <div class="pregunta-container cuadro text-center md:text-xl text-sm h-auto w-auto  p-[25px]">
             {{#puntaje}}
                 <p>Puntaje: {{puntaje}}</p>
             {{/puntaje}}
@@ -47,5 +47,9 @@
 </div>
 <script src="/public/js/agregarTerminarPartida.js"></script>
 <script src="/public/js/reportarPregunta.js"></script>
+<script>  window.addEventListener("load", function() {
+    var body = document.body;
+    body.classList.add('body-lobby');
+});</script>
 </body>
 {{>footer}}
