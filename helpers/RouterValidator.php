@@ -81,6 +81,12 @@ class RouterValidator{
                     return true;
                 }
                 return false;
+            case 'jugada':
+            case 'nuevaPartida':
+                if($this->userIsLogged() && $this->userIsPlaying()){
+                    return true;
+                }
+                return false;
             default:
                 return true;
         }

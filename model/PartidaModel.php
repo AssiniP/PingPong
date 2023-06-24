@@ -225,9 +225,8 @@ class PartidaModel
             /* en la tabla usuario_pregunta se requiere eliminar el delete posterior para q las estadisticas funcionen*/
         } else {
             $arrayDatos['mensaje'] = "FIN DEL JUEGO. LA RESPUESTA ERA: " .$respuestaCorrecta[0]['respuestaCorrecta'];
-            $arrayDatos['url'] = "/lobby/list";
+            $arrayDatos['url'] = "/partida/terminarPartida?url=/lobby/list";
             $arrayDatos['texto'] = "Volver al Lobby";
-            $_SESSION['jugando'] = false;
             $this->updateJugada($preguntaId, $idPartida, 0);
             $this->calculoDificultadDePregunta($preguntaId);
             $this->calculoHabilidadDelUser($usuarioId);
