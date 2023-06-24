@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
 
                     const rolUsuarioLink = document.createElement('a');
                     rolUsuarioLink.href = '/admin/users/';
-                    rolUsuarioLink.textContent = 'Rol Usuario';
+                    rolUsuarioLink.textContent = 'Rol';
                     rolUsuarioLink.classList.add('header-link');
 
                     // Agregar enlace al contenedor de enlaces adicionales
