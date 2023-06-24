@@ -17,8 +17,8 @@
         <a href="/partida/list" class="boton-jugar"></a>
     </div>
     {{#usuarioJuego}}
-        <!-- Hay que agregar el link para que compre :P-->
-        <a href="#" class="trampita text-black text-3xl text-center pt-2 md:mb-20 mb-2 hover:text-white">{{trampita}}</a>
+        <a href="" class="trampita text-black text-3xl text-center pt-2 md:mb-20 mb-2 hover:text-white"
+           id="comprar-trampita">{{trampita}}</a>
     {{/usuarioJuego}}
 </div>
 </div>
@@ -27,5 +27,25 @@
     window.addEventListener("load", function() {
         var body = document.body;
         body.classList.add('body-lobby');
+    });
+    const enlaceTrampita = document.getElementById('comprar-trampita');
+
+    enlaceTrampita.addEventListener('click', () => {
+        fetch('/partida/comprarTrampita', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+                .then((response) => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        console.error('Error al comprar la trampita');
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
     });
 </script>

@@ -47,6 +47,24 @@ function mostrarPopupComprarTrampita() {
     popup.style.display = "block";
 }
 
-function comprarTrampita() {
-    console.log('Trampita comprada');
-}
+const comprarBtn = document.getElementById('comprarTrampita-btn');
+comprarBtn.addEventListener('click', () => {
+    // Realiza la solicitud AJAX utilizando fetch
+    fetch('/partida/comprarTrampita', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            if (response.ok) {
+                // Si la compra fue exitosa, llama a la función para usar la trampita
+                usarTrampita();
+            } else {
+                console.error('Error al comprar la trampita');
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+});

@@ -329,6 +329,12 @@ class PartidaModel
         $this->database->query($query);
     }
 
+    public function comprarTrampita(){
+        $idUsuario = $this->getIDUsuarioActual();
+        $query = "INSERT INTO trampita (idUsuario, fechaCompra, utilizada) VALUES ('".$idUsuario."', NOW(), 0);";
+        $this->database->query($query);
+    }
+
     private function respondioATiempo($idPregunta, $idPartida){
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $inicio = $this->getTiempoDeJugada($idPregunta, $idPartida);
