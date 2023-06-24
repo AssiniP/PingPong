@@ -6,15 +6,21 @@ window.addEventListener('load', () => {
             console.log(data.logueado);
             var anchoNavegador = window.innerWidth;
             if (data.rol === 'Administrador' && anchoNavegador>700) { // Comparar con el string 'Editor'
-                // Generar enlace para ABM de preguntas
+                // Generar enlace para Administrador
                 const abmPreguntasLink = document.createElement('a');
                 abmPreguntasLink.href = '/admin/list/';
                 abmPreguntasLink.textContent = 'Administrar';
                 abmPreguntasLink.classList.add('header-link');
 
+                const rolUsuarioLink = document.createElement('a');
+                rolUsuarioLink.href = '/admin/users/';
+                rolUsuarioLink.textContent = 'Modificar Rol';
+                rolUsuarioLink.classList.add('header-link');
+
                 // Agregar enlace al contenedor de enlaces adicionales
                 const additionalLinksContainer = document.getElementById('additional-links');
                 additionalLinksContainer.appendChild(abmPreguntasLink);
+                additionalLinksContainer.appendChild(rolUsuarioLink);
             }else {
                 if(data.rol === 'Administrador'){
                     const abmPreguntasLink = document.createElement('a');
@@ -22,9 +28,15 @@ window.addEventListener('load', () => {
                     abmPreguntasLink.innerHTML = '<span class="material-symbols-outlined">analytics</span>';
                     abmPreguntasLink.classList.add('header-link');
 
+                    const rolUsuarioLink = document.createElement('a');
+                    rolUsuarioLink.href = '/admin/users/';
+                    rolUsuarioLink.textContent = 'Modificar Rol';
+                    rolUsuarioLink.classList.add('header-link');
+
                     // Agregar enlace al contenedor de enlaces adicionales
                     const additionalLinksContainer = document.getElementById('additional-links');
                     additionalLinksContainer.appendChild(abmPreguntasLink);
+                    additionalLinksContainer.appendChild(rolUsuarioLink);
                 }
             }
 

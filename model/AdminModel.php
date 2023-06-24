@@ -25,6 +25,28 @@ class AdminModel
         return $user[0]['id'];
     }
 
+    public function getAllUsers()
+    {
+        $query = "select u.*, G.nombre genero , r.rol  from usuario U, genero G, rol r  where U.idGenero =G.id and u.idRol =r.id";
+        return $this->database->query($query);
+    }
+
+    public function getUsersId($idUsuario)
+    {
+        $query = "select u.*, G.nombre genero , r.rol  from usuario U, genero G, rol r  where U.idGenero =G.id and u.idRol =r.id and u.id=".$idUsuario;
+        return $this->database->query($query);
+    }
+
+    public function upateRolNickName($nickName,$idRol)
+    {
+        $query = "update usuario set idRol=".$idRol."  where nickName like '".$nickName."'";
+        return $this->database->query($query);
+    }
+    public function getAllRols()
+    {
+        $query = "select *  from rol";
+        return $this->database->query($query);
+    }
     public function getDiaUnoMesAnterior()
     {
         $currentDate = new DateTime();
