@@ -326,7 +326,6 @@ class AdminModel
         return $imagePath;
     }
 
-
     public function paisesGrafico($filterDate){
         $usuariosPorPais = $this->getCantidadUsuariosPorPais($filterDate);
 
@@ -441,7 +440,6 @@ class AdminModel
         $graph->Stroke($imagePath);
         return $imagePath;
     }
-
 
     public function adminModelMethodsTest()
     {
