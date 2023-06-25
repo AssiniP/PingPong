@@ -517,10 +517,6 @@ footer {
     padding-top: 2rem;
     gap: 2rem;
 }
-.admin-row:nth-child(2) {
-    justify-content: left;
-    margin-left: 12rem;
-}
 
 .select-container select {
     background-color: #ffffff;
@@ -535,10 +531,38 @@ footer {
     outline: none;
 }
 
+.admin-form input:first-of-type{
+    background-color: #ffffff;
+    color: black;
+    padding: 12px;
+    width: 30rem;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+    -webkit-appearance: button;
+    appearance: inherit;
+    outline: none;
+}
+
+.admin-form:nth-child(1){
+    background-color: #ffffff;
+    color: black;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+    -webkit-appearance: button;
+    appearance: inherit;
+    outline: none;
+}
+
 .grafico-container {
     background-color: rgb(214, 179, 179);
     width: 25rem;
     height: 100%;
+}
+
+.admin-row h1{
+    font-weight: 700;
+    font-size: 2rem;
 }
 
 .boton-comenzar{
