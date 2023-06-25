@@ -25,6 +25,28 @@ class AdminModel
         return $user[0]['id'];
     }
 
+    public function getAllUsers()
+    {
+        $query = "select u.*, G.nombre genero , r.rol  from usuario U, genero G, rol r  where U.idGenero =G.id and u.idRol =r.id";
+        return $this->database->query($query);
+    }
+
+    public function getUsersId($idUsuario)
+    {
+        $query = "select u.*, G.nombre genero , r.rol  from usuario U, genero G, rol r  where U.idGenero =G.id and u.idRol =r.id and u.id=".$idUsuario;
+        return $this->database->query($query);
+    }
+
+    public function upateRolNickName($nickName,$idRol)
+    {
+        $query = "update usuario set idRol=".$idRol."  where nickName like '".$nickName."'";
+        return $this->database->query($query);
+    }
+    public function getAllRols()
+    {
+        $query = "select *  from rol";
+        return $this->database->query($query);
+    }
     public function getDiaUnoMesAnterior()
     {
         $currentDate = new DateTime();
@@ -143,17 +165,22 @@ class AdminModel
 
     public function getPorcentajePreguntasAcertadasPorUsuario($idUsuario)
     {
-        $query = "SELECT ROUND((COUNT(up.aciertos) / (SELECT COUNT(*) FROM usuario_pregunta WHERE idUsuario = $idUsuario)) * 100, 1) AS porcentaje_acertadas
-                  FROM usuario_pregunta up
-                  INNER JOIN pregunta p ON up.idPregunta = p.id
-                  WHERE up.idUsuario = $idUsuario AND up.aciertos > 0";
+        $query = "SELECT COALESCE(ROUND((COUNT(up.aciertos) / NULLIF((SELECT COUNT(*) FROM usuario_pregunta WHERE idUsuario = $idUsuario), 0)) * 100, 1), 0) AS porcentaje_acertadas
+              FROM usuario_pregunta up
+              INNER JOIN pregunta p ON up.idPregunta = p.id
+              WHERE up.idUsuario = $idUsuario AND up.aciertos > 0";
         $result = $this->database->query($query);
         return $result[0]['porcentaje_acertadas'];
     }
 
     public function getCantidadUsuariosPorPais()
     {
-        // se requiere la tabla país
+        $query = "SELECT p.nombre AS pais, COUNT(u.id) AS cantidadUsuarios
+              FROM usuario u
+              INNER JOIN paises p ON u.pais = p.nombre
+              GROUP BY p.nombre";
+        $result = $this->database->query($query);
+        return $result;
     }
 
     public function getCantidadUsuariosPorSexo()
@@ -164,6 +191,23 @@ class AdminModel
                   GROUP BY g.nombre";
         $result = $this->database->query($query);
         return $result;
+    }
+    public function getBalanceTrampitasPorUsuario()
+    {
+        $query = "SELECT u.id, u.nickname, COUNT(t.id) AS balanceTrampitas
+              FROM Usuario u
+              LEFT JOIN Trampita t ON u.id = t.idUsuario
+              GROUP BY u.id, u.nickname";
+        $result = $this->database->query($query);
+        return $result[0]['balanceTrampitas'];
+    }
+
+    public function getCantidadTrampitas()
+    {
+        $query = "SELECT COUNT(*) AS cantidadTrampitas
+              FROM Trampita";
+        $result = $this->database->query($query);
+        return $result[0]['cantidadTrampitas'];
     }
 
     public function crearGraficoBarras()
@@ -183,8 +227,8 @@ class AdminModel
         $b1plot->SetFillGradient("#4B0082", "white", GRAD_LEFT_REFLECTION);
         $b1plot->SetWidth(45);
         $graph->title->Set("Bar Gradient(Left reflection)");
-        $imagePath = 'graficos/imagenes/grafico.png';
-        $directory = 'graficos/imagenes/';
+        $imagePath = 'public/graficos/imagenes/grafico.png';
+        $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -217,6 +261,9 @@ class AdminModel
         $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
         $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
         $mesesList = $this->getMesesList();
+        $balanceTrampitas = $this->getBalanceTrampitasPorUsuario();
+        $cantidadTrampitas = $this->getCantidadTrampitas();
+        $cantidadUsuarioPais = $this->getCantidadUsuariosPorPais();
 
         $arrayDatos["totalUsuarios"] = $totalUsuarios;
         $arrayDatos["totalJugadores"] = $totalJugadores;
@@ -231,8 +278,11 @@ class AdminModel
         $arrayDatos["cantidadUsuariosPorSexo"] = $cantidadUsuariosPorSexo;
         $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
         $arrayDatos["nombreMes"] = $nombreMes;
-        $arrayDatos['imagePath'] = $this->crearGraficoBarras();
+        $arrayDatos['imagePath'] = "../../". $this->crearGraficoBarras();
         $arrayDatos["mesesList"] = $mesesList;
+        $arrayDatos["balanceTrampitas"] = $balanceTrampitas;
+        $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
+        $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
 
         return array('arrayDatos' => $arrayDatos);
     }

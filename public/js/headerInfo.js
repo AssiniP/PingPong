@@ -3,6 +3,7 @@ window.addEventListener('load', () => {
         .then(response => response.json())
         .then(data => {
             console.log(data.rol);
+
             console.log(data.rol === 'Administrador');
             if (data.rol === 'Administrador' ) {
                 let administrador = document.getElementById('estadisticas');
@@ -18,7 +19,6 @@ window.addEventListener('load', () => {
                 rol_lg.classList.remove("flex");
                 rol.classList.remove("hidden");
                 rol.classList.add("flex");
-
             }
 
             if (data.rol === 'Editor') { // Comparar con el string 'Editor'
