@@ -12,9 +12,8 @@ class AdminController
 
     public function list()
     {
-        $_SESSION['jugando'] = true;
-
-        $arrayDatos = $this->adminModel->adminModelMethodsTest();
+        $filterDate = $_GET['filter_date'] ?? date('Y-m-d');
+        $arrayDatos = $this->adminModel->adminModelMethodsTest($filterDate);
         $data['totalUsuarios'] = $arrayDatos['arrayDatos']['totalUsuarios'];
         $data['totalJugadores'] = $arrayDatos['arrayDatos']['totalJugadores'];
         $data['totalEditores'] = $arrayDatos['arrayDatos']['totalEditores'];
@@ -41,6 +40,11 @@ class AdminController
 
         
         $this->renderer->render('admin', $data);
+    }
+
+    public function generarPDF(){
+        $filterDate = $_GET['filter_date'] ?? date('Y-m-d');
+        $this->adminModel->generarPdf($filterDate);
     }
 
     public function users(){

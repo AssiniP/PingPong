@@ -4,8 +4,9 @@ require_once('jpgraph/src/jpgraph.php');
 require_once('jpgraph/src/jpgraph_bar.php');
 require_once('jpgraph/src/jpgraph_pie.php');
 require_once('jpgraph/src/jpgraph_line.php');
-require_once('jpgraph/src/jpgraph_line.php');
-
+require_once ('jpgraph/src/jpgraph_line.php');
+/*require_once (SITE_ROOT.'/third-party/pdfGenerator.php');
+require_once (SITE_ROOT.'/third-party/fpdf185/fpdf.php');*/
 
 class AdminModel
 {
@@ -200,7 +201,7 @@ class AdminModel
                 END AS categoria,
                 COUNT(u.id) AS cantidadUsuarios
               FROM usuario u
-              WHERE u.fecharegistro <= '$filterDate'
+              WHERE u.fecharegistro >= '$filterDate'
               GROUP BY categoria";
 
         $result = $this->database->query($query);
@@ -439,9 +440,8 @@ class AdminModel
         return $imagePath;
     }
 
-    public function adminModelMethodsTest()
+    public function adminModelMethodsTest($filterDate)
     {
-        $filterDate = $_GET['filter_date'] ?? date('Y-m-d');
 
         $arrayDatos = array();
 
@@ -480,6 +480,7 @@ class AdminModel
         $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
         $arrayDatos['filterDate'] = $filterDate;
+        //GRAFICOS FACHA
         $arrayDatos['usuariosNuevosGrafico'] = "../../" . $this->usuariosNuevosGrafico($filterDate);
         $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico($filterDate);
         $arrayDatos['paisesGrafico'] = "../../" . $this->paisesGrafico($filterDate);
@@ -492,4 +493,15 @@ class AdminModel
 
         return array('arrayDatos' => $arrayDatos);
     }
+
+    public function generarPdf($filterDate){
+        /*include_once( SITE_ROOT . '/third-party/pdfGenerator.php');
+        $pdf = new PDF();
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        $pdf->SetFont('Times','',12);
+        $pdfPath = SITE_ROOT . '/public/reportes/archivo.pdf';
+        return $pdf->Output($pdfPath, 'I');*/
+    }
 }
+
