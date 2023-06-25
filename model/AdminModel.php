@@ -339,6 +339,57 @@ class AdminModel
         return $imagePath;
     }
 
+    public function paisesGrafico($filterDate){
+        $usuariosPorPais = $this->getCantidadUsuariosPorPais($filterDate);
+
+        $paises = array();
+        $cantidadUsuarios = array();
+
+        foreach ($usuariosPorPais as $row) {
+            $paises[] = $row['pais'];
+            $cantidadUsuarios[] = $row['cantidadUsuarios'];
+        }
+        $datay = $cantidadUsuarios;
+
+        $graph = new Graph(220,300,'auto');
+        $graph->SetScale("textlin");
+
+        $theme_class=new UniversalTheme;
+        $graph->SetTheme($theme_class);
+        $graph->xaxis->SetTickLabels($paises);
+        $graph->Set90AndMargin(50,40,40,40);
+        $graph->img->SetAngle(90);
+
+        $graph->SetBox(false);
+
+        $graph->ygrid->Show(false);
+        $graph->ygrid->SetFill(false);
+        $graph->yaxis->HideLine(false);
+        $graph->yaxis->HideTicks(false,false);
+
+        $graph->SetBackgroundGradient('#00CED1', '#FFFFFF', GRAD_HOR, BGRAD_PLOT);
+
+        $b1plot = new BarPlot($datay);
+
+        $graph->Add($b1plot);
+
+        $b1plot->SetWeight(0);
+        $b1plot->SetFillGradient("#808000","#90EE90",GRAD_HOR);
+        $b1plot->SetWidth(17);
+
+        $imagePath = 'public/graficos/imagenes/paises.png';
+        $directory = 'public/graficos/imagenes/';
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        if (!is_dir($directory)) {
+            if (!mkdir($directory, 0777, true)) {
+                die('Error al crear el directorio');
+            }
+        }
+        $graph->Stroke($imagePath);
+    }
+
 
     public function adminModelMethodsTest()
     {
@@ -383,6 +434,8 @@ class AdminModel
 
         $arrayDatos['usuariosNuevosGrafico'] = "../../" . $this->usuariosNuevosGrafico();
         $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico($filterDate);
+
+        $arrayDatos['generosGrafico'] = "../../" . $this->paisesGrafico($filterDate);
 
         return array('arrayDatos' => $arrayDatos);
     }
