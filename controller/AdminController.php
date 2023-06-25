@@ -27,13 +27,12 @@ class AdminController
         $data['porcentajePreguntasAcertadasPorUsuario'] = $arrayDatos['arrayDatos']['porcentajePreguntasAcertadasPorUsuario'];
         $data['cantidadUsuariosPorSexo'] = $arrayDatos['arrayDatos']['cantidadUsuariosPorSexo'];
         $data['partidasNuevasDesdeFecha'] = $arrayDatos['arrayDatos']['partidasNuevasDesdeFecha'];
-
         $data['balanceTrampitas'] = $arrayDatos['arrayDatos']['balanceTrampitas'];
         $data['cantidadTrampitas'] = $arrayDatos['arrayDatos']['cantidadTrampitas'];
-        $data['cantidadPorPais'] = $arrayDatos['arrayDatos']['cantidadPorPais'];
-        
+        $data['cantidadPorPais'] = $arrayDatos['arrayDatos']['cantidadPorPais'];    
         $data['usuariosNuevosGrafico'] = $arrayDatos['arrayDatos']['usuariosNuevosGrafico'];
         $data['generosGrafico'] = $arrayDatos['arrayDatos']['generosGrafico'];
+        $data['filterDate'] = $arrayDatos['arrayDatos']['filterDate'];
 
         $this->renderer->render('admin', $data);
     }
