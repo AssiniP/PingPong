@@ -23,7 +23,7 @@ class PartidaController
     {
         $partidas = $this->partidaModel->getLastPartida($this->partidaModel->getIDUsuarioActual());
         $data = array('partidas' => $partidas);
-        $this->renderer->render('nuevaPartida', $data);
+        $this->renderer->render('siguientePartida', $data);
     }
 
     public function empezarJugada(){
@@ -83,5 +83,18 @@ class PartidaController
 
     public function comprarTrampita(){
         $this->partidaModel->comprarTrampita();
+    }
+
+    public function tiempo(){
+        $arrayDatos = $this->partidaModel->juego();
+        $data['mensaje'] = 'Se acabo el tiempo';
+        $data['url'] = $arrayDatos['arrayDatos']['url'];
+        $data['texto'] = $arrayDatos['arrayDatos']['texto'];
+        $data['pregunta'] = $arrayDatos['arrayDatos']['pregunta'];
+        $data['puntaje'] = $arrayDatos['arrayDatos']['puntaje'];
+        $data['preguntaId'] = $arrayDatos['arrayDatos']['preguntaId'];
+        $data['usuarioId'] = $arrayDatos['arrayDatos']['usuarioId'];
+        $this->renderer->render('seacaboeltiempo', $data);
+
     }
 }

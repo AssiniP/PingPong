@@ -198,6 +198,7 @@ class PartidaModel
         $result = $this->database->query($query);
 
         if ($result[0]['existe'] == 0) {
+            var_dump('id pregunta: '. $idPregunta . ' id usuario: ' . $idUsuario);
             $query = "INSERT INTO usuario_pregunta (idUsuario, idPregunta) VALUES ('".$idUsuario."', '".$idPregunta."');";
             $this->database->query($query);
         }
@@ -205,7 +206,7 @@ class PartidaModel
 
     public function juego()
     {
-        $preguntaId = $_GET['pregunta'];
+        $preguntaId = $_GET['pregunta'] ;
         $usuarioId = $this->getIDUsuarioActual();
         $idPartida = $this->getIDPartidaActual();
         $arrayDatos = array();
