@@ -1,6 +1,10 @@
 {{> header}}
 <div class="cuadro admin-container">
     <div class="admin-row">
+        <h1>Sección General</h1>
+    </div>
+
+    <div class="admin-row">
         <div class="admin-card ">
             <div
                 class="w-72 bg-white max-w-xs rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
@@ -131,13 +135,36 @@
             <div
                 class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
                 <div class="h-20 bg-red-900 flex items-center justify-between">
-                    <p class="mr-0 text-white text-lg pl-5">TOTAL PARTIDAS</p>
+                    <p class="mr-0 text-white text-lg pl-5">TOTAL PARTIDAS <b>({{nombreMes}})</b></p>
                 </div>
                 <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
                     <p>TOTAL</p>
                 </div>
                 <p class="py-4 text-3xl ml-5">{{cantidadPartidasJugadas}}</p>
             </div>
+        </div>
+    </div>
+    <div class="admin-row">
+        <h1>Sección de Usuarios</h1>
+    </div>
+    <div class="admin-row">
+        <div class="admin-form">
+            <input type="text" placeholder="Buscar Usuario">
+            <input type="submit" value="i" class="btn">
+        </div>
+    </div>
+    <div class="admin-row">
+        <div class="grafico-container">
+            <img src="/public/img/prueba-logo.png">
+
+        </div>
+        <div class="grafico-container">
+            <img src="/public/img/prueba-logo.png">
+
+        </div>
+        <div class="grafico-container">
+            <img src="/public/img/prueba-logo.png">
+
         </div>
     </div>
 
@@ -154,4 +181,3 @@
     <li>{{genero}}: {{cantidadUsuarios}}</li>
     {{/cantidadUsuariosPorSexo}}
 </ul>
-<p>Cantidad de Partidas nuevas desde el mes de <b>{{nombreMes}}</b>: {{partidasNuevasDesdeFecha}}</p>
