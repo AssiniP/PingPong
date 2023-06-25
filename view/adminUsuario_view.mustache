@@ -1,0 +1,78 @@
+{{> header}}
+
+      <div class="w-8/5 h-4/5 bg-white rounded-[39px] mt-[30px] p-2 m-5 md:m-auto md:w-[600px] md:mt-10">
+
+        <h1 class="md:text-4xl text-lg text-center font-bold ">Rol Usuarios</h1>
+
+              <form id="Form" action="/admin/updateRol" method="POST" class="flex flex-col justify-center items-center justify-items-center text-center">
+
+                  <div class="grid grid-cols-1 justify-center items-center">
+                     <br><label for="idRol" class="mr-2 ml-2">Rol:</label>
+                     <select id="idRol" name="idRol" required
+                     class="rounded border border-2 border-green-300 h-4/5 px-2">
+                     <option value="">Seleccionar</option>
+                     {{#roles}}
+                        <option value={{id}}>{{rol}}</option>
+                     {{/roles}}
+                     </select><br>
+                   </div>
+                   <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                    <label for="nickName" class="mr-2">NickName:</label>
+                                         <input type="text" id="nickName" name="nickName" readonly
+                                        class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                  </div>
+                  <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                    <label for="nombre" class="mr-2">Nombre:</label>
+                                       <input type="text" id="nombre" name="nombre" disabled
+                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                     </div>
+                  <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                    <label for="email" class="mr-2">email:</label>
+                                       <input type="text" id="email" name="email" disabled
+                                      class="rounded border border-2 border-green-300 h-4/5 mr-5 px-2"><br><br>
+                     </div>
+                     <div class="flex flex-row md:grid-cols-1 justify-center items-center">
+                                <input type="submit" id="aprobar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white m-5"> <br>
+                      </div>
+               </div>
+              </form>
+        </div>
+         <p id="errorMsg"></p>
+        <div class="flex flex-col  text-green-700 bg-white p-5  m-auto mt-10 mb-10  rounded">
+       <table >
+             <tr>
+                <th>NickName</th>
+                 <th>Nombre</th>
+                 <th>rol</th>
+             </tr>
+
+             {{#usuarios}}
+             <tr>
+                 <td>{{nickName}}</td>
+                 <td>{{nombre}}</td>
+                 <td>{{rol}}</td>
+                 <td><a href='/admin/users/&id={{id}}'><span class="material-symbols-sharp">edit</span></a></td>
+             </tr>
+             {{/usuarios}}
+
+         </table>
+ </div>
+</body>
+
+</html>
+
+{{#editarUsuario}}
+ <script>
+         var idRolField = document.getElementById('idRol');
+         var nickNameField = document.getElementById('nickName');
+         var nombreField = document.getElementById('nombre');
+         var emailField = document.getElementById('email');
+
+         // Poblar los campos del formulario con los datos de la pregunta
+         idRolField.value = "{{idRol}}";
+         nickNameField.value = "{{nickName}}";
+         nombreField.value = "{{nombre}}";
+         emailField.value = "{{email}}";
+ </script>
+ {{/editarUsuario}}
+</script>

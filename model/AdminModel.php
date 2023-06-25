@@ -34,13 +34,13 @@ class AdminModel
 
     public function getUsersId($idUsuario)
     {
+
         $query = "select u.*, G.nombre genero , r.rol  from usuario U, genero G, rol r  where U.idGenero =G.id and u.idRol =r.id and u.id=" . $idUsuario;
         return $this->database->query($query);
     }
-
-    public function upateRolNickName($nickName, $idRol)
+    public function upateRolNickName($nickName,$idRol)
     {
-        $query = "update usuario set idRol=" . $idRol . "  where nickName like '" . $nickName . "'";
+        $query = "update usuario set idRol=".$idRol."  where nickName like '".$nickName."'";
         return $this->database->query($query);
     }
     public function getAllRols()
@@ -211,6 +211,15 @@ class AdminModel
         return $result[0]['cantidadTrampitas'];
     }
 
+    public function crearGraficoBarras()
+    {
+        $query = "SELECT u.id, u.nickname, COUNT(t.id) AS balanceTrampitas
+              FROM Usuario u
+              LEFT JOIN Trampita t ON u.id = t.idUsuario
+              GROUP BY u.id, u.nickname";
+        $result = $this->database->query($query);
+        return $result[0]['balanceTrampitas'];
+    }
     public function getCantidadUsuariosHombres()
     {
         $query = "SELECT COUNT(*) AS total FROM usuario WHERE idGenero = 1";
@@ -319,6 +328,7 @@ class AdminModel
         // Generar el gráfico en un archivo temporal
         $imagePath = 'public/graficos/imagenes/generos.png';
         $directory = 'public/graficos/imagenes/';
+
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -350,7 +360,6 @@ class AdminModel
         $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual());
         $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
         $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
-        $mesesList = $this->getMesesList();
         $balanceTrampitas = $this->getBalanceTrampitasPorUsuario();
         $cantidadTrampitas = $this->getCantidadTrampitas();
         $cantidadUsuarioPais = $this->getCantidadUsuariosPorPais();
@@ -368,13 +377,12 @@ class AdminModel
         $arrayDatos["cantidadUsuariosPorSexo"] = $cantidadUsuariosPorSexo;
         $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
         $arrayDatos["nombreMes"] = $nombreMes;
-        $arrayDatos["mesesList"] = $mesesList;
         $arrayDatos["balanceTrampitas"] = $balanceTrampitas;
         $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
+
         $arrayDatos['graficoGenero'] = "../../" . $this->graficoGenero();
         $arrayDatos['generarGraficoPie'] = "../../" . $this->generarGraficoPie();
-
 
         return array('arrayDatos' => $arrayDatos);
     }
