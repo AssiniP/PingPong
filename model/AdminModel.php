@@ -8,7 +8,6 @@ require_once ('jpgraph/src/jpgraph_line.php');
 /*require_once (SITE_ROOT.'/third-party/pdfGenerator.php');
 require_once (SITE_ROOT.'/third-party/fpdf185/fpdf.php');*/
 
-
 class AdminModel
 {
     private $database;
@@ -170,7 +169,7 @@ class AdminModel
     }
     public function getBalanceTrampitasPorUsuario($filterDate)
     {
-     $query = "SELECT u.id, u.nickname, COALESCE(COUNT(t.id), 0) AS balanceTrampitas
+        $query = "SELECT u.id, u.nickname, COALESCE(COUNT(t.id), 0) AS balanceTrampitas
               FROM Usuario u
               LEFT JOIN Trampita t ON u.id = t.idUsuario
               WHERE t.fechaCompra <= '$filterDate'
@@ -244,36 +243,26 @@ class AdminModel
     {
         $totalUsuarios = $this->getCantidadUsuariosNuevosDesdeFecha($fecha);
         $datay = array($totalUsuarios);
-
         if ($totalUsuarios == 0) {
-
             $imagePath = 'public/graficos/imagenes/error.png';
             return $imagePath;
         }
-
-        // Crear el objeto del gráfico
         $graph = new Graph(400, 300, 'auto');
         $graph->SetScale('textlin');
         $graph->SetMargin(50, 30, 20, 40);
-
         $barplot = new BarPlot($datay);
         $barplot->SetFillColor('red');
         $graph->Add($barplot);
-
         $graph->xaxis->title->Set('Usuarios Nuevos');
         $graph->yaxis->title->Set('Cantidad');
         $graph->xaxis->SetTickLabels(['Usuarios Nuevos']);
-        $graph->yaxis->SetTickPositions(array(0, $totalUsuarios)); // Ajustar las marcas de división al rango de valores
+        $graph->yaxis->SetTickPositions(array(0, $totalUsuarios));
         $barplot->value->Show();
         $barplot->value->SetFont(FF_ARIAL, FS_NORMAL, 12);
         $barplot->value->SetFormat('%d');
-
-        // Establecer el formato de las etiquetas del eje y
         $graph->yaxis->SetLabelFormat('%d');
-
         $imagePath = 'public/graficos/imagenes/usuarios.png';
         $directory = 'public/graficos/imagenes/';
-
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -283,9 +272,7 @@ class AdminModel
                 die('Error al crear el directorio');
             }
         }
-
         $graph->Stroke($imagePath);
-
         return $imagePath;
     }
     public function generosGrafico($fecha)
@@ -293,8 +280,7 @@ class AdminModel
         $h = $this->getCantidadUsuariosHombres($fecha);
         $m = $this->getCantidadUsuariosMujeres($fecha);
         $o = $this->getCantidadUsuariosOtros($fecha);
-
-        $generos = array($h ." H" , $m ." M" , $o ." O" );
+        $generos = array($h . " H", $m . " M", $o . " O");
         $cantidadUsuarios = array($h, $m, $o);
         if (array_sum($cantidadUsuarios) === 0) {
             $imagePath = 'public/graficos/imagenes/error.png';
@@ -327,55 +313,40 @@ class AdminModel
         $grafico->Stroke($imagePath);
         return $imagePath;
     }
-
-
-    public function paisesGrafico($filterDate){
+    public function paisesGrafico($filterDate)
+    {
         $usuariosPorPais = $this->getCantidadUsuariosPorPais($filterDate);
-
         $paises = array();
         $cantidadUsuarios = array();
-
         foreach ($usuariosPorPais as $row) {
             $paises[] = $row['pais'];
             $cantidadUsuarios[] = $row['cantidadUsuarios'];
         }
-
         if (array_sum($cantidadUsuarios) === 0) {
-
             $imagePath = 'public/graficos/imagenes/error.png';
             return $imagePath;
         }
-
         $datay = $cantidadUsuarios;
-
-        $graph = new Graph(250,300,'auto');
+        $graph = new Graph(400, 300, 'auto');
         $graph->SetScale("textlin");
-
-        $theme_class=new UniversalTheme;
+        $theme_class = new UniversalTheme;
         $graph->SetTheme($theme_class);
         $graph->xaxis->SetTickLabels($paises);
-        $graph->Set90AndMargin(80,40,40,40);
+        $graph->Set90AndMargin(80, 40, 40, 40);
         $graph->img->SetAngle(90);
         $graph->title->Set('Distribucion de usuarios por pais');
-        $graph->title->SetFont(FF_VERDANA,FS_BOLD,8);
-
+        $graph->title->SetFont(FF_VERDANA, FS_BOLD, 8);
         $graph->SetBox(false);
-
         $graph->ygrid->Show(false);
         $graph->ygrid->SetFill(false);
         $graph->yaxis->HideLine(false);
-        $graph->yaxis->HideTicks(false,false);
-
+        $graph->yaxis->HideTicks(false, false);
         $graph->SetBackgroundGradient('#00CED1', '#FFFFFF', GRAD_HOR, BGRAD_PLOT);
-
         $b1plot = new BarPlot($datay);
-
         $graph->Add($b1plot);
-
         $b1plot->SetWeight(0);
-        $b1plot->SetFillGradient("#808000","#90EE90",GRAD_HOR);
+        $b1plot->SetFillGradient("#808000", "#90EE90", GRAD_HOR);
         $b1plot->SetWidth(17);
-
         $imagePath = 'public/graficos/imagenes/paises.png';
         $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
@@ -389,47 +360,34 @@ class AdminModel
         $graph->Stroke($imagePath);
         return $imagePath;
     }
-
-    public function usuariosEdadGrafico($filterDate){
-        // Some data
+    public function usuariosEdadGrafico($filterDate)
+    {
         $usuariosPorEdad = $this->getCantidadUsuariosPorEdad($filterDate);
-
-
         $categoria = array();
         $cantidadUsuarios = array();
-
         foreach ($usuariosPorEdad as $row) {
             $categoria[] = $row['categoria'];
             $cantidadUsuarios[] = $row['cantidadUsuarios'];
         }
-
         $data = $cantidadUsuarios;
         if (array_sum($cantidadUsuarios) === 0) {
 
             $imagePath = 'public/graficos/imagenes/error.png';
             return $imagePath;
         }
-
-        $graph = new PieGraph(350,250);
-
-        $theme_class="DefaultTheme";
-
+        $graph = new PieGraph(400, 300);
         $graph->title->Set("Distribucion de usuarios por rango etario");
         $graph->SetBox(true);
-
         $p1 = new PiePlot($data);
         $graph->Add($p1);
         $p1->SetLegends($categoria);
-
         $p1->ShowBorder();
         $p1->SetColor('black');
-        $p1->SetSliceColors(array('#1E90FF','#2E8B57','#ADFF2F','#DC143C','#BA55D3'));
+        $p1->SetSliceColors(array('#1E90FF', '#2E8B57', '#ADFF2F', '#DC143C', '#BA55D3'));
         $p1->SetLabelType(PIE_VALUE_ABS);
         $p1->value->SetFormat('%d');
         $p1->value->Show();
         $p1->SetLabelPos(1);
-
-
         $imagePath = 'public/graficos/imagenes/edad.png';
         $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
@@ -444,6 +402,43 @@ class AdminModel
         return $imagePath;
     }
 
+    public function partidasGrafico($fecha)
+    {
+        $p = $this->getCantidadPartidasJugadas($fecha);
+        $jcup = $this->getTotalJugadoresConAlMenosUnaPartida($fecha);
+        $t = $this->getCantidadTrampitas($fecha);
+        $a = $this->getPorcentajePreguntasAcertadas($fecha);
+        $datay = array($p,0,$jcup,0,$t,35,$a);
+        $graph = new Graph(400, 300);
+        $graph->SetScale("intlin", 0, $p + 100);
+        $theme_class = new UniversalTheme;
+        $graph->SetTheme($theme_class);
+        $graph->SetBox(false);
+        $graph->title->Set('Datos de Partidas');
+        $graph->ygrid->Show(true);
+        $graph->xgrid->Show(false);
+        $graph->yaxis->HideZeroLabel();
+        $graph->ygrid->SetFill(true, '#FFFFFF@0.5', '#FFFFFF@0.5');
+        $graph->SetBackgroundGradient('blue', '#55eeff', GRAD_HOR, BGRAD_PLOT);
+        $graph->xaxis->SetTickLabels(array('Partidas','','Jugaron','','Trampas','','Aciertos'));
+        $p1 = new LinePlot($datay);
+        $graph->Add($p1);
+        $p1->SetFillGradient('yellow', 'red');
+        $p1->SetStepStyle();
+        $p1->SetColor('#808000');
+        $imagePath = 'public/graficos/imagenes/partidas.png';
+        $directory = 'public/graficos/imagenes/';
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        if (!is_dir($directory)) {
+            if (!mkdir($directory, 0777, true)) {
+                die('Error al crear el directorio');
+            }
+        }
+        $graph->Stroke($imagePath);
+        return $imagePath;
+    }
 
     public function adminModelMethodsTest($filterDate)
     {
@@ -490,6 +485,10 @@ class AdminModel
         $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico($filterDate);
         $arrayDatos['paisesGrafico'] = "../../" . $this->paisesGrafico($filterDate);
         $arrayDatos['edadGrafico'] = "../../" . $this->usuariosEdadGrafico($filterDate);
+        $arrayDatos['partidasGrafico'] = "../../" . $this->partidasGrafico($filterDate);
+
+
+        
 
 
         return array('arrayDatos' => $arrayDatos);
@@ -505,3 +504,4 @@ class AdminModel
         return $pdf->Output($pdfPath, 'I');*/
     }
 }
+

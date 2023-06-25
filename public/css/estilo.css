@@ -51,6 +51,12 @@ header {
     -moz-box-shadow: -3px -2px 38px 8px rgba(0, 0, 0, 0.41);
 }
 
+.cuadro-2 {
+    box-shadow: 4px 6px 5px -4px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 4px 6px 5px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 6px 5px -4px rgba(0,0,0,0.75);
+}
+
 .boton {
     display: flex;
     justify-content: center;
@@ -480,7 +486,7 @@ footer {
     font-size: 14px;
 }
 
-.modal button{
+.modal button {
     background-color: #47a386;
     border: 0;
     border-radius: 5px;
@@ -518,7 +524,7 @@ footer {
     gap: 2rem;
 }
 
-.select-container select {
+.admin-form input:first-of-type {
     background-color: #ffffff;
     color: black;
     padding: 12px;
@@ -531,20 +537,7 @@ footer {
     outline: none;
 }
 
-.admin-form input:first-of-type{
-    background-color: #ffffff;
-    color: black;
-    padding: 12px;
-    width: 30rem;
-    border: none;
-    font-size: 20px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
-    -webkit-appearance: button;
-    appearance: inherit;
-    outline: none;
-}
-
-.admin-form button{
+.admin-form button {
     background-color: #ffffff;
     color: black;
     padding: 12px;
@@ -565,13 +558,13 @@ footer {
     height: 100%;
 }
 
-.admin-row h1{
+.admin-row h1 {
     font-weight: 700;
     font-size: 2rem;
 }
 
-.boton-comenzar{
-background-image: url("/public/img/boton-comenza.png");
+.boton-comenzar {
+    background-image: url("/public/img/boton-comenza.png");
     display: block;
     height: 100px;
     width: 50%;
@@ -581,7 +574,6 @@ background-image: url("/public/img/boton-comenza.png");
     background-color: transparent !important;
 }
 
-.boton-comenzar:hover{
+.boton-comenzar:hover {
     background-image: url("/public/img/boton-comenza-hover.png");
 }
-

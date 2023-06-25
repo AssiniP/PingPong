@@ -198,7 +198,6 @@ class PartidaModel
         $result = $this->database->query($query);
 
         if ($result[0]['existe'] == 0) {
-            var_dump('id pregunta: '. $idPregunta . ' id usuario: ' . $idUsuario);
             $query = "INSERT INTO usuario_pregunta (idUsuario, idPregunta) VALUES ('".$idUsuario."', '".$idPregunta."');";
             $this->database->query($query);
         }
