@@ -27,9 +27,10 @@ class AdminController
         $data['cantidadUsuariosPorSexo'] = $arrayDatos['arrayDatos']['cantidadUsuariosPorSexo'];
         $data['partidasNuevasDesdeFecha'] = $arrayDatos['arrayDatos']['partidasNuevasDesdeFecha'];
         $data['nombreMes'] = $arrayDatos['arrayDatos']['nombreMes'];
-        $data['imagePath'] = $arrayDatos['arrayDatos']['imagePath'];
-        $data['mesesList'] = $arrayDatos['arrayDatos']['mesesList'];
-        
+        $data['graficoGenero'] = $arrayDatos['arrayDatos']['graficoGenero'];
+        $data['generarGraficoPie'] = $arrayDatos['arrayDatos']['generarGraficoPie'];
+
+
 
         $this->renderer->render('admin', $data);
     }
