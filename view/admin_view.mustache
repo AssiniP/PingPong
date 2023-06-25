@@ -150,8 +150,22 @@
         <button type="submit" class="btn">Generar PDF</button>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var filterButton = document.getElementById("filter-btn");
+        filterButton.addEventListener("click", function() {
+            var dateInput = document.getElementById("date-input");
+            var selectedDate = dateInput.value;
+            console.log(selectedDate);
+            if (selectedDate !== "") {
+                window.location.href = window.location.pathname + "?filter_date=" + selectedDate;
+            } else {
+                alert("Por favor, selecciona una fecha");
+            }
+        });
+    });
 
-
+</script>
 <img src="{{imagePath}}" alt="Gráfico" />
 <p>Balance de trampitas por usuario: {{balanceTrampitas}}</p>
 <p>Dinero ganado con las trampitas: {{cantidadTrampitas}}$</p>
@@ -170,19 +184,4 @@
     <li>{{genero}}: {{cantidadUsuarios}}</li>
     {{/cantidadUsuariosPorSexo}}
 </ul>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var filterButton = document.getElementById("filter-btn");
-        filterButton.addEventListener("click", function() {
-            var dateInput = document.getElementById("date-input");
-            var selectedDate = dateInput.value;
-            console.log(selectedDate);
-            if (selectedDate !== "") {
-                window.location.href = window.location.pathname + "?filter_date=" + selectedDate;
-            } else {
-                alert("Por favor, selecciona una fecha");
-            }
-        });
-    });
 
-</script>
