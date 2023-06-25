@@ -544,9 +544,12 @@ footer {
     outline: none;
 }
 
-.admin-form:nth-child(1){
+.admin-form button{
     background-color: #ffffff;
     color: black;
+    padding: 12px;
+    width: auto;
+    border: none;
     font-size: 20px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
     -webkit-appearance: button;
@@ -555,7 +558,9 @@ footer {
 }
 
 .grafico-container {
-    background-color: rgb(214, 179, 179);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 25rem;
     height: 100%;
 }
