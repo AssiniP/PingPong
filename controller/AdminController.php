@@ -27,9 +27,6 @@ class AdminController
         $data['porcentajePreguntasAcertadasPorUsuario'] = $arrayDatos['arrayDatos']['porcentajePreguntasAcertadasPorUsuario'];
         $data['cantidadUsuariosPorSexo'] = $arrayDatos['arrayDatos']['cantidadUsuariosPorSexo'];
         $data['partidasNuevasDesdeFecha'] = $arrayDatos['arrayDatos']['partidasNuevasDesdeFecha'];
-        $data['imagePath'] = $arrayDatos['arrayDatos']['imagePath'];
-
-
 
         $data['balanceTrampitas'] = $arrayDatos['arrayDatos']['balanceTrampitas'];
         $data['cantidadTrampitas'] = $arrayDatos['arrayDatos']['cantidadTrampitas'];

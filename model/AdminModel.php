@@ -217,18 +217,19 @@ class AdminModel
     }
     public function getBalanceTrampitasPorUsuario($filterDate)
     {
-        $query = "SELECT u.id, u.nickname, COUNT(t.id) AS balanceTrampitas
+        $query = "SELECT u.id, u.nickname, COALESCE(COUNT(t.id), 0) AS balanceTrampitas
               FROM Usuario u
               LEFT JOIN Trampita t ON u.id = t.idUsuario
               WHERE t.fechaCompra <= '$filterDate'
               GROUP BY u.id, u.nickname";
         $result = $this->database->query($query);
         return $result[0]['balanceTrampitas'];
+        //return $result;
     }
 
     public function getCantidadTrampitas($filterDate)
     {
-        $query = "SELECT COUNT(*) AS cantidadTrampitas
+        $query = "SELECT COALESCE(COUNT(*), 0) AS cantidadTrampitas
               FROM Trampita
               WHERE fechaCompra <= '$filterDate'";
         $result = $this->database->query($query);
@@ -244,23 +245,23 @@ class AdminModel
         $result = $this->database->query($query);
         return $result[0]['balanceTrampitas'];
     }
-    public function getCantidadUsuariosHombres()
+    public function getCantidadUsuariosHombres($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM usuario WHERE idGenero = 1";
+        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 1 AND fechaRegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
-    public function getCantidadUsuariosMujeres()
+    public function getCantidadUsuariosMujeres($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM usuario WHERE idGenero = 2";
+        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 2 AND fechaRegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
-    public function getCantidadUsuariosOtros()
+    public function getCantidadUsuariosOtros($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM usuario WHERE idGenero = 3";
+        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 3 AND fechaRegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -303,13 +304,17 @@ class AdminModel
         return $imagePath;
     }
 
-    public function generosGrafico()
+    public function generosGrafico($filterDate)
     {
-        $h = $this->getCantidadUsuariosHombres();
-        $m = $this->getCantidadUsuariosMujeres();
-        $o = $this->getCantidadUsuariosOtros();
+        $h = $this->getCantidadUsuariosHombres($filterDate);
+        $m = $this->getCantidadUsuariosMujeres($filterDate);
+        $o = $this->getCantidadUsuariosOtros($filterDate);
         $generos = array('M' . ' ' . $h, 'F' . ' ' . $m, 'O' . ' ' . $o);
         $cantidadUsuarios = array($h, $m, $o);
+        if (array_sum($cantidadUsuarios) === 0) {
+            $imagePath = 'public/graficos/imagenes/error.png';
+            return $imagePath;
+        }
         $grafico = new PieGraph(400, 300);
         $grafico->title->Set('Distribución de usuarios por género');
         $datos = new PiePlot($cantidadUsuarios);
@@ -377,7 +382,7 @@ class AdminModel
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
 
         $arrayDatos['usuariosNuevosGrafico'] = "../../" . $this->usuariosNuevosGrafico();
-        $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico();
+        $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico($filterDate);
 
         return array('arrayDatos' => $arrayDatos);
     }
