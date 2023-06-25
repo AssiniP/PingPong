@@ -340,43 +340,6 @@ class AdminModel
         return $imagePath;
     }
 
-    public function generosGrafico($filterDate)
-    {
-        $h = $this->getCantidadUsuariosHombres($filterDate);
-        $m = $this->getCantidadUsuariosMujeres($filterDate);
-        $o = $this->getCantidadUsuariosOtros($filterDate);
-
-        $generos = array('M' . ' ' . $h, 'F' . ' ' . $m, 'O' . ' ' . $o);
-        $cantidadUsuarios = array($h, $m, $o);
-        if (array_sum($cantidadUsuarios) === 0) {
-            $imagePath = 'public/graficos/imagenes/error.png';
-            return $imagePath;
-        }
-        $grafico = new PieGraph(400, 300);
-        $grafico->title->Set('Distribución de usuarios por género');
-        $datos = new PiePlot($cantidadUsuarios);
-        $datos->SetSliceColors(array('blue', 'pink', 'green'));
-        $datos->SetLabels($generos);
-        $datos->value->SetFont(FF_ARIAL, FS_BOLD, 12);
-        $datos->value->SetColor('black');
-        $datos->value->Show();
-        $datos->ExplodeSlice(1);
-        $grafico->Add($datos);
-        $imagePath = 'public/graficos/imagenes/generos.png';
-        $directory = 'public/graficos/imagenes/';
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
-        if (!is_dir($directory)) {
-            if (!mkdir($directory, 0777, true)) {
-                die('Error al crear el directorio');
-            }
-        }
-        $grafico->Stroke($imagePath);
-        return $imagePath;
-    }
-
-
     public function adminModelMethodsTest()
     {
         $filterDate = $_GET['filter_date'] ?? date('Y-m-d');
