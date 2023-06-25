@@ -227,8 +227,8 @@ class AdminModel
         $b1plot->SetFillGradient("#4B0082", "white", GRAD_LEFT_REFLECTION);
         $b1plot->SetWidth(45);
         $graph->title->Set("Bar Gradient(Left reflection)");
-        $imagePath = 'graficos/imagenes/grafico.png';
-        $directory = 'graficos/imagenes/';
+        $imagePath = 'public/graficos/imagenes/grafico.png';
+        $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -278,7 +278,7 @@ class AdminModel
         $arrayDatos["cantidadUsuariosPorSexo"] = $cantidadUsuariosPorSexo;
         $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
         $arrayDatos["nombreMes"] = $nombreMes;
-        $arrayDatos['imagePath'] = $this->crearGraficoBarras();
+        $arrayDatos['imagePath'] = "../../". $this->crearGraficoBarras();
         $arrayDatos["mesesList"] = $mesesList;
         $arrayDatos["balanceTrampitas"] = $balanceTrampitas;
         $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;

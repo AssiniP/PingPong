@@ -175,6 +175,13 @@
 <p>Dinero ganado con las trampitas: {{cantidadTrampitas}}$</p>
 <p>Cantidad de Usuarios desde fecha por parametro: {{cantidadUsuariosNuevosDesdeFecha}}</p>
 <p>Porcentaje de Preguntas acertadas por Usuario en particular: {{porcentajePreguntasAcertadasPorUsuario}}%</p>
+<p>Cantidad de usuarios por país</p>
+<ul>
+    {{#cantidadPorPais}}
+    <li>{{pais}}: {{cantidadUsuarios}}</li>
+    {{/cantidadPorPais}}
+</ul>
+
 <p><b><u>Cantidad de Usuarios por Género</u></b></p>
 <ul>
     {{#cantidadUsuariosPorSexo}}
