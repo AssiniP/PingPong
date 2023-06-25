@@ -97,43 +97,57 @@ class AdminModel
         }
     }
 
-    public function getTotalUsuarios()
+    public function getTotalUsuarios($filterDate)
     {
         $query = "SELECT COUNT(*) AS TotalUsuarios
-                  FROM Usuario";
+              FROM Usuario
+              WHERE fecharegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['TotalUsuarios'];
     }
-    public function getTotalJugadores()
+    public function getTotalJugadores($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM Usuario WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Jugador')";
+        $query = "SELECT COUNT(*) AS total
+              FROM Usuario
+              WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Jugador')
+              AND fecharegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
-    public function getTotalEditores()
+    public function getTotalEditores($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM Usuario WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Editor')";
+        $query = "SELECT COUNT(*) AS total
+              FROM Usuario
+              WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Editor')
+              AND fecharegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
-    public function getTotalAdministradores()
+    public function getTotalAdministradores($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM Usuario WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Administrador')";
+        $query = "SELECT COUNT(*) AS total
+              FROM Usuario
+              WHERE idRol = (SELECT id FROM Rol WHERE rol = 'Administrador')
+              AND fecharegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
-    public function getTotalJugadoresConAlMenosUnaPartida()
+    public function getTotalJugadoresConAlMenosUnaPartida($filterDate)
     {
-        $query = "SELECT COUNT(DISTINCT idUsuario) AS total FROM Partida";
+        $query = "SELECT COUNT(DISTINCT idUsuario) AS total
+              FROM Partida
+              WHERE fecha <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
-    public function getCantidadPartidasJugadas()
+    public function getCantidadPartidasJugadas($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM Partida";
+        $query = "SELECT COUNT(*) AS total
+              FROM Partida
+              WHERE fecha <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -144,16 +158,20 @@ class AdminModel
         return $result[0]['total'];
     }
 
-    public function getCantidadUsuariosNuevosDesdeFecha($fecha)
+    public function getCantidadUsuariosNuevosDesdeFecha($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM usuario WHERE fechaRegistro >= '$fecha'";
+        $query = "SELECT COUNT(*) AS total
+              FROM Usuario
+              WHERE fecharegistro <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
-    public function getPartidasNuevasDesdeFecha($fecha)
+    public function getPartidasNuevasDesdeFecha($filterDate)
     {
-        $query = "SELECT COUNT(*) AS total FROM partida WHERE fecha >= '$fecha'";
+        $query = "SELECT COUNT(*) AS total
+              FROM Partida
+              WHERE fecha <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -174,39 +192,43 @@ class AdminModel
         return $result[0]['porcentaje_acertadas'];
     }
 
-    public function getCantidadUsuariosPorPais()
+    public function getCantidadUsuariosPorPais($filterDate)
     {
         $query = "SELECT p.nombre AS pais, COUNT(u.id) AS cantidadUsuarios
               FROM usuario u
               INNER JOIN paises p ON u.pais = p.nombre
+              WHERE u.fecharegistro <= '$filterDate'
               GROUP BY p.nombre";
         $result = $this->database->query($query);
         return $result;
     }
 
-    public function getCantidadUsuariosPorSexo()
+    public function getCantidadUsuariosPorSexo($filterDate)
     {
         $query = "SELECT g.nombre AS genero, COUNT(u.id) AS cantidadUsuarios
-                  FROM genero g
-                  INNER JOIN usuario u ON g.id = u.idGenero
-                  GROUP BY g.nombre";
+              FROM genero g
+              INNER JOIN usuario u ON g.id = u.idGenero
+              WHERE u.fecharegistro <= '$filterDate'
+              GROUP BY g.nombre";
         $result = $this->database->query($query);
         return $result;
     }
-    public function getBalanceTrampitasPorUsuario()
+    public function getBalanceTrampitasPorUsuario($filterDate)
     {
         $query = "SELECT u.id, u.nickname, COUNT(t.id) AS balanceTrampitas
               FROM Usuario u
               LEFT JOIN Trampita t ON u.id = t.idUsuario
+              WHERE t.fechaCompra <= '$filterDate'
               GROUP BY u.id, u.nickname";
         $result = $this->database->query($query);
         return $result[0]['balanceTrampitas'];
     }
 
-    public function getCantidadTrampitas()
+    public function getCantidadTrampitas($filterDate)
     {
         $query = "SELECT COUNT(*) AS cantidadTrampitas
-              FROM Trampita";
+              FROM Trampita
+              WHERE fechaCompra <= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['cantidadTrampitas'];
     }
@@ -271,8 +293,10 @@ class AdminModel
         $b1plot->SetFillGradient("#4B0082", "white", GRAD_LEFT_REFLECTION);
         $b1plot->SetWidth(45);
 
+
         $graph->Add($b1plot);
         $graph->title->Set("Generos");
+
 
         $imagePath = 'public/graficos/imagenes/grafico.png';
         $directory = 'public/graficos/imagenes/';
@@ -344,25 +368,27 @@ class AdminModel
 
     public function adminModelMethodsTest()
     {
-        $arrayDatos = array();
-        $mesAnterior = $this->getDiaUnoMesAnterior();
-        $nombreMes = $this->getNombreDelMes($mesAnterior);
+        $filterDate = $_GET['filter_date'] ?? date('Y-m-d');
 
-        $totalUsuarios = $this->getTotalUsuarios();
-        $totalJugadores = $this->getTotalJugadores();
-        $totalEditores = $this->getTotalEditores();
-        $totalAdministradores = $this->getTotalAdministradores();
-        $totalJugadoresConAlMenosUnaPartida = $this->getTotalJugadoresConAlMenosUnaPartida();
-        $cantidadPartidasJugadas = $this->getCantidadPartidasJugadas();
+        $arrayDatos = array();
+
+        //Querys filtrableess
+        $totalUsuarios = $this->getTotalUsuarios($filterDate);
+        $totalJugadores = $this->getTotalJugadores($filterDate);
+        $totalEditores = $this->getTotalEditores($filterDate);
+        $totalAdministradores = $this->getTotalAdministradores($filterDate);
+        $totalJugadoresConAlMenosUnaPartida = $this->getTotalJugadoresConAlMenosUnaPartida($filterDate);
+        $cantidadPartidasJugadas = $this->getCantidadPartidasJugadas($filterDate);
+        $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo($filterDate);
+        $cantidadUsuarioPais = $this->getCantidadUsuariosPorPais($filterDate);
+        $balanceTrampitas = $this->getBalanceTrampitasPorUsuario($filterDate);
+        $cantidadTrampitas = $this->getCantidadTrampitas($filterDate);
+        $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($filterDate);
+        $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($filterDate);
+        //querys no filtrableees
         $cantidadPreguntas = $this->getTotalPreguntasCreadas();
-        $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($mesAnterior);
         $porcentajePreguntasAcertadas = $this->getPorcentajePreguntasAcertadas();
         $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual());
-        $cantidadUsuariosPorSexo = $this->getCantidadUsuariosPorSexo();
-        $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($mesAnterior);
-        $balanceTrampitas = $this->getBalanceTrampitasPorUsuario();
-        $cantidadTrampitas = $this->getCantidadTrampitas();
-        $cantidadUsuarioPais = $this->getCantidadUsuariosPorPais();
 
         $arrayDatos["totalUsuarios"] = $totalUsuarios;
         $arrayDatos["totalJugadores"] = $totalJugadores;
@@ -376,7 +402,7 @@ class AdminModel
         $arrayDatos["porcentajePreguntasAcertadasPorUsuario"] = $porcentajePreguntasAcertadasPorUsuario;
         $arrayDatos["cantidadUsuariosPorSexo"] = $cantidadUsuariosPorSexo;
         $arrayDatos["partidasNuevasDesdeFecha"] = $partidasNuevasDesdeFecha;
-        $arrayDatos["nombreMes"] = $nombreMes;
+
         $arrayDatos["balanceTrampitas"] = $balanceTrampitas;
         $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;

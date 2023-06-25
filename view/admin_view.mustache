@@ -70,22 +70,8 @@
         </div>
     </div>
     <div class="admin-row">
-        <div class="select-container">
-            <select name="mesSeleccionado">
-                <option value="Enero">Enero</option>
-                <option value="Febrero">Febrero</option>
-                <option value="Marzo">Marzo</option>
-                <option value="Abril">Abril</option>
-                <option value="Mayo">Mayo</option>
-                <option value="Junio">Junio</option>
-                <option value="Julio">Julio</option>
-                <option value="Agosto">Agosto</option>
-                <option value="Septiembre">Septiembre</option>
-                <option value="Octubre">Octubre</option>
-                <option value="Noviembre">Noviembre</option>
-                <option value="Diciembre">Diciembre</option>
-            </select>
-        </div>
+        <input type="date" id="date-input" placeholder="Seleccionar fecha">
+        <button id="filter-btn">Filtrar</button>
     </div>
     <div class="admin-row">
         <div class="admin-card ">
@@ -176,4 +162,19 @@
     <li>{{genero}}: {{cantidadUsuarios}}</li>
     {{/cantidadUsuariosPorSexo}}
 </ul>
--->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var filterButton = document.getElementById("filter-btn");
+        filterButton.addEventListener("click", function() {
+            var dateInput = document.getElementById("date-input");
+            var selectedDate = dateInput.value;
+            console.log(selectedDate);
+            if (selectedDate !== "") {
+                window.location.href = window.location.pathname + "?filter_date=" + selectedDate;
+            } else {
+                alert("Por favor, selecciona una fecha");
+            }
+        });
+    });
+
+</script>

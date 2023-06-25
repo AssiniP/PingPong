@@ -13,6 +13,7 @@ class AdminController
     public function list()
     {
         $_SESSION['jugando'] = true;
+
         $arrayDatos = $this->adminModel->adminModelMethodsTest();
         $data['totalUsuarios'] = $arrayDatos['arrayDatos']['totalUsuarios'];
         $data['totalJugadores'] = $arrayDatos['arrayDatos']['totalJugadores'];
@@ -26,7 +27,10 @@ class AdminController
         $data['porcentajePreguntasAcertadasPorUsuario'] = $arrayDatos['arrayDatos']['porcentajePreguntasAcertadasPorUsuario'];
         $data['cantidadUsuariosPorSexo'] = $arrayDatos['arrayDatos']['cantidadUsuariosPorSexo'];
         $data['partidasNuevasDesdeFecha'] = $arrayDatos['arrayDatos']['partidasNuevasDesdeFecha'];
-        $data['nombreMes'] = $arrayDatos['arrayDatos']['nombreMes'];
+        $data['imagePath'] = $arrayDatos['arrayDatos']['imagePath'];
+
+
+
         $data['balanceTrampitas'] = $arrayDatos['arrayDatos']['balanceTrampitas'];
         $data['cantidadTrampitas'] = $arrayDatos['arrayDatos']['cantidadTrampitas'];
         $data['cantidadPorPais'] = $arrayDatos['arrayDatos']['cantidadPorPais'];
