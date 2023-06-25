@@ -47,15 +47,9 @@
 <script src="/public/js/agregarTerminarPartida.js"></script>
 <script src="/public/js/reportarPregunta.js"></script>
 <script>
-    window.addEventListener("load", function() {
-        var body = document.body;
-        body.classList.add('body-lobby');
-
-
-    });
+    setTimeout(function() {
+        window.location.href = "{{url}}";
+    }, 5000);</script>
 </script>
-<script>
-setInterval(function() {window.location.href= {{url}}
-}, 10000);</script>
 </body>
 {{>footer}}
