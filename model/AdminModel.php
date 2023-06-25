@@ -49,53 +49,7 @@ class AdminModel
         $query = "select *  from rol";
         return $this->database->query($query);
     }
-    public function getDiaUnoMesAnterior()
-    {
-        $currentDate = new DateTime();
-        $currentDate->modify('first day of previous month');
-        $firstDay = $currentDate->format('Y-m-d');
-        return $firstDay;
-    }
 
-    public function getNombreDelMes($fecha)
-    {
-        $dateTime = new DateTime($fecha);
-        $numeroMes = $dateTime->format('n'); // obtiene el número de mes del 1 a 12
-        $nombresMeses = [
-            1 => 'enero',
-            2 => 'febrero',
-            3 => 'marzo',
-            4 => 'abril',
-            5 => 'mayo',
-            6 => 'junio',
-            7 => 'julio',
-            8 => 'agosto',
-            9 => 'septiembre',
-            10 => 'octubre',
-            11 => 'noviembre',
-            12 => 'diciembre'
-        ];
-        $nombreMes = $nombresMeses[$numeroMes];
-        $nombreMes = ucfirst($nombreMes); // mayus primer letra del mes
-        return $nombreMes;
-    }
-
-    public function getMesesList()
-    {
-        $query = "SELECT nombre FROM Meses";
-        $result = $this->database->query($query);
-
-        if ($result && $result instanceof mysqli_result && $result->num_rows > 0) {
-            $mesesArray = array();
-            while ($row = $result->fetch_assoc()) {
-                $mesesArray[] = $row['nombre'];
-            }
-
-            return $mesesArray;
-        } else {
-            return array();
-        }
-    }
     public function getTotalUsuarios($filterDate)
     {
         $query = "SELECT COUNT(*) AS TotalUsuarios
@@ -161,7 +115,7 @@ class AdminModel
     {
         $query = "SELECT COUNT(*) AS total
               FROM Usuario
-              WHERE fecharegistro <= '$filterDate'";
+              WHERE fecharegistro >= DATE_SUB('$filterDate', INTERVAL 3 DAY)";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
@@ -170,23 +124,23 @@ class AdminModel
     {
         $query = "SELECT COUNT(*) AS total
               FROM Partida
-              WHERE fecha <= '$filterDate'";
+              WHERE fecha >= DATE_SUB('$filterDate', INTERVAL 3 DAY)";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
     public function getPorcentajePreguntasAcertadas()
     {
-        $query = "SELECT ROUND((COUNT(*) / (SELECT COUNT(*) FROM Pregunta)) * 100, 1) AS porcentaje_acertadas FROM Pregunta WHERE cantidadAciertos > 0";
+        $query = "SELECT ROUND((SUM(cantidadAciertos) / SUM(cantidadOcurrencias)) * 100, 1) AS porcentaje_acertadas FROM Pregunta WHERE cantidadOcurrencias > 0";
         $result = $this->database->query($query);
         return $result[0]['porcentaje_acertadas'];
     }
 
-    public function getPorcentajePreguntasAcertadasPorUsuario($idUsuario)
+    public function getPorcentajePreguntasAcertadasPorUsuario()
     {
-        $query = "SELECT COALESCE(ROUND((COUNT(up.aciertos) / NULLIF((SELECT COUNT(*) FROM usuario_pregunta WHERE idUsuario = $idUsuario), 0)) * 100, 1), 0) AS porcentaje_acertadas
+        $query = "SELECT COALESCE(ROUND((SUM(up.aciertos) / NULLIF(SUM(up.ocurrencias), 0)) * 100, 1), 0) AS porcentaje_acertadas
               FROM usuario_pregunta up
               INNER JOIN pregunta p ON up.idPregunta = p.id
-              WHERE up.idUsuario = $idUsuario AND up.aciertos > 0";
+              WHERE up.ocurrencias > 0";
         $result = $this->database->query($query);
         return $result[0]['porcentaje_acertadas'];
     }
@@ -236,6 +190,23 @@ class AdminModel
         return $result[0]['cantidadTrampitas'];
     }
 
+    public function getCantidadUsuariosPorEdad($filterDate)
+    {
+        $query = "SELECT 
+                CASE
+                    WHEN TIMESTAMPDIFF(YEAR, u.fechaNacimiento, '$filterDate') < 18 THEN 'Menores'
+                    WHEN TIMESTAMPDIFF(YEAR, u.fechaNacimiento, '$filterDate') >= 65 THEN 'Jubilados'
+                    ELSE 'Medio'
+                END AS categoria,
+                COUNT(u.id) AS cantidadUsuarios
+              FROM usuario u
+              WHERE u.fecharegistro <= '$filterDate'
+              GROUP BY categoria";
+
+        $result = $this->database->query($query);
+        return $result;
+    }
+
     public function crearGraficoBarras()
     {
         $query = "SELECT u.id, u.nickname, COUNT(t.id) AS balanceTrampitas
@@ -269,8 +240,14 @@ class AdminModel
     /* Graficos */
     public function usuariosNuevosGrafico($fecha)
     {
-        $totalUsuarios = $this->getTotalUsuarios($fecha);
+        $totalUsuarios = $this->getCantidadUsuariosNuevosDesdeFecha($fecha);
         $datay = array($totalUsuarios);
+
+        if ($totalUsuarios == 0) {
+
+            $imagePath = 'public/graficos/imagenes/error.png';
+            return $imagePath;
+        }
 
         // Crear el objeto del gráfico
         $graph = new Graph(400, 300, 'auto');
@@ -314,13 +291,22 @@ class AdminModel
         $h = $this->getCantidadUsuariosHombres($fecha);
         $m = $this->getCantidadUsuariosMujeres($fecha);
         $o = $this->getCantidadUsuariosOtros($fecha);
-        $generos = array('M' . ' ' . $h, 'F' . ' ' . $m, 'O' . ' ' . $o);
+
+        $generos = array($h ." H" , $m ." M" , $o ." O" );
         $cantidadUsuarios = array($h, $m, $o);
+        if (array_sum($cantidadUsuarios) === 0) {
+            $imagePath = 'public/graficos/imagenes/error.png';
+            return $imagePath;
+        }
         $grafico = new PieGraph(400, 300);
         $grafico->title->Set('Distribución de usuarios por género');
         $datos = new PiePlot($cantidadUsuarios);
         $datos->SetSliceColors(array('blue', 'pink', 'green'));
         $datos->SetLabels($generos);
+        $datos->SetLegends(array('Hombre', 'Mujer', 'Otro'));
+        $datos->SetLabelType(PIE_VALUE_ABS);
+        $datos->value->SetFormat('%d');
+        $datos->value->Show();
         $datos->value->SetFont(FF_ARIAL, FS_BOLD, 12);
         $datos->value->SetColor('black');
         $datos->value->Show();
@@ -340,29 +326,55 @@ class AdminModel
         return $imagePath;
     }
 
-    public function generosGrafico($filterDate)
-    {
-        $h = $this->getCantidadUsuariosHombres($filterDate);
-        $m = $this->getCantidadUsuariosMujeres($filterDate);
-        $o = $this->getCantidadUsuariosOtros($filterDate);
 
-        $generos = array('M' . ' ' . $h, 'F' . ' ' . $m, 'O' . ' ' . $o);
-        $cantidadUsuarios = array($h, $m, $o);
+    public function paisesGrafico($filterDate){
+        $usuariosPorPais = $this->getCantidadUsuariosPorPais($filterDate);
+
+        $paises = array();
+        $cantidadUsuarios = array();
+
+        foreach ($usuariosPorPais as $row) {
+            $paises[] = $row['pais'];
+            $cantidadUsuarios[] = $row['cantidadUsuarios'];
+        }
+
         if (array_sum($cantidadUsuarios) === 0) {
+
             $imagePath = 'public/graficos/imagenes/error.png';
             return $imagePath;
         }
-        $grafico = new PieGraph(400, 300);
-        $grafico->title->Set('Distribución de usuarios por género');
-        $datos = new PiePlot($cantidadUsuarios);
-        $datos->SetSliceColors(array('blue', 'pink', 'green'));
-        $datos->SetLabels($generos);
-        $datos->value->SetFont(FF_ARIAL, FS_BOLD, 12);
-        $datos->value->SetColor('black');
-        $datos->value->Show();
-        $datos->ExplodeSlice(1);
-        $grafico->Add($datos);
-        $imagePath = 'public/graficos/imagenes/generos.png';
+
+        $datay = $cantidadUsuarios;
+
+        $graph = new Graph(250,300,'auto');
+        $graph->SetScale("textlin");
+
+        $theme_class=new UniversalTheme;
+        $graph->SetTheme($theme_class);
+        $graph->xaxis->SetTickLabels($paises);
+        $graph->Set90AndMargin(80,40,40,40);
+        $graph->img->SetAngle(90);
+        $graph->title->Set('Distribucion de usuarios por pais');
+        $graph->title->SetFont(FF_VERDANA,FS_BOLD,8);
+
+        $graph->SetBox(false);
+
+        $graph->ygrid->Show(false);
+        $graph->ygrid->SetFill(false);
+        $graph->yaxis->HideLine(false);
+        $graph->yaxis->HideTicks(false,false);
+
+        $graph->SetBackgroundGradient('#00CED1', '#FFFFFF', GRAD_HOR, BGRAD_PLOT);
+
+        $b1plot = new BarPlot($datay);
+
+        $graph->Add($b1plot);
+
+        $b1plot->SetWeight(0);
+        $b1plot->SetFillGradient("#808000","#90EE90",GRAD_HOR);
+        $b1plot->SetWidth(17);
+
+        $imagePath = 'public/graficos/imagenes/paises.png';
         $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
@@ -372,7 +384,61 @@ class AdminModel
                 die('Error al crear el directorio');
             }
         }
-        $grafico->Stroke($imagePath);
+        $graph->Stroke($imagePath);
+        return $imagePath;
+    }
+
+    public function usuariosEdadGrafico($filterDate){
+        // Some data
+        $usuariosPorEdad = $this->getCantidadUsuariosPorEdad($filterDate);
+
+
+        $categoria = array();
+        $cantidadUsuarios = array();
+
+        foreach ($usuariosPorEdad as $row) {
+            $categoria[] = $row['categoria'];
+            $cantidadUsuarios[] = $row['cantidadUsuarios'];
+        }
+
+        $data = $cantidadUsuarios;
+        if (array_sum($cantidadUsuarios) === 0) {
+
+            $imagePath = 'public/graficos/imagenes/error.png';
+            return $imagePath;
+        }
+
+        $graph = new PieGraph(350,250);
+
+        $theme_class="DefaultTheme";
+
+        $graph->title->Set("Distribucion de usuarios por rango etario");
+        $graph->SetBox(true);
+
+        $p1 = new PiePlot($data);
+        $graph->Add($p1);
+        $p1->SetLegends($categoria);
+
+        $p1->ShowBorder();
+        $p1->SetColor('black');
+        $p1->SetSliceColors(array('#1E90FF','#2E8B57','#ADFF2F','#DC143C','#BA55D3'));
+        $p1->SetLabelType(PIE_VALUE_ABS);
+        $p1->value->SetFormat('%d');
+        $p1->value->Show();
+        $p1->SetLabelPos(1);
+
+
+        $imagePath = 'public/graficos/imagenes/edad.png';
+        $directory = 'public/graficos/imagenes/';
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        if (!is_dir($directory)) {
+            if (!mkdir($directory, 0777, true)) {
+                die('Error al crear el directorio');
+            }
+        }
+        $graph->Stroke($imagePath);
         return $imagePath;
     }
 
@@ -399,7 +465,7 @@ class AdminModel
         //querys no filtrableees
         $cantidadPreguntas = $this->getTotalPreguntasCreadas();
         $porcentajePreguntasAcertadas = $this->getPorcentajePreguntasAcertadas();
-        $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario($this->getIDUsuarioActual());
+        $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario();
 
         $arrayDatos["totalUsuarios"] = $totalUsuarios;
         $arrayDatos["totalJugadores"] = $totalJugadores;
@@ -422,11 +488,10 @@ class AdminModel
 
         $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico($filterDate);
 
+        $arrayDatos['paisesGrafico'] = "../../" . $this->paisesGrafico($filterDate);
+        $arrayDatos['edadGrafico'] = "../../" . $this->usuariosEdadGrafico($filterDate);
+
+
         return array('arrayDatos' => $arrayDatos);
     }
 }
-
-
-// X FECHA: 
-
-// PAIS, EDAD, PARTIDA, USUARIO, GENERO 
