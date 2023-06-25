@@ -165,10 +165,10 @@ class AdminModel
 
     public function getPorcentajePreguntasAcertadasPorUsuario($idUsuario)
     {
-        $query = "SELECT ROUND((COUNT(up.aciertos) / (SELECT COUNT(*) FROM usuario_pregunta WHERE idUsuario = $idUsuario)) * 100, 1) AS porcentaje_acertadas
-                  FROM usuario_pregunta up
-                  INNER JOIN pregunta p ON up.idPregunta = p.id
-                  WHERE up.idUsuario = $idUsuario AND up.aciertos > 0";
+        $query = "SELECT COALESCE(ROUND((COUNT(up.aciertos) / NULLIF((SELECT COUNT(*) FROM usuario_pregunta WHERE idUsuario = $idUsuario), 0)) * 100, 1), 0) AS porcentaje_acertadas
+              FROM usuario_pregunta up
+              INNER JOIN pregunta p ON up.idPregunta = p.id
+              WHERE up.idUsuario = $idUsuario AND up.aciertos > 0";
         $result = $this->database->query($query);
         return $result[0]['porcentaje_acertadas'];
     }
@@ -283,7 +283,6 @@ class AdminModel
         $arrayDatos["balanceTrampitas"] = $balanceTrampitas;
         $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
-        var_dump($arrayDatos["cantidadTrampitas"]);
 
         return array('arrayDatos' => $arrayDatos);
     }
