@@ -502,7 +502,7 @@ footer {
     flex-direction: column;
     margin: 2rem auto;
     background-color: rgb(236, 234, 234);
-    width: 80%;
+    width: calc(90% + 30px);
     height: auto;
     border-radius: 5px;
     padding-bottom: 2rem;
@@ -559,6 +559,7 @@ footer {
     height: 100%;
 }
 
+
 @media (max-width: 768px) {
     .admin-container{
         width: 90%;
@@ -573,6 +574,27 @@ footer {
     }
     .row-fecha{
         width: 80%;
+        margin: auto;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1400px) {
+    .admin-container{
+        width: 90%;
+    }
+    .grafico-row{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .row-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        text-align: center;
+    }
+    .grafico-container{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
         margin: auto;
     }
 }
