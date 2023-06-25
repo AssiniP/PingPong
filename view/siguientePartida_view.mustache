@@ -4,7 +4,6 @@
     {{#partidas}}
         <p class="m-5 hidden">Fecha: {{fecha}}</p>
         <p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
-        <p id="jugando">{{jugando}}</p>
     {{/partidas}}
 
     <div id="contenedor-juego" class=" hidden w-full md:w-[75%] grid grid-cols-1 justify-center content-center m-5 p-5 bg-gray-500 rounded-[200px]">
@@ -38,16 +37,6 @@
 <script src="/public/js/reportarPregunta.js"></script>
 <script>
     window.addEventListener("load", function() {
-        var body = document.body;
-        body.classList.add('body-lobby');
-
-
-    });
-</script>
-<script>
-    window.addEventListener("load", function() {
-        var body = document.body;
-        body.classList.add('body-lobby');
-        consultarAPI();
+consultarAPI();
     });
 </script>
