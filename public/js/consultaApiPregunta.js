@@ -3,6 +3,8 @@ function consultarAPI() {
         let usuario = document.getElementById("usuario");
     var body = document.body;
     body.classList.add('body-lobby');
+    let contenedor_juego = document.getElementById('contenedor-juego');
+    contenedor_juego.classList.remove("hidden");
     fetch('http://localhost:80/api/list?usuario=' + usuario.innerText)
         .then(response => response.json())
         .then(data => {
@@ -64,11 +66,7 @@ function consultarAPI() {
             idPregunta.innerText = primeraPregunta.id;
             let idPreguntaJugada = primeraPregunta.id;
             empezarJugada(idPreguntaJugada);
-        })
-        .catch(error => {
-            // Manejo de errores
-            console.error(error);
-        });
+
         let number;
 
     let input = document.getElementById("numero");
@@ -79,15 +77,23 @@ function consultarAPI() {
         function countdown() {
                 repeater = setInterval(runner, 1000);
         }
+        let idQuestion =primeraPregunta.id;
         function runner() {
                 if (number > 0) {
                         number --;
                 }else {
-                        window.location.href = "/lobby/list";
+
+                        window.location.href = '/partida/tiempo?opcion=tiempo&pregunta='+idQuestion;
+
                 }
 
                 input.innerText = number < 10 ? '0'+number : number;
         }
+        })
+        .catch(error => {
+            // Manejo de errores
+            console.error(error);
+        });
 
     function mezcladorNumerico() {
         const numbers = [1, 2, 3, 4];

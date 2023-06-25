@@ -1,3 +1,4 @@
+
 function mostrarPopup() {
     var popup = document.getElementById("popup-reporte");
     popup.classList.remove('pop-up')
