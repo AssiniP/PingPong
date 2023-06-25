@@ -66,8 +66,10 @@
     <div class="admin-row">
         <h1>Fecha: <span style="color: red"> {{filterDate}}</span></h1>
     </div>
-    
-    
+    <div class="admin-row">
+        <h1>Sección de Usuarios</h1>
+    </div>
+
     <div class="admin-row">
         <div class="grafico-container">
             <img src="{{usuariosNuevosGrafico}}">
@@ -78,8 +80,19 @@
         <div class="grafico-container">
         </div>
     </div>
+    <!--GRAFICOS MIOS-->
+    <div class="admin-row">
+        <div class="grafico-container">
+            <img src="{{paisesGrafico}}">
+        </div>
+        <div class="grafico-container">
+            <img src="{{edadGrafico}}">
+        </div>
+    </div>
 
-
+    <div class="admin-row">
+        <h1>Datos del Juego</h1>
+    </div>
 
     <div class="admin-row">
         <div class="admin-card ">
@@ -98,7 +111,7 @@
             <div
                 class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
                 <div class="h-20 bg-purple-300 flex items-center justify-between">
-                    <p class="mr-0 text-white text-lg pl-5">ACIERTOS</p>
+                    <p class="mr-0 text-white text-lg pl-5">ACIERTOS TOTALES</p>
                 </div>
                 <div class="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
                     <p>TOTAL</p>
@@ -131,21 +144,58 @@
             </div>
         </div>
     </div>
-    <div class="admin-row">
-        <h1>Sección de Usuarios</h1>
-    </div>
 
     <div class="admin-row">
-        <div class="grafico-container">
-            <img src="/public/img/prueba-logo.png">
+        <div class="admin-card ">
+            <div
+                    class="w-72 bg-white max-w-xs rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-purple-900 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">BALANCE DE TRAMPITAS X USUARIO</p>
+                </div>
+                <div class="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{balanceTrampitas}}</p>
+            </div>
         </div>
-        <div class="grafico-container">
-            <img src="/public/img/prueba-logo.png">
+        <div class="admin-card  ">
+            <div
+                    class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-purple-300 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">DINERO GANADO CON TRAMPITAS</p>
+                </div>
+                <div class="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{cantidadTrampitas}}$</p>
+            </div>
         </div>
-        <div class="grafico-container">
-            <img src="/public/img/prueba-logo.png">
+        <div class="admin-card ">
+            <div
+                    class="w-72 bg-white max-w-xs rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-blue-400 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">USUARIOS NUEVOS DESDE LA FECHA</p>
+                </div>
+                <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{cantidadUsuariosNuevosDesdeFecha}}</p>
+            </div>
+        </div>
+        <div class="admin-card">
+            <div
+                    class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                <div class="h-20 bg-red-900 flex items-center justify-between">
+                    <p class="mr-0 text-white text-lg pl-5">PORCENTAJE DE ACIERTOS POR USUARIO</p>
+                </div>
+                <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
+                    <p>TOTAL</p>
+                </div>
+                <p class="py-4 text-3xl ml-5">{{porcentajePreguntasAcertadasPorUsuario}}%</p>
+            </div>
         </div>
     </div>
+
     <div class="admin-row">
         <button type="submit" class="btn">Generar PDF</button>
     </div>
@@ -165,5 +215,4 @@
             }
         });
     });
-
 </script>
