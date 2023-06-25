@@ -24,5 +24,7 @@ class LobbyController{
         $this->renderer->render('ranking',$data);
     }
 
-
+public function generarpdf(){
+        $this->userModel->generadorPDF();
+}
 }
