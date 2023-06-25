@@ -52,9 +52,9 @@ header {
 }
 
 .cuadro-2 {
-    box-shadow: 4px 6px 5px -4px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 4px 6px 5px -4px rgba(0,0,0,0.75);
-    -moz-box-shadow: 4px 6px 5px -4px rgba(0,0,0,0.75);
+    box-shadow: 4px 6px 5px -4px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 4px 6px 5px -4px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 4px 6px 5px -4px rgba(0, 0, 0, 0.75);
 }
 
 .boton {
@@ -522,6 +522,7 @@ footer {
     justify-content: center;
     padding-top: 2rem;
     gap: 2rem;
+
 }
 
 .admin-form input:first-of-type {
@@ -557,6 +558,25 @@ footer {
     width: 25rem;
     height: 100%;
 }
+
+@media (max-width: 768px) {
+    .admin-container{
+        width: 90%;
+    }
+    .admin-row {
+        flex-direction: column;
+        text-align: center;
+    }
+    .grafico-container{
+        width: 90%;
+        margin: auto;
+    }
+    .row-fecha{
+        width: 80%;
+        margin: auto;
+    }
+}
+
 
 .admin-row h1 {
     font-weight: 700;
