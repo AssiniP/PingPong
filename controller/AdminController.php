@@ -37,4 +37,24 @@ class AdminController
 
         $this->renderer->render('admin', $data);
     }
+
+    public function users(){
+        $data["usuarios"] = $this->adminModel->getAllUsers();
+        $data["roles"]= $this->adminModel->getAllRols();
+        if(isset($_GET["id"])) {
+            $data["editarUsuario"] = $this->adminModel->getUsersId(intval($_GET["id"]));
+        }
+        $this->renderer->render('adminUsuario', $data);
+    }
+
+    public function updateRol(){
+        var_dump($_POST);
+        if(isset($_POST["nickName"]) && isset($_POST["idRol"])) {
+
+            $this->adminModel->upateRolNickName($_POST["nickName"],intval($_POST["idRol"]));
+
+        }
+        header('location: /admin/users');
+
+    }
 }

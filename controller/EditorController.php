@@ -59,18 +59,22 @@ class EditorController{
         }
     }
 
-    //Guardar de pregunta_sugerida
+    //Guardar de pregunta_sugerida Elimina de Sugerida y Agrega a la API
     public function guardarSugerida(){
         header('Content-Type: application/json');
+        $api = new ApiPreguntas();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $jsonData = file_get_contents('php://input');
             if($jsonData!= null){
                 $body = json_decode($jsonData);
-                if ($body->idPregunta == 0) {
-                    $this->editorModel->addQuestion($body);
+                $categoria = $api->getCategory($body->idCategoria);
+                if ($body->idUsuario == 0) {
+                    $usuario =$api->getUsuarioByID($this->editorModel->getIDUsuarioActual());
                 } else {
-                    $this->editorModel->editQuestionId($body);
+                    $usuario = $api->getUsuarioByID($body->idUsuario);
                 }
+                $this->editorModel->delQuestionId($body->idPregunta);
+                $api->altaPregunta($body->pregunta,$body->opcion1,$body->opcion2,$body->opcion3,$body->respuestaCorrecta,$categoria['nombre'],$usuario['nick']);
 
 
             }
