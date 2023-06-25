@@ -14,11 +14,30 @@
   <link rel="stylesheet" href="/public/css/estilo.css">
 </head>
 <body>
-<header id="main-header" class="header-user w-full flex justify-center items-center content-center jutify-items-center">
-    <div id="additional-links" class="flex flex-row md:gap-10 gap-5 w-[80%] text-white justify-center m-auto">
-    <a id="logo-header" href="/lobby/list" class="w-[65px] h-auto sm:w-[50px]">
+<header id="main-header" class="header-user w-full justify-center items-center content-center jutify-items-center h-[65px] gap-5 flex flex-row">
+    <a id="logo-header" href="/lobby/list" class="w-[50px] h-auto sm:w-[75px]">
         <img src="/public/img/prueba-logo.png" alt="LOGO" class="h-[100%] w-[100%]">
     </a>
+    <div  class="text-white">
+            <ul id="smallMenuItems" class="max-[700px]:flex min-[700px]:hidden gap-5" >
+                <li><a href="/editor/list/" class="hidden" id="editor"><span class="material-symbols-sharp">edit</span></a></li>
+                <li><a href="/admin/list/" class="hidden" id="estadisticas"><span class="material-symbols-outlined">analytics</span></a></li>
+                <li><a href="/sugerir/list" ><span class="material-symbols-outlined">factory</span></a></li>
+                <li><a href="/lobby/ranking"><span class="material-symbols-sharp">rewarded_ads</span></a></li>
+                <li><a href="/lobby/historial"><span class="material-symbols-sharp">calendar_month</span></a></li>
+                <li><a href="/admin/users/" class="hidden" id="rol"><span class="material-symbols-outlined">supervised_user_circle</span></a></li>
+                <li><a href="/login/logout" ><div class="text-lg"><i class="fa-solid fa-right-from-bracket"></i></div></a></li>
+             </ul>
+        <ul id="largeMenu" class="min-[700px]:flex hidden min-[700px]:gap-10">
+            <li class="hidden" id="editor-lg"><a href="/editor/list/" >Editar</a></li>
+            <li class="hidden" id="estadisticas-lg"><a href="/admin/list/" >Administrar</a></li>
+            <li><a href="/sugerir/list">Fabrica de Preguntas</a></li>
+            <li><a href="/lobby/ranking" >Ranking</a></li>
+            <li><a href="/lobby/historial">Historial</a></li>
+            <li class="hidden" id="rol-lg"><a href="/admin/users/" >Rol de usuario</a></li>
+            <li><a href="/login/logout" ><div class="text-2xl"><i class="fa-solid fa-right-from-bracket"></i></div></a></li>
+        </ul>
     </div>
+
     <script src="/public/js/headerInfo.js"></script>
 </header>
