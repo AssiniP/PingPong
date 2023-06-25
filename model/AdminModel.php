@@ -4,6 +4,7 @@ require_once('jpgraph/src/jpgraph.php');
 require_once('jpgraph/src/jpgraph_bar.php');
 require_once('jpgraph/src/jpgraph_pie.php');
 require_once('jpgraph/src/jpgraph_line.php');
+require_once ('jpgraph/src/jpgraph_line.php');
 
 
 class AdminModel
@@ -27,7 +28,6 @@ class AdminModel
         $user = $this->getUserByNickname($nickname);
         return $user[0]['id'];
     }
-
     public function getAllUsers()
     {
         $query = "select u.*, G.nombre genero , r.rol  from usuario U, genero G, rol r  where U.idGenero =G.id and u.idRol =r.id";
@@ -36,7 +36,6 @@ class AdminModel
 
     public function getUsersId($idUsuario)
     {
-
         $query = "select u.*, G.nombre genero , r.rol  from usuario U, genero G, rol r  where U.idGenero =G.id and u.idRol =r.id and u.id=" . $idUsuario;
         return $this->database->query($query);
     }
@@ -94,11 +93,9 @@ class AdminModel
 
             return $mesesArray;
         } else {
-            // Manejar el caso en que la consulta no devuelva resultados
-            return array(); // O devuelve un valor predeterminado, según tu lógica
+            return array();
         }
     }
-
     public function getTotalUsuarios($filterDate)
     {
         $query = "SELECT COUNT(*) AS TotalUsuarios
@@ -217,14 +214,17 @@ class AdminModel
     }
     public function getBalanceTrampitasPorUsuario($filterDate)
     {
-        $query = "SELECT u.id, u.nickname, COALESCE(COUNT(t.id), 0) AS balanceTrampitas
+     $query = "SELECT u.id, u.nickname, COALESCE(COUNT(t.id), 0) AS balanceTrampitas
               FROM Usuario u
               LEFT JOIN Trampita t ON u.id = t.idUsuario
               WHERE t.fechaCompra <= '$filterDate'
               GROUP BY u.id, u.nickname";
         $result = $this->database->query($query);
-        return $result[0]['balanceTrampitas'];
-        //return $result;
+
+        if ($result && isset($result[0]['balanceTrampitas'])) {
+            return $result[0]['balanceTrampitas'];
+        }
+        return 0;
     }
 
     public function getCantidadTrampitas($filterDate)
@@ -267,40 +267,76 @@ class AdminModel
     }
 
     /* Graficos */
-    public function usuariosNuevosGrafico()
+    public function usuariosNuevosGrafico($fecha)
     {
-        $datay = array(45);
-    
-        $graph = new Graph(500, 300); // Aumenta el tamaño del gráfico
-        $graph->SetScale("lin");
-    
-        $graph->SetBox(false);
-        $graph->ygrid->SetFill(false);
-        $graph->yaxis->HideLine(false);
-        $graph->yaxis->HideTicks(false, false);
-    
-        $lineplot = new LinePlot($datay);
-        $lineplot->SetColor("blue");
-        $lineplot->SetWeight(2);
-    
-        $graph->Add($lineplot);
-        $graph->title->Set("Cantidad de Usuarios");
-    
-        $imagePath = 'public/graficos/imagenes/grafico.png';
+        $totalUsuarios = $this->getTotalUsuarios($fecha);
+        $datay = array($totalUsuarios);
+
+        // Crear el objeto del gráfico
+        $graph = new Graph(400, 300, 'auto');
+        $graph->SetScale('textlin');
+        $graph->SetMargin(50, 30, 20, 40);
+
+        $barplot = new BarPlot($datay);
+        $barplot->SetFillColor('red');
+        $graph->Add($barplot);
+
+        $graph->xaxis->title->Set('Usuarios Nuevos');
+        $graph->yaxis->title->Set('Cantidad');
+        $graph->xaxis->SetTickLabels(['Usuarios Nuevos']);
+        $graph->yaxis->SetTickPositions(array(0, $totalUsuarios)); // Ajustar las marcas de división al rango de valores
+        $barplot->value->Show();
+        $barplot->value->SetFont(FF_ARIAL, FS_NORMAL, 12);
+        $barplot->value->SetFormat('%d');
+
+        // Establecer el formato de las etiquetas del eje y
+        $graph->yaxis->SetLabelFormat('%d');
+
+        $imagePath = 'public/graficos/imagenes/usuarios.png';
         $directory = 'public/graficos/imagenes/';
-    
+
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
-    
+
         if (!is_dir($directory)) {
             if (!mkdir($directory, 0777, true)) {
                 die('Error al crear el directorio');
             }
         }
-    
+
         $graph->Stroke($imagePath);
-    
+
+        return $imagePath;
+    }
+    public function generosGrafico($fecha)
+    {
+        $h = $this->getCantidadUsuariosHombres($fecha);
+        $m = $this->getCantidadUsuariosMujeres($fecha);
+        $o = $this->getCantidadUsuariosOtros($fecha);
+        $generos = array('M' . ' ' . $h, 'F' . ' ' . $m, 'O' . ' ' . $o);
+        $cantidadUsuarios = array($h, $m, $o);
+        $grafico = new PieGraph(400, 300);
+        $grafico->title->Set('Distribución de usuarios por género');
+        $datos = new PiePlot($cantidadUsuarios);
+        $datos->SetSliceColors(array('blue', 'pink', 'green'));
+        $datos->SetLabels($generos);
+        $datos->value->SetFont(FF_ARIAL, FS_BOLD, 12);
+        $datos->value->SetColor('black');
+        $datos->value->Show();
+        $datos->ExplodeSlice(1);
+        $grafico->Add($datos);
+        $imagePath = 'public/graficos/imagenes/generos.png';
+        $directory = 'public/graficos/imagenes/';
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        if (!is_dir($directory)) {
+            if (!mkdir($directory, 0777, true)) {
+                die('Error al crear el directorio');
+            }
+        }
+        $grafico->Stroke($imagePath);
         return $imagePath;
     }
 
@@ -309,6 +345,7 @@ class AdminModel
         $h = $this->getCantidadUsuariosHombres($filterDate);
         $m = $this->getCantidadUsuariosMujeres($filterDate);
         $o = $this->getCantidadUsuariosOtros($filterDate);
+
         $generos = array('M' . ' ' . $h, 'F' . ' ' . $m, 'O' . ' ' . $o);
         $cantidadUsuarios = array($h, $m, $o);
         if (array_sum($cantidadUsuarios) === 0) {
@@ -431,8 +468,9 @@ class AdminModel
         $arrayDatos["balanceTrampitas"] = $balanceTrampitas;
         $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
+        $arrayDatos['filterDate'] = $filterDate;
+        $arrayDatos['usuariosNuevosGrafico'] = "../../" . $this->usuariosNuevosGrafico($filterDate);
 
-        $arrayDatos['usuariosNuevosGrafico'] = "../../" . $this->usuariosNuevosGrafico();
         $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico($filterDate);
 
         $arrayDatos['generosGrafico'] = "../../" . $this->paisesGrafico($filterDate);
@@ -440,3 +478,8 @@ class AdminModel
         return array('arrayDatos' => $arrayDatos);
     }
 }
+
+
+// X FECHA: 
+
+// PAIS, EDAD, PARTIDA, USUARIO, GENERO 

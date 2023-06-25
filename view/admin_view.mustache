@@ -9,7 +9,7 @@
             <div
                 class="w-72 bg-white max-w-xs rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
                 <div class="h-20 bg-red-400 flex items-center justify-between">
-                    <p class="mr-0 text-white text-lg pl-5">USUARIOS</p>
+                    <p class="mr-0 text-white text-lg pl-5">TOTAL USUARIOS</p>
                 </div>
                 <div class="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
                     <p>TOTAL</p>
@@ -22,7 +22,7 @@
             <div
                 class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
                 <div class="h-20 bg-blue-500 flex items-center justify-between">
-                    <p class="mr-0 text-white text-lg pl-5">JUGADORES</p>
+                    <p class="mr-0 text-white text-lg pl-5">TOTAL JUGADORES</p>
                 </div>
                 <div class="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
                     <p>TOTAL</p>
@@ -35,7 +35,7 @@
             <div
                 class="w-72 bg-white max-w-xs rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
                 <div class="h-20 bg-purple-400 flex items-center justify-between">
-                    <p class="mr-0 text-white text-lg pl-5">EDITORES</p>
+                    <p class="mr-0 text-white text-lg pl-5">TOTAL EDITORES</p>
                 </div>
                 <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
                     <p>TOTAL</p>
@@ -48,7 +48,7 @@
             <div
                 class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
                 <div class="h-20 bg-purple-900 flex items-center justify-between">
-                    <p class="mr-0 text-white text-lg pl-5">ADMINISTRADORES</p>
+                    <p class="mr-0 text-white text-lg pl-5">TOTAL ADMIN</p>
                 </div>
                 <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
                     <p>TOTAL</p>
@@ -57,6 +57,16 @@
             </div>
         </div>
     </div>
+
+    <div class="admin-row">
+        <input class="admin-fecha" type="date" id="date-input" placeholder="Seleccionar fecha" value="{{filterDate}}">
+        <button id="filter-btn">Filtrar</button>
+    </div>
+
+    <div class="admin-row">
+        <h1>Fecha: <span style="color: red"> {{filterDate}}</span></h1>
+    </div>
+    
     
     <div class="admin-row">
         <div class="grafico-container">
@@ -66,14 +76,10 @@
             <img src="{{generosGrafico}}">
         </div>
         <div class="grafico-container">
-            <img src="/public/img/prueba-logo.png">
         </div>
     </div>
 
-    <div class="admin-row">
-        <input type="date" id="date-input" placeholder="Seleccionar fecha">
-        <button id="filter-btn">Filtrar</button>
-    </div>
+
 
     <div class="admin-row">
         <div class="admin-card ">
@@ -160,7 +166,6 @@
     });
 
 </script>
-<!--
 <img src="{{imagePath}}" alt="Gráfico" />
 <p>Balance de trampitas por usuario: {{balanceTrampitas}}</p>
 <p>Dinero ganado con las trampitas: {{cantidadTrampitas}}$</p>
