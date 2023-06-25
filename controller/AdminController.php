@@ -33,6 +33,8 @@ class AdminController
         $data['usuariosNuevosGrafico'] = $arrayDatos['arrayDatos']['usuariosNuevosGrafico'];
         $data['generosGrafico'] = $arrayDatos['arrayDatos']['generosGrafico'];
         $data['filterDate'] = $arrayDatos['arrayDatos']['filterDate'];
+        $data['paisesGrafico'] = $arrayDatos['arrayDatos']['paisesGrafico'];
+        $data['edadGrafico'] = $arrayDatos['arrayDatos']['edadGrafico'];
 
         $this->renderer->render('admin', $data);
     }
