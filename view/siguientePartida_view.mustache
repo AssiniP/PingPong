@@ -6,16 +6,16 @@
         <p class="m-5 hidden" id="usuario">{{idUsuario}}</p>
         <p id="jugando">{{jugando}}</p>
     {{/partidas}}
-    <a class="boton-comenzar lg:ml-[40%] sm:ml-[40%] md:ml-[10%] rounded-[15px] m-auto" id="btn-jugar"   onclick="consultarAPI()"><p></p></a>
+
     <div id="contenedor-juego" class=" hidden w-full md:w-[75%] grid grid-cols-1 justify-center content-center m-5 p-5 bg-gray-500 rounded-[200px]">
         <div class="w-[50%] h-auto rounded-2xl text-center broder border-white m-auto text-lg" id="contenedor-categoria" >
 
-        <p id="categoria" class="md:text-6xl text-sm"></p>
-    </div>
-    <div class="w-[50%] h-auto grid grid-cols-1 justify-center content-center p-3 mt-2 rounded-2xl m-auto" id="contenedor-pregunta">
-        <p id="pregunta" class="md:text-4xl text-sm font-bold text-white text-center"></p>
-        <p id="idPregunta" class="hidden"></p>
-    </div>
+            <p id="categoria" class="md:text-6xl text-sm"></p>
+        </div>
+        <div class="w-[50%] h-auto grid grid-cols-1 justify-center content-center p-3 mt-2 rounded-2xl m-auto" id="contenedor-pregunta">
+            <p id="pregunta" class="md:text-4xl text-sm font-bold text-white text-center"></p>
+            <p id="idPregunta" class="hidden"></p>
+        </div>
         <div class="grid grid-cols-2 md:gap-5 gap-3 justify-center items-center justify-items-center content-center text-white">
             <a id="opcion1" class="w-auto h-auto rounded-[50px] text-center md:text-2xl text-sm md:p-5 m-2"></a>
             <a id="opcion2" class="w-auto h-auto rounded-[50px] text-center md:text-2xl text-sm md:p-5 m-2"></a>
@@ -32,13 +32,22 @@
     </div>
 
 </div>
-
 <script src="/public/js/consultaApiPregunta.js"></script>
 <script src="/public/js/trampita.js"></script>
 <script src="/public/js/agregarTerminarPartida.js"></script>
+<script src="/public/js/reportarPregunta.js"></script>
 <script>
     window.addEventListener("load", function() {
         var body = document.body;
         body.classList.add('body-lobby');
+
+
+    });
+</script>
+<script>
+    window.addEventListener("load", function() {
+        var body = document.body;
+        body.classList.add('body-lobby');
+        consultarAPI();
     });
 </script>

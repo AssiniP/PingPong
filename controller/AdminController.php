@@ -35,6 +35,8 @@ class AdminController
         $data['cantidadTrampitas'] = $arrayDatos['arrayDatos']['cantidadTrampitas'];
         $data['cantidadPorPais'] = $arrayDatos['arrayDatos']['cantidadPorPais'];
         
+        $data['graficoGenero'] = $arrayDatos['arrayDatos']['graficoGenero'];
+        $data['generarGraficoPie'] = $arrayDatos['arrayDatos']['generarGraficoPie'];
 
         $this->renderer->render('admin', $data);
     }

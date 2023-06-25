@@ -57,26 +57,22 @@
             </div>
         </div>
     </div>
-
+    
+    <div class="admin-row">
+        <div class="grafico-container">
+            <img src="{{graficoGenero}}">
+        </div>
+        <div class="grafico-container">
+            <img src="{{generarGraficoPie}}">
+        </div>
+        <div class="grafico-container">
+            <img src="/public/img/prueba-logo.png">
+        </div>
+    </div>
     <div class="admin-row">
         <input type="date" id="date-input" placeholder="Seleccionar fecha">
         <button id="filter-btn">Filtrar</button>
     </div>
-    <div class="admin-row">
-        <div class="grafico-container">
-            <img src="/public/img/prueba-logo.png">
-
-        </div>
-        <div class="grafico-container">
-            <img src="/public/img/prueba-logo.png">
-
-        </div>
-        <div class="grafico-container">
-            <img src="/public/img/prueba-logo.png">
-
-        </div>
-    </div>
-
     <div class="admin-row">
         <div class="admin-card ">
             <div
@@ -90,7 +86,6 @@
                 <p class="py-4 text-3xl ml-5">{{cantidadPreguntas}}</p>
             </div>
         </div>
-
         <div class="admin-card  ">
             <div
                 class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
@@ -103,7 +98,6 @@
                 <p class="py-4 text-3xl ml-5">{{porcentajePreguntasAcertadas}}%</p>
             </div>
         </div>
-
         <div class="admin-card ">
             <div
                 class="w-72 bg-white max-w-xs rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
@@ -116,7 +110,6 @@
                 <p class="py-4 text-3xl ml-5">{{totalJugadoresConAlMenosUnaPartida}}</p>
             </div>
         </div>
-
         <div class="admin-card">
             <div
                 class="w-72 bg-white max-w-xs  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
@@ -133,29 +126,24 @@
     <div class="admin-row">
         <h1>Sección de Usuarios</h1>
     </div>
-    <div class="admin-row">
-        <div class="admin-form">
-            <input type="text" placeholder="Buscar Usuario">
-            <input type="submit" value="i" class="btn">
-        </div>
-    </div>
+
     <div class="admin-row">
         <div class="grafico-container">
             <img src="/public/img/prueba-logo.png">
-
         </div>
         <div class="grafico-container">
             <img src="/public/img/prueba-logo.png">
-
         </div>
         <div class="grafico-container">
             <img src="/public/img/prueba-logo.png">
-
         </div>
     </div>
-
+    <div class="admin-row">
+        <button type="submit" class="btn">Generar PDF</button>
+    </div>
 </div>
 
+<!--
 <img src="{{imagePath}}" alt="Gráfico" />
 <p>Balance de trampitas por usuario: {{balanceTrampitas}}</p>
 <p>Dinero ganado con las trampitas: {{cantidadTrampitas}}$</p>
