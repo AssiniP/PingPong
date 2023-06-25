@@ -5,8 +5,7 @@ require_once('jpgraph/src/jpgraph_bar.php');
 require_once('jpgraph/src/jpgraph_pie.php');
 require_once('jpgraph/src/jpgraph_line.php');
 require_once ('jpgraph/src/jpgraph_line.php');
-/*require_once (SITE_ROOT.'/third-party/pdfGenerator.php');
-require_once (SITE_ROOT.'/third-party/fpdf185/fpdf.php');*/
+
 
 class AdminModel
 {
@@ -244,7 +243,7 @@ class AdminModel
         $totalUsuarios = $this->getCantidadUsuariosNuevosDesdeFecha($fecha);
         $datay = array($totalUsuarios);
         if ($totalUsuarios == 0) {
-            $imagePath = 'public/graficos/imagenes/error.png';
+            $imagePath = '/public/graficos/imagenes/error.png';
             return $imagePath;
         }
         $graph = new Graph(400, 300, 'auto');
@@ -261,8 +260,8 @@ class AdminModel
         $barplot->value->SetFont(FF_ARIAL, FS_NORMAL, 12);
         $barplot->value->SetFormat('%d');
         $graph->yaxis->SetLabelFormat('%d');
-        $imagePath = 'public/graficos/imagenes/usuarios.png';
-        $directory = 'public/graficos/imagenes/';
+        $imagePath = '/public/graficos/imagenes/usuarios.png';
+        $directory = '/public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -283,7 +282,7 @@ class AdminModel
         $generos = array($h . " H", $m . " M", $o . " O");
         $cantidadUsuarios = array($h, $m, $o);
         if (array_sum($cantidadUsuarios) === 0) {
-            $imagePath = 'public/graficos/imagenes/error.png';
+            $imagePath = '/public/graficos/imagenes/error.png';
             return $imagePath;
         }
         $grafico = new PieGraph(400, 300);
@@ -300,8 +299,8 @@ class AdminModel
         $datos->value->Show();
         $datos->ExplodeSlice(1);
         $grafico->Add($datos);
-        $imagePath = 'public/graficos/imagenes/generos.png';
-        $directory = 'public/graficos/imagenes/';
+        $imagePath = '/public/graficos/imagenes/generos.png';
+        $directory = '/public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -323,7 +322,7 @@ class AdminModel
             $cantidadUsuarios[] = $row['cantidadUsuarios'];
         }
         if (array_sum($cantidadUsuarios) === 0) {
-            $imagePath = 'public/graficos/imagenes/error.png';
+            $imagePath = '/public/graficos/imagenes/error.png';
             return $imagePath;
         }
         $datay = $cantidadUsuarios;
@@ -347,8 +346,8 @@ class AdminModel
         $b1plot->SetWeight(0);
         $b1plot->SetFillGradient("#808000", "#90EE90", GRAD_HOR);
         $b1plot->SetWidth(17);
-        $imagePath = 'public/graficos/imagenes/paises.png';
-        $directory = 'public/graficos/imagenes/';
+        $imagePath = '/public/graficos/imagenes/paises.png';
+        $directory = '/public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -371,8 +370,7 @@ class AdminModel
         }
         $data = $cantidadUsuarios;
         if (array_sum($cantidadUsuarios) === 0) {
-
-            $imagePath = 'public/graficos/imagenes/error.png';
+            $imagePath = '/public/graficos/imagenes/error.png';
             return $imagePath;
         }
         $graph = new PieGraph(400, 300);
@@ -388,8 +386,8 @@ class AdminModel
         $p1->value->SetFormat('%d');
         $p1->value->Show();
         $p1->SetLabelPos(1);
-        $imagePath = 'public/graficos/imagenes/edad.png';
-        $directory = 'public/graficos/imagenes/';
+        $imagePath = '/public/graficos/imagenes/edad.png';
+        $directory = '/public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -409,6 +407,10 @@ class AdminModel
         $t = $this->getCantidadTrampitas($fecha);
         $a = $this->getPorcentajePreguntasAcertadas($fecha);
         $datay = array($p,0,$jcup,0,$t,35,$a);
+        if (array_sum($datay) === 0) {
+            $imagePath = '/public/graficos/imagenes/error.png';
+            return $imagePath;
+        }
         $graph = new Graph(400, 300);
         $graph->SetScale("intlin", 0, $p + 100);
         $theme_class = new UniversalTheme;
@@ -426,8 +428,8 @@ class AdminModel
         $p1->SetFillGradient('yellow', 'red');
         $p1->SetStepStyle();
         $p1->SetColor('#808000');
-        $imagePath = 'public/graficos/imagenes/partidas.png';
-        $directory = 'public/graficos/imagenes/';
+        $imagePath = '/public/graficos/imagenes/partidas.png';
+        $directory = '/public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -458,6 +460,7 @@ class AdminModel
         $cantidadTrampitas = $this->getCantidadTrampitas($filterDate);
         $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($filterDate);
         $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($filterDate);
+
         //querys no filtrableees
         $cantidadPreguntas = $this->getTotalPreguntasCreadas();
         $porcentajePreguntasAcertadas = $this->getPorcentajePreguntasAcertadas();
@@ -480,28 +483,22 @@ class AdminModel
         $arrayDatos["cantidadTrampitas"] = $cantidadTrampitas;
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
         $arrayDatos['filterDate'] = $filterDate;
+
         //GRAFICOS FACHA
-        $arrayDatos['usuariosNuevosGrafico'] = "../../" . $this->usuariosNuevosGrafico($filterDate);
-        $arrayDatos['generosGrafico'] = "../../" . $this->generosGrafico($filterDate);
-        $arrayDatos['paisesGrafico'] = "../../" . $this->paisesGrafico($filterDate);
-        $arrayDatos['edadGrafico'] = "../../" . $this->usuariosEdadGrafico($filterDate);
-        $arrayDatos['partidasGrafico'] = "../../" . $this->partidasGrafico($filterDate);
-
-
-        
+        $arrayDatos['usuariosNuevosGrafico'] = $this->usuariosNuevosGrafico($filterDate);
+        $arrayDatos['generosGrafico'] = $this->generosGrafico($filterDate);
+        $arrayDatos['paisesGrafico'] = $this->paisesGrafico($filterDate);
+        $arrayDatos['edadGrafico'] = $this->usuariosEdadGrafico($filterDate);
+        $arrayDatos['partidasGrafico'] = $this->partidasGrafico($filterDate);
 
 
         return array('arrayDatos' => $arrayDatos);
     }
 
     public function generarPdf($filterDate){
-        /*include_once( SITE_ROOT . '/third-party/pdfGenerator.php');
-        $pdf = new PDF();
-        $pdf->AliasNbPages();
-        $pdf->AddPage();
-        $pdf->SetFont('Times','',12);
-        $pdfPath = SITE_ROOT . '/public/reportes/archivo.pdf';
-        return $pdf->Output($pdfPath, 'I');*/
+        include_once(SITE_ROOT . '/vendor/GeneradorPDF.php');
+        $datosReporte = $this->adminModelMethodsTest($filterDate);
+        generarReportePDF($datosReporte, $filterDate);
     }
 }
 

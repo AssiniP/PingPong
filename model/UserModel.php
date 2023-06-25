@@ -123,7 +123,4 @@ class UserModel {
        return $this->database->query( "select ROW_NUMBER() OVER(ORDER BY SUM(puntaje) DESC) AS 'Puesto', u.nickName,u.imagenPerfil ,sum(puntaje) as 'Puntaje'  from partida p join usuario u on u.id = p.idUsuario group by u.nickName,u.imagenPerfil  ORDER BY SUM(puntaje) DESC LIMIT 5");
     }
 
-    public function generadorPDF(){
-        include_once('vendor/GeneradorPDF.php');
-    }
 }

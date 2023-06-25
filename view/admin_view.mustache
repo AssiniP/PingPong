@@ -198,7 +198,7 @@
     </div>
 
     <div class="admin-row">
-        <a href="admin/generarPDF">Generar pdf</a>
+        <a href="/admin/generarPDF">Generar pdf</a>
     </div>
 </div>
 
@@ -206,11 +206,22 @@
     document.addEventListener("DOMContentLoaded", function() {
         var filterButton = document.getElementById("filter-btn");
         filterButton.addEventListener("click", function() {
+
             var dateInput = document.getElementById("date-input");
             var selectedDate = dateInput.value;
-            console.log(selectedDate);
+
             if (selectedDate !== "") {
-                window.location.href = window.location.pathname + "?filter_date=" + selectedDate;
+                var currentDate = new Date();
+                var selectedDateObj = new Date(selectedDate);
+
+                var currentDateValue = currentDate.getTime();
+                var selectedDateValue = selectedDateObj.getTime();
+
+                if (selectedDateValue > currentDateValue) {
+                    alert("La fecha seleccionada no puede ser mayor a la fecha actual.");
+                } else {
+                    window.location.href = window.location.pathname + "?filter_date=" + selectedDate;
+                }
             } else {
                 alert("Por favor, selecciona una fecha");
             }

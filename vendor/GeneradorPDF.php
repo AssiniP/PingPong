@@ -20,12 +20,47 @@ include_once "autoload.php";
 
 use Dompdf\Dompdf;
 
-$dompdf = new Dompdf();
-ob_start();
-include_once "helpers/RenderizadorImagenDomPDF.php";
-$html = ob_get_clean();
-$dompdf->loadHtml($html);
-$dompdf->render();
-header("Content-type: application/pdf");
-header("Content-Disposition: inline; filename=documento.pdf");
-echo $dompdf->output();
+function generarReportePDF($datosReporte, $filterDate) {
+    $dompdf = new Dompdf();
+
+    include_once SITE_ROOT . "/helpers/RenderizadorImagenDomPDF.php";
+    //HEADER CON INFO
+    $base64 = renderImg("/public/img/prueba-logo.png");
+    $html2 = headerLogo($filterDate, $base64);
+
+    //Datos del grafico
+    $base64 = renderImg($datosReporte['arrayDatos']['edadGrafico']);
+    $html2 .= showGraph($base64, "Distribución de usuarios por edad");
+
+    $base64 = renderImg($datosReporte['arrayDatos']['generosGrafico']);
+    $html2 .= showGraph($base64, "Distribución de usuarios por genero");
+
+    $base64 = renderImg($datosReporte['arrayDatos']['paisesGrafico']);
+    $html2 .= showGraph($base64, "Distribución de usuarios por país");
+
+    $base64 = renderImg($datosReporte['arrayDatos']['usuariosNuevosGrafico']);
+    $html2 .= showGraph($base64, "Usuarios nuevos");
+
+    $base64 = renderImg($datosReporte['arrayDatos']['partidasGrafico']);
+    $html2 .= showGraph($base64, "Datos de partidas");
+
+    //INFO DEMAS
+    $html2 .= renderizar($datosReporte['arrayDatos']['totalUsuarios'], "Total de usuarios en la aplicación");
+    $html2 .= renderizar($datosReporte['arrayDatos']['totalJugadores'], "Total de jugadores en la aplicación");
+    $html2 .= renderizar($datosReporte['arrayDatos']['totalEditores'], "Total de editores en la aplicación");
+    $html2 .= renderizar($datosReporte['arrayDatos']['totalAdministradores'], "Total de administradores en la aplicación");
+    $html2 .= renderizar($datosReporte['arrayDatos']['totalJugadoresConAlMenosUnaPartida'], "Total de jugadores con al menos 1 partida");
+    $html2 .= renderizar($datosReporte['arrayDatos']['cantidadPartidasJugadas'], "Cantidad de partidas jugadas");
+    $html2 .= renderizar($datosReporte['arrayDatos']['cantidadPreguntas'], "Cantidad de preguntas");
+    $html2 .= renderizar($datosReporte['arrayDatos']['cantidadUsuariosNuevosDesdeFecha'], "Cantidad de usuarios nuevos desde la fecha");
+    $html2 .= renderizar($datosReporte['arrayDatos']['porcentajePreguntasAcertadas'], "Porcentaje de preguntas acertadas");
+    $html2 .= renderizar($datosReporte['arrayDatos']['porcentajePreguntasAcertadasPorUsuario'], "Porcentaje de aciertos por usuario");
+    $html2 .= renderizar($datosReporte['arrayDatos']['balanceTrampitas'], "Balance de trampitas por usuario");
+    $html2 .= renderizar($datosReporte['arrayDatos']['cantidadTrampitas'], "Dinero ganado con trampitas");
+
+    $dompdf->loadHtml($html2);
+    $dompdf->render();
+    header("Content-type: application/pdf");
+    header("Content-Disposition: inline; filename=reporte.pdf");
+    echo $dompdf->output();
+}
