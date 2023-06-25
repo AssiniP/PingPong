@@ -71,6 +71,11 @@
     </div>
 
     <div class="admin-row">
+        <input type="date" id="date-input" placeholder="Seleccionar fecha">
+        <button id="filter-btn">Filtrar</button>
+    </div>
+
+    <div class="admin-row">
         <div class="admin-card ">
             <div
                 class="w-72 bg-white max-w-xs rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
@@ -152,4 +157,26 @@
     <li>{{pais}}: {{cantidadUsuarios}}</li>
     {{/cantidadPorPais}}
 </ul>
--->
+
+<p><b><u>Cantidad de Usuarios por Género</u></b></p>
+<ul>
+    {{#cantidadUsuariosPorSexo}}
+    <li>{{genero}}: {{cantidadUsuarios}}</li>
+    {{/cantidadUsuariosPorSexo}}
+</ul>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var filterButton = document.getElementById("filter-btn");
+        filterButton.addEventListener("click", function() {
+            var dateInput = document.getElementById("date-input");
+            var selectedDate = dateInput.value;
+            console.log(selectedDate);
+            if (selectedDate !== "") {
+                window.location.href = window.location.pathname + "?filter_date=" + selectedDate;
+            } else {
+                alert("Por favor, selecciona una fecha");
+            }
+        });
+    });
+
+</script>
