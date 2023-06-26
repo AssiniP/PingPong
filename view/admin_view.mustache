@@ -198,7 +198,7 @@
     </div>
 
     <div class="admin-row">
-        <a href="/admin/generarPDF" class="bg-violet-600 hover:bg-violet-200 p-5 m-5 md:text-2xl text-lg text-center text-white font-bold rounded-lg">Generar pdf</a>
+        <a href="#" id="pdf-btn" class="bg-violet-600 hover:bg-violet-200 p-5 m-5 md:text-2xl text-lg text-center text-white font-bold rounded-lg">Generar pdf</a>
     </div>
 </div>
 
@@ -226,5 +226,17 @@
                 alert("Por favor, selecciona una fecha");
             }
         });
-    });
+
+        var pdfButton = document.getElementById("pdf-btn");
+        pdfButton.addEventListener("click", function() {
+
+            var dateInput = document.getElementById("date-input");
+            var selectedDate = dateInput.value;
+
+            if (selectedDate !== "") {
+                //console.log("/admin/generarPDF" + "?filter_date=" + selectedDate);
+                window.location.href = "/admin/generarPDF" + "?filter_date=" + selectedDate;
+                }
+            })
+        });
 </script>
