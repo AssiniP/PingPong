@@ -599,11 +599,12 @@ footer {
     }
 }
 
-
 .admin-row h1 {
     font-weight: 700;
     font-size: 2rem;
 }
+
+/* Fin de Admin */
 
 .boton-comenzar {
     background-image: url("/public/img/boton-comenza.png");
@@ -619,3 +620,4 @@ footer {
 .boton-comenzar:hover {
     background-image: url("/public/img/boton-comenza-hover.png");
 }
+

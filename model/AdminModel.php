@@ -5,8 +5,6 @@ require_once('jpgraph/src/jpgraph_bar.php');
 require_once('jpgraph/src/jpgraph_pie.php');
 require_once('jpgraph/src/jpgraph_line.php');
 require_once ('jpgraph/src/jpgraph_line.php');
-
-
 class AdminModel
 {
     private $database;
@@ -260,8 +258,8 @@ class AdminModel
         $barplot->value->SetFont(FF_ARIAL, FS_NORMAL, 12);
         $barplot->value->SetFormat('%d');
         $graph->yaxis->SetLabelFormat('%d');
-        $imagePath = '/public/graficos/imagenes/usuarios.png';
-        $directory = '/public/graficos/imagenes/';
+        $imagePath = 'public/graficos/imagenes/usuarios.png';
+        $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -299,8 +297,8 @@ class AdminModel
         $datos->value->Show();
         $datos->ExplodeSlice(1);
         $grafico->Add($datos);
-        $imagePath = '/public/graficos/imagenes/generos.png';
-        $directory = '/public/graficos/imagenes/';
+        $imagePath = 'public/graficos/imagenes/generos.png';
+        $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -346,8 +344,8 @@ class AdminModel
         $b1plot->SetWeight(0);
         $b1plot->SetFillGradient("#808000", "#90EE90", GRAD_HOR);
         $b1plot->SetWidth(17);
-        $imagePath = '/public/graficos/imagenes/paises.png';
-        $directory = '/public/graficos/imagenes/';
+        $imagePath = 'public/graficos/imagenes/paises.png';
+        $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -386,8 +384,8 @@ class AdminModel
         $p1->value->SetFormat('%d');
         $p1->value->Show();
         $p1->SetLabelPos(1);
-        $imagePath = '/public/graficos/imagenes/edad.png';
-        $directory = '/public/graficos/imagenes/';
+        $imagePath = 'public/graficos/imagenes/edad.png';
+        $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -428,8 +426,8 @@ class AdminModel
         $p1->SetFillGradient('yellow', 'red');
         $p1->SetStepStyle();
         $p1->SetColor('#808000');
-        $imagePath = '/public/graficos/imagenes/partidas.png';
-        $directory = '/public/graficos/imagenes/';
+        $imagePath = 'public/graficos/imagenes/partidas.png';
+        $directory = 'public/graficos/imagenes/';
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -444,7 +442,6 @@ class AdminModel
 
     public function adminModelMethodsTest($filterDate)
     {
-
         $arrayDatos = array();
 
         //Querys filtrableess
