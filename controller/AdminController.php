@@ -12,6 +12,7 @@ class AdminController
 
     public function list()
     {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $filterDate = $_GET['filter_date'] ?? date('Y-m-d');
         $arrayDatos = $this->adminModel->adminModelMethodsTest($filterDate);
         $data['totalUsuarios'] = $arrayDatos['arrayDatos']['totalUsuarios'];
@@ -43,6 +44,7 @@ class AdminController
     }
 
     public function generarPDF(){
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $filterDate = $_GET['filter_date'] ?? date('Y-m-d');
         $this->adminModel->generarPdf($filterDate);
     }
