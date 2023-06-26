@@ -31,8 +31,8 @@ CREATE TABLE usuario (
     longitud double not null,
     latitud double not null,
     nivelJugador varchar(150) default 'PRINCIPIANTE',
-    FOREIGN KEY (idGenero) REFERENCES genero (id),
-    FOREIGN KEY (idRol) references rol (id)
+    FOREIGN KEY (idGenero) REFERENCES genero (id) ON DELETE CASCADE,
+    FOREIGN KEY (idRol) references rol (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Partida (
@@ -40,7 +40,7 @@ CREATE TABLE Partida (
     fecha DATE NOT NULL,
     idUsuario INT NOT NULL,
     puntaje INT,
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+    FOREIGN KEY (idUsuario) REFERENCES Usuario (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Categoria (
@@ -62,10 +62,8 @@ CREATE TABLE Pregunta (
     respuestaCorrecta varchar(200) not null,
     dificultad varchar(150) default 'FACIL',
     estadoReportada boolean default false,
-    CONSTRAINT fk_idCategoria
     FOREIGN KEY (idCategoria) REFERENCES Categoria (id)
     ON DELETE CASCADE,
-    CONSTRAINT fk_idUsuario
     FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
     ON DELETE CASCADE
 );
@@ -75,10 +73,8 @@ CREATE TABLE Jugada (
     idPregunta INT NOT NULL,
     idPartida INT NOT NULL,
     tiempo TIME NOT NULL,
-    CONSTRAINT fk_idPregunta
         FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
             ON DELETE CASCADE,
-    CONSTRAINT fk_idPartida
         FOREIGN KEY (idPartida) REFERENCES pregunta (id)
             ON DELETE CASCADE,
     respondidoCorrectamente BOOLEAN DEFAULT FALSE
@@ -90,10 +86,8 @@ CREATE TABLE PreguntaReportada (
     idUsuario INT NOT NULL,
     fecha DATE NOT NULL,
     motivo VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_idPregunta
         FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
             ON DELETE CASCADE,
-    CONSTRAINT fk_idUsuario
         FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
         ON DELETE CASCADE
 );
@@ -104,10 +98,8 @@ CREATE TABLE usuario_pregunta (
     ocurrencias int default 0,
     aciertos int default 0,
     PRIMARY KEY (idUsuario, idPregunta),
-    CONSTRAINT fk_idPregunta
         FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
             ON DELETE CASCADE,
-    CONSTRAINT fk_idUsuario
         FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
             ON DELETE CASCADE
 );
@@ -121,10 +113,8 @@ CREATE TABLE Pregunta_sugerida (
     opcion2 VARCHAR(200) NOT NULL,
     opcion3 VARCHAR(200) not null,
     respuestaCorrecta varchar(200) not null,
-    CONSTRAINT fk_idCategoria
         FOREIGN KEY (idCategoria) REFERENCES Categoria (id)
             ON DELETE CASCADE,
-    CONSTRAINT fk_idUsuario
         FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
             ON DELETE CASCADE
 );
@@ -133,10 +123,8 @@ CREATE TABLE aparicion_pregunta (
     idUsuario INT not null,
     idPregunta INT not null,
     PRIMARY KEY (idUsuario, idPregunta),
-    CONSTRAINT fk_idPregunta
         FOREIGN KEY (idPregunta) REFERENCES pregunta (id)
             ON DELETE CASCADE,
-    CONSTRAINT fk_idUsuario
         FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
             ON DELETE CASCADE
 );
@@ -146,7 +134,6 @@ CREATE TABLE Trampita (
     idUsuario INT NOT NULL,
     fechaCompra DATE NOT NULL,
     utilizada BOOLEAN DEFAULT FALSE,
-    CONSTRAINT fk_idUsuario
         FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
             ON DELETE CASCADE
 );
