@@ -216,21 +216,21 @@ class AdminModel
     }
     public function getCantidadUsuariosHombres($filterDate)
     {
-        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 1 AND fechaRegistro <= '$filterDate'";
+        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 1 AND fechaRegistro >= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
     public function getCantidadUsuariosMujeres($filterDate)
     {
-        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 2 AND fechaRegistro <= '$filterDate'";
+        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 2 AND fechaRegistro >= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
 
     public function getCantidadUsuariosOtros($filterDate)
     {
-        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 3 AND fechaRegistro <= '$filterDate'";
+        $query = "SELECT COALESCE(COUNT(*), 0) AS total FROM usuario WHERE idGenero = 3 AND fechaRegistro >= '$filterDate'";
         $result = $this->database->query($query);
         return $result[0]['total'];
     }
