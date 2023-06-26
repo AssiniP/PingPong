@@ -444,7 +444,6 @@ class AdminModel
     {
         $arrayDatos = array();
 
-        //Querys filtrableess
         $totalUsuarios = $this->getTotalUsuarios($filterDate);
         $totalJugadores = $this->getTotalJugadores($filterDate);
         $totalEditores = $this->getTotalEditores($filterDate);
@@ -458,7 +457,6 @@ class AdminModel
         $cantidadUsuariosNuevosDesdeFecha = $this->getCantidadUsuariosNuevosDesdeFecha($filterDate);
         $partidasNuevasDesdeFecha = $this->getPartidasNuevasDesdeFecha($filterDate);
 
-        //querys no filtrableees
         $cantidadPreguntas = $this->getTotalPreguntasCreadas();
         $porcentajePreguntasAcertadas = $this->getPorcentajePreguntasAcertadas();
         $porcentajePreguntasAcertadasPorUsuario = $this->getPorcentajePreguntasAcertadasPorUsuario();
@@ -481,7 +479,6 @@ class AdminModel
         $arrayDatos['cantidadPorPais'] = $cantidadUsuarioPais;
         $arrayDatos['filterDate'] = $filterDate;
 
-        //GRAFICOS FACHA
         $arrayDatos['usuariosNuevosGrafico'] = $this->usuariosNuevosGrafico($filterDate);
         $arrayDatos['generosGrafico'] = $this->generosGrafico($filterDate);
         $arrayDatos['paisesGrafico'] = $this->paisesGrafico($filterDate);

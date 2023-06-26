@@ -96,8 +96,6 @@ function enviarFormulario(url) {
                     idGenero: form.elements.namedItem('idGenero').value,
                     ciudad: form.elements.namedItem('ciudad').value,
                 };
-
-    console.log(data);
     validoCampos=true;
 
     if (data.nickName === "" || data.password === "" ||  data.repassword === "" || data.email === "" || data.nombre === "" || data.pais === "" ||
