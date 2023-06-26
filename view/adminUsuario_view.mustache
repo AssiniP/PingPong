@@ -9,7 +9,7 @@
                   <div class="grid grid-cols-1 justify-center items-center">
                      <br><label for="idRol" class="mr-2 ml-2">Rol:</label>
                      <select id="idRol" name="idRol" required
-                     class="rounded border border-2 border-green-300 h-4/5 px-2">
+                     class="rounded border border-2 border-green-300 h-11/12 px-2">
                      <option value="">Seleccionar</option>
                      {{#roles}}
                         <option value={{id}}>{{rol}}</option>
@@ -34,7 +34,6 @@
                      <div class="flex flex-row md:grid-cols-1 justify-center items-center">
                                 <input type="submit" id="aprobar" value="Guardar" class="bg-green-800 hover:bg-blue-800 px-5 py-2 rounded text-white m-5"> <br>
                       </div>
-               </div>
               </form>
         </div>
          <p id="errorMsg"></p>
