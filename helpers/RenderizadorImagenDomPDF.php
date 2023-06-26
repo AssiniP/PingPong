@@ -4,7 +4,7 @@
         return $html;
     }
     function renderImg($img){
-        $nombreImagen = SITE_ROOT . $img;
+        $nombreImagen = SITE_ROOT ."/". $img;
         $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImagen));
         return $imagenBase64;
     }
