@@ -1,6 +1,14 @@
-let dataAPI;
 function consultarAPI() {
-        let usuario = document.getElementById("usuario");
+    var miDiv = document.getElementById("jugar-audio");
+
+    var miAudio = document.createElement("audio");
+    miAudio.src = "/public/audio/preguntas.mp3";
+    miAudio.controls = true;
+    miAudio.autoplay = true;
+    miAudio.style.width="100%";
+    miDiv.appendChild(miAudio);
+    miAudio.play();
+    let usuario = document.getElementById("usuario");
     var body = document.body;
     body.classList.add('body-lobby');
     let contenedor_juego = document.getElementById('contenedor-juego');
