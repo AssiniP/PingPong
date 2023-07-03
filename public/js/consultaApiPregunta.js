@@ -73,6 +73,7 @@ function consultarAPI() {
             let idPregunta = document.getElementById("idPregunta");
             idPregunta.innerText = primeraPregunta.id;
             let idPreguntaJugada = primeraPregunta.id;
+            console.log('pregunta: '+ idPregunta);
             empezarJugada(idPreguntaJugada);
 
         let number;

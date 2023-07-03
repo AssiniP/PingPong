@@ -34,6 +34,7 @@ class PartidaModel
     {
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $tiempoActual = date("H:i:s");
+        var_dump('idPartida' . $idPartida . 'idPregunta:' . $idPregunta . 'tiempo' . $tiempoActual);
         $query = "INSERT INTO Jugada (idPregunta, idPartida, tiempo, respondidoCorrectamente)
                   VALUES ($idPregunta, $idPartida, '$tiempoActual', 0)";
         return $this->database->query($query);
@@ -190,6 +191,7 @@ class PartidaModel
     public function empezarJugada($preguntaID){
         $usuarioId = $this->getIDUsuarioActual();
         $idPartida = $this->getIDPartidaActual();
+        var_dump('usuario:' . $usuarioId . 'partida: ' . $idPartida );
         $this->createJugada($preguntaID, $this->getIDPartidaActual());
     }
 
@@ -335,20 +337,22 @@ class PartidaModel
     private function respondioATiempo($idPregunta, $idPartida){
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $inicio = $this->getTiempoDeJugada($idPregunta, $idPartida);
-        $tiempoDeInicio = strtotime($inicio[0]["inicio"]);
-        $tiempoActual = strtotime(date("H:i:s"));
-        if (($tiempoActual - $tiempoDeInicio) > 10) {
-            return false;
-        } else {
-            return true;
-        }
+
+            $tiempoDeInicio = strtotime($inicio[0]["inicio"]);
+            $tiempoActual = strtotime(date("H:i:s"));
+            if (($tiempoActual - $tiempoDeInicio) > 10) {
+                return false;
+            } else {
+                return true;
+            }
+
     }
 
     private function getTiempoDeJugada($idPregunta, $idPartida){
         $query = "SELECT tiempo as 'inicio' from Jugada
                   WHERE idPregunta = '" .$idPregunta. "' AND idPartida = '". $idPartida ."'
                   ORDER BY id DESC
-                  LIMIT 1;";
+                  LIMIT 1";
         $result =$this->database->query($query);
         return $result;
     }
