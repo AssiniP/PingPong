@@ -13,10 +13,10 @@ function consultarAPI() {
     body.classList.add('body-lobby');
     let contenedor_juego = document.getElementById('contenedor-juego');
     contenedor_juego.classList.remove("hidden");
-    fetch('http://localhost:80/api/list?usuario=' + usuario.innerText)
+    fetch('http://localhost:80/api/mostrarpregunta?usuario=' + usuario.innerText)
         .then(response => response.json())
         .then(data => {
-                var primeraPregunta = data.preguntas[0];
+                var primeraPregunta = data;
                 let contenedorCategoria = document.getElementById('contenedor-categoria')
             let botonJugar = document.getElementById("btn-jugar");
                 let trampita = document.getElementById("btn-trampita");

@@ -89,4 +89,11 @@ class ApiPreguntas
             return json_encode(array('mensaje' => 'No existen categorias con el id buscado.'));
         }
     }
+
+    function obtenerUnaPreguntaPorUsuario($id){
+        $res = json_decode($this->getAll($id), true);
+
+        return json_encode($res['preguntas'][0]);
+
+    }
 }

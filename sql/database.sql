@@ -5,13 +5,13 @@ CREATE DATABASE pingPong;
 USE pingPong;
 
 CREATE TABLE Rol (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    rol VARCHAR(150) NOT NULL
+                     id INT AUTO_INCREMENT PRIMARY KEY,
+                     rol VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE Genero (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(150) NOT NULL
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        nombre VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE usuario (
@@ -44,9 +44,9 @@ CREATE TABLE Partida (
 );
 
 CREATE TABLE Categoria (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    color VARCHAR(100) NOT NULL
+                           id INT AUTO_INCREMENT PRIMARY KEY,
+                           nombre VARCHAR(255) NOT NULL,
+                           color VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Pregunta (
@@ -139,6 +139,6 @@ CREATE TABLE Trampita (
 );
 
 CREATE TABLE paises (
-    id int primary key auto_increment,
-    nombre varchar(150) default ''
+                        id int primary key auto_increment,
+                        nombre varchar(150) default ''
 );
