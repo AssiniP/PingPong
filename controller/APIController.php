@@ -54,4 +54,14 @@ class APIController
 
         }
     }
+
+    public function mostrarPregunta(){
+        header('Content-Type: application/json');
+        $api = new ApiPreguntas();
+
+        if(isset($_GET['usuario'])){
+            $idUsuario = $_GET['usuario'];
+            echo $api->obtenerUnaPreguntaPorUsuario($idUsuario);
+        }
+    }
 }
